@@ -1,0 +1,261 @@
+.hidden{
+    display: none;
+}
+.non-stretched-mobile-style {
+    padding-bottom: 0%;
+    padding-top: 1.31579%;
+    padding-left: 0;
+    background-color: rgba(0, 183, 179, 1);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: none;
+}
+
+.grid-col-style-1 {
+    width: 100%;
+    padding-left: 0%;
+    padding-right: 0%;
+    background-color: transparent;
+    background-image: none;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
+
+    top: 0px;
+}
+
+#image-widget-1682342703370 {
+    margin-top: 0.292398%;
+    margin-left: 0px;
+}
+
+.mt-0 {
+    margin-top: 0px;
+}
+
+.ml-0 {
+    margin-left: 0px;
+}
+
+/* Banner css */
+.banner-button-buy-now {
+    font-size: 32px;
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Cocogoose Pro Semilight';
+    background-color: rgba(230, 73, 139, 1);
+    letter-spacing: 0px;
+    border-width: 0px;
+    padding: 20px 40px;
+    width: auto;
+    border-radius: 42px;
+}
+
+#slider-widget-1682342703332 {
+    display: none !important;
+}
+
+.banner-logo-with {
+    width: 37%;
+}
+
+#video-widget-1682451679794 {
+    width: 80%;
+}
+
+@media (max-width: 784px) {
+    #video-widget-1682451679794 {
+        width: 100%;
+    }
+
+    .banner-logo-with {
+        width: 37%;
+    }
+
+    .banner-button-buy-now {
+        margin-top: 20px;
+        font-size: 24px;
+        color: rgba(255, 255, 255, 1);
+        font-family: 'Montserrat';
+        background-color: rgba(211, 107, 134, 1);
+        border-color: rgba(13, 175, 209, 1);
+        letter-spacing: 0px;
+        border-width: 0px;
+        padding: 9px 18px;
+        width: auto;
+        border-radius: 10px;
+    }
+
+    .banner-button-buy-now>span {
+        font-weight: bold;
+    }
+
+    #slider-widget-1681919826819 {
+        display: none;
+    }
+
+    #slider-widget-1682342703332 {
+        display: block !important;
+    }
+}
+
+/* End Banner css */
+
+/* Powder css */
+.powder-pannel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.powder-bck-panel {
+    padding-bottom: 0%;
+    padding-top: 2.61389%;
+    padding-left: 0;
+    background-color: transparent;
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+@media (max-width: 940px) {
+    .powder-bck-panel {
+        background-size: cover;
+    }
+}
+
+@media (max-width: 784px) {
+    .powder-pannel-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .powder-bck-panel {
+        background-size: cover;
+    }
+}
+
+
+/* End Powder css */
+
+/* Stevia drops css */
+.steviadrops-bck-panel{
+    padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(28, 176, 222, 1);background-position: center top;background-repeat: repeat-x;background-size: auto;
+}
+.steviadrops-style-frase{
+    margin-top: 33.5968%; margin-left: 0px;
+}
+@media (max-width: 784px) {
+    .steviadrops-hand-stevia-mobile{
+        order: -1;
+    }
+    .steviadrops-style-frase{
+        margin-top: 3em; margin-left: 0px;
+    }
+}
+
+/* User in css */
+.userin-mobile-title{
+    display: none !important;
+}
+@media (max-width: 784px) {
+    .userin-mobile-title{
+        display: block !important;
+    }
+    .userin-web-title{
+        display: none;
+    }
+}
+.userin-text-size{
+    font-size: 2.2em !important;
+}
+
+.userin-pannel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.userin-img-receta{
+    width: 24em;
+}
+@media (max-width: 784px) {
+    .userin-img-receta{
+        width: 100%;
+    }
+
+    .userin-pannel-grid {
+        grid-template-columns: 1fr ;
+    }
+    .userin-text-size{
+        font-size: 2.2em !important;
+    }
+}
+/* End User in css */
+
+
+/* Recetas css */
+.recetas-cart-content-image{
+    border-radius: 45px;
+    width: 24em;
+    margin-top: 4em;
+}
+.recetas-grid-column-receta{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+}
+.recetas-cart-image{
+    display: flex;
+    justify-content: center;
+    /* align-self: center; */
+    /* align-items: center; */
+    height: 100%;
+}
+@media (max-width: 784px) {
+    .recetas-grid-column-receta{
+        grid-template-columns: 1fr ;
+    }
+    .receta-panel-receta-2{
+        order: -1;
+    }
+}
+
+/* End Recetas css */
+
+/* Stevia Lovers css */
+.stevialovers-grid-comments{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 2.5em;
+    width: 90%;
+    margin: 0 auto;
+}
+.stevialovers-grid-comments > .stevialovers-grid-child{
+    margin-top: 20px;
+}
+
+@media (max-width: 784px) {
+    .stevialovers-grid-comments{
+        grid-template-columns: 1fr 1fr;
+    }
+    .stevialovers-grid-comments > .stevialovers-grid-child{
+        border-width: 11px;
+        border-radius: 15px;
+        border-color: rgba(13, 175, 209, 1);
+    }
+}
+@media (max-width: 480px) {
+    .stevialovers-grid-comments{
+        grid-template-columns: 1fr ;
+    }
+    .stevialovers-grid-comments > .stevialovers-grid-child{
+        border-width: 11px;
+        border-radius: 15px;
+        border-color: rgba(13, 175, 209, 1);
+    }
+}
+
+/*End Stevia Lovers css */
+
+
+/* Location css */
+.location-image-footer{
+    width: 500px;
+}
