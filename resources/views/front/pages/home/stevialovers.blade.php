@@ -203,7 +203,7 @@
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
                     <div class="text-widget-content">
                         <h2 style="text-align: center; line-height: 1;"><span
-                                style="color: rgb(255, 255, 255); font-family: Jumper; font-weight: 700; font-size: 36px !important;">¡Unete
+                                style="color: rgb(255, 255, 255); font-family: Jumper; font-weight: 700; font-size: 30px !important;">¡Unete
                                 a esta comunidad! Solo debes contarnos tu experiencia en nuestras redes
                                 sociales</span></h2>
                     </div>

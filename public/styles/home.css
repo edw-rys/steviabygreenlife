@@ -170,6 +170,8 @@
 
 .userin-pannel-grid {
     display: grid;
+    width: 90%;
+    margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
@@ -183,6 +185,7 @@
 
     .userin-pannel-grid {
         grid-template-columns: 1fr ;
+        width: 100%;
     }
     .userin-text-size{
         font-size: 2.2em !important;
@@ -223,8 +226,8 @@
 .stevialovers-grid-comments{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 2.5em;
-    width: 90%;
+    grid-column-gap: 3em;
+    width: 80%;
     margin: 0 auto;
 }
 .stevialovers-grid-comments > .stevialovers-grid-child{
@@ -233,6 +236,8 @@
 
 @media (max-width: 784px) {
     .stevialovers-grid-comments{
+        width: 95%;
+        grid-column-gap: 1.5em;
         grid-template-columns: 1fr 1fr;
     }
     .stevialovers-grid-comments > .stevialovers-grid-child{
@@ -254,8 +259,49 @@
 
 /*End Stevia Lovers css */
 
+/* Redes sociales */
+
+.redessociales-web-presentation{
+    display: block !important;
+}
+.w-80{
+    margin:  0 auto;
+    width: 80%;
+    margin: 0 auto;
+}
+.redessociales-mobile-presentation{
+    display: none !important;
+}
+@media (max-width: 784px) {
+    .redessociales-web-presentation{
+        display: none !important;
+    }
+    .redessociales-mobile-presentation{
+        display: block !important;
+    }
+}
+/* End Redes sociales */
 
 /* Location css */
 .location-image-footer{
     width: 500px;
+}
+
+.location-background-image-panel{
+    padding-bottom:0%;
+    padding-top: 0%; padding-left: 0;
+    background-color: rgba(241, 213, 109, 0.9158722908266129);
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-size: auto;
+    
+    background-image: url('/images/redes/Fondo_Azul_amarillo-2097955.svg');
+}
+@media (max-width: 1035px) {
+    .location-background-image-panel{
+        padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(242, 214, 109, 1);background-position: center center;background-repeat: repeat;background-size: auto;background-image: none;
+    }
+    .location-image-footer{
+        width: 90%;
+    }
 }

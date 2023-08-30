@@ -53,7 +53,7 @@
                                 }
                             </style>
                             <div style="text-align: center;">
-                                <a href="/store/category/stevia-drops" target="_self"
+                                <a href="{{ route('front.shop.category', 'stevia-drops')}}" target="_self"
                                     class="theme-button hvr-sweep-to-right  border-color-primary "
                                     style="font-size: 19px; color:rgba(255, 255, 255, 1);font-family:'Cocogoose Pro Semilight';background-color: rgba(0, 67, 109, 1);letter-spacing:1px;border-width: 0px;padding: 12px 24px;width: auto;box-shadow: 4px 2px 20px -13px rgba(0, 0, 0, 1) ;border-radius: 50px;">
                                     <span class="">
@@ -123,26 +123,6 @@
             </div>
             <div class="recetas-content-panel-receta receta-panel-receta-2">
                 <div class="widget-row with-centered-content">
-                    <div class="widget           with-delay anim-delayed-item widgetResponsive imageWidget col20 with-delay-initialized anim-displayed lazyAnimation-fadeInDown delay-ended"
-                        id="image-widget-1682082824069" data-type="ImageWidget" data-delay="2"
-                        data-animation-duration="1100" data-animation-delay="0" data-animation="lazyAnimation-fadeInDown"
-                        style="margin-top: 8.56643%; margin-left: 0px; animation-delay: 0ms; animation-duration: 1100ms;">
-
-                        <div class="image-box  image-position-center" style="max-width: 572px;">
-                            <div class="widget-preserving-ratio-outer " style="padding-bottom: 34.96503496503497%">
-
-                                <div class="widget-preserving-ratio-inner"
-                                    data-slide="{{ asset('images/recetas/Cheesecake_de_fresa-2617678.svg')}}">
-                                    <a class="lazyImage flex flex-col image-fit">
-                                        <img src="{{ asset('images/recetas/Cheesecake_de_fresa-2617678.svg')}}"
-                                            class="flex-none" alt="" style="" loading="lazy">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget-row with-centered-content">
                     <div class="widget  anim-delayed-item widgetResponsive buttonWidget col20"
                         id="button-widget-1682082823928" data-type="Button" data-delay=""
                         data-animation-duration="1100" data-animation-delay="0" data-animation="lazyAnimation-bounceIn"
@@ -175,7 +155,7 @@
                                 }
                             </style>
                             <div style="text-align: center;">
-                                <a href="/store/category/web" target="_self"
+                                <a href="{{ route('front.shop.category', 'stevia-powder')}}" target="_self"
                                     class="theme-button hvr-sweep-to-right  border-color-primary "
                                     style="font-size: 19px; color:rgba(255, 255, 255, 1);font-family:'Cocogoose Pro Semilight';background-color: rgba(0, 67, 109, 1);letter-spacing:1px;border-width: 0px;padding: 12px 24px;width: auto;box-shadow: 4px 2px 20px -13px rgba(0, 0, 0, 1) ;border-radius: 50px;">
 

@@ -13,5 +13,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','FrontController@index');
+Route::get('/','FrontController@index')->name('front.index');
 Route::get('/front','FrontController@front');
+
+/**
+ * Cart
+ */
+Route::get('/front/cart','CartController@cart');
+
+
+Route::get('/store','ShopController@index')->name('front.shop');
+Route::get('/store/category/{category_name}','ShopController@index')->name('front.shop.category');
+Route::get('/store/product/{id}','ShopController@show')->name('front.shop.show');
+Route::post('/store/product/{id}/add-to-cart','ShopController@show')->name('front.shop.add-to-cart');
+
+
+Route::get('/store/cart/show','CartController@show')->name('front.cart.show');
+Route::get('/store/cart/checkout','CartController@show')->name('front.cart.checkout');
+
+// api
+Route::get('/store/cart/get-items','CartController@show')->name('front.cart.get-items');
+
+
+// Auth
+
+Route::get('/auth/register', 'AuthController@registerShow')->name('auth.register');
+Route::get('/auth/login', 'AuthController@loginShow')->name('auth.login');
+Route::get('/auth/forgot-your-password', 'AuthController@forgorYourPasswordShow')->name('front.forgotyourpassword');
+
+Route::post('/auth/login', 'AuthController@login')->name('auth.login.post');
+
