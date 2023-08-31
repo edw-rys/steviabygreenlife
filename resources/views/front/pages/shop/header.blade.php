@@ -3,7 +3,7 @@
         <div class="inner">
             <div class="left">
                 <div class="site-branding">
-                    <a href="{{ route('front.index') }}" class="custom-logo-link" rel="home"><img
+                    <a href="{{ route('front.shop') }}" class="custom-logo-link" rel="home"><img
                             src="{{ asset('images/shop/logo.png') }}" class="logo-light lazyloaded" alt="Logo"
                             data-ll-status="loaded"><noscript><img src="{{ asset('images/shop/logo.png') }}"
                                 class="logo-light" alt="Logo" /></noscript></a>

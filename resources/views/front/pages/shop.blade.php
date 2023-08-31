@@ -15,4 +15,5 @@ theme archive post-type-archive post-type-archive-product wp-embed-responsive th
     
 @section('scripts_body_after')
     <script src="{{ asset('scripts/off-canvas.js')}}"></script>
+    @include('front.pages.shop.script-add-favorites')
 @endsection

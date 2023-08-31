@@ -14,7 +14,7 @@
                     <div class="group-action">
                         <div class="shop-action">
                             @if (auth()->user() != null)
-                            <button class="woosw-btn woosw-btn-267" data-id="267" data-product_name="{{ $item->name }}"
+                            <button class="woosw-btn woosw-btn-{{ $item->id }} btn-add-favorites {{ $item->favorites_count != null && $item->favorites_count >= 1 ? 'color-bck-hover-auto': '' }}" data-id="{{ $item->id }}" data-product_name="{{ $item->name }}"
                                 data-product_image="{{ $item->url_image }}">Add
                                 to wishlist</button>
                             @endif

@@ -2,6 +2,7 @@
 namespace App\Service;
 
 use App\Models\ClientEventsViewsSystem;
+use App\Models\FavoriteProducts;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -9,11 +10,13 @@ class ClientService
 {
 
     private ClientEventsViewsSystem $clientEventsViewsSystem;
-
+    private FavoriteProducts $favoriteProducts;
     public function __construct(
-        ClientEventsViewsSystem $clientEventsViewsSystem
+        ClientEventsViewsSystem $clientEventsViewsSystem,
+        FavoriteProducts $favoriteProducts
     ) {
         $this->clientEventsViewsSystem = $clientEventsViewsSystem;
+        $this->favoriteProducts = $favoriteProducts;
     }
 
 
@@ -34,5 +37,26 @@ class ClientService
             'end_date'      => null,
             'authorization' => $request->headers->get('Authorization'),
         ]);
+    }
+
+    /**
+     * @param $product_id
+     * @param $user_id
+     */
+    public function addProductToFavorite($product_id, $user_id) {
+        $myFavorite = $this->favoriteProducts->where('product_id',$product_id)->where('user_id', $user_id)->first();
+        if($myFavorite != null){
+            $myFavorite->delete();
+            return 'remove';
+        }
+        try {
+            $this->favoriteProducts->create([
+                'product_id'    => $product_id,
+                'user_id'       => $user_id
+            ]);
+        } catch (\Throwable $th) {
+            return '';
+        }
+        return 'add';
     }
 }

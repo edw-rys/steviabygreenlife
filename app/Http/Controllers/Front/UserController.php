@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Service\ClientService;
 use App\Service\UserService;
 use App\Service\UtilsService;
 use Illuminate\Http\Request;
@@ -13,14 +14,18 @@ class UserController extends Controller
 {
     private UserService $userService;
     private UtilsService $utilsService;
+    private ClientService $clientService;
+    
 
     /**
      * @param UtilsService $utilsService
      * @param UserService $userService
+     * @param ClientService $clientService
      */
-    public function __construct(UtilsService $utilsService, UserService $userService) {
+    public function __construct(UtilsService $utilsService, UserService $userService, ClientService $clientService) {
         $this->userService = $userService;
         $this->utilsService = $utilsService;
+        $this->clientService = $clientService;
     }
 
     public function profile() {
@@ -60,8 +65,6 @@ class UserController extends Controller
             ->with($response->key_status, $response->message);
     }
 
-    public function favorites() {
-    }
     public function shopping() {
     }
 }

@@ -17,7 +17,7 @@ class ShopService
         $this->categoryProductMode = $categoryProductMode;
         $this->productModel = $productModel;
     }
-    public function getProducts(Request $request, $category, $except_id = null) {
+    public function getProducts(Request $request, $category, $except_id = null, $myFavorites = false) {
         // return $this->fakeProducts();
         $countPaginate = 15;
 
@@ -50,7 +50,16 @@ class ShopService
         if($except_id != null){
             $products->where('id', '!=', $except_id);
         }
+        if(auth()->user() != null){
+            $products->withCount(['favorites' => function($query){
+                $query->where('user_id', auth()->user()->id);
+            }]);
+            if($myFavorites){
+                $products->having('favorites_count', '>', 0);
+            }
+        }
         $products = $products->paginate($countPaginate);
+
         return (object)[
             'count'         => $products->total(),
             'items'         => $products->items(),

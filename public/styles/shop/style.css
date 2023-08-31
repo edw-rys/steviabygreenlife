@@ -10355,6 +10355,14 @@ div[class*=post-style-] .entry-content>a:before {
     color: #00436B;
     font-weight: 900;
 }
+.color-bck-hover-auto{
+    background-color: #00BAB4 !important;
+    border-color: #00BAB4 !important;
+}
+.color-bck-hover-auto.woosw-btn:before {
+    color:#fff !important;
+
+}
 html[dir=rtl] .woocommerce-breadcrumb .breadcrumb-separator::after {
     content: ""
 }

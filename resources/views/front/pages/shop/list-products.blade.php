@@ -8,7 +8,7 @@
                 <div class="group-action">
                     <div class="shop-action">
                         @if (auth()->user() != null)
-                            <button class="woosw-btn woosw-btn-271" data-id="271" data-product_name="{{ $item->name }}"
+                            <button class="woosw-btn btn-add-favorites woosw-btn-{{ $item->id }} {{ $item->favorites_count != null && $item->favorites_count >= 1 ? 'color-bck-hover-auto': '' }}" data-id="{{ $item->id }}" data-product_name="{{ $item->name }}"
                                 data-product_image="{{ $item->url_image }}">Agregar a favorito</button>
                         @endif
                         <a

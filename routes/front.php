@@ -68,7 +68,8 @@ Route::middleware(['auth'])->group(function () {
     
     
     Route::get('user/perfil', 'UserController@profile')->name('user.profile');
-    Route::get('user/favoritos', 'UserController@favorites')->name('user.favorites');
+    Route::get('user/favoritos', 'ClientController@favorites')->name('user.favorites');
+    Route::post('user/favoritos/{id}/add', 'ClientController@addFavorites')->name('user.favorites.add');
     Route::get('user/mis-compras', 'UserController@shopping')->name('user.shopping');
     Route::get('user/change-password', 'UserController@changePassword')->name('user.change-password');
 

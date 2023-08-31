@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use OwenIt\Auditing\Auditable;
@@ -65,5 +66,9 @@ class Product extends Model implements AuditableContract
   function category(): BelongsTo
   {
     return $this->belongsTo(CategoryProduct::class, 'category_id');
+  }
+
+  public function favorites():HasMany {
+    return $this->hasMany(FavoriteProducts::class, 'product_id');
   }
 }

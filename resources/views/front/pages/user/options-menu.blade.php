@@ -7,7 +7,6 @@
             <li class="cat-item cat-item-186"><a href="{{ route('user.favorites') }}">Mi favoritos</a></li>
             <li class="cat-item cat-item-186"><a href="{{ route('user.shopping') }}">Mi compras</a></li>
             <li class="cat-item cat-item-186"><a href="{{ route('user.change-password') }}">Cambiar contraseña</a></li>
-            
         </ul>
     </div>
 </div>
