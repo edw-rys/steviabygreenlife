@@ -10,7 +10,9 @@ class FrontController extends Controller
     
     public function index() {
         return view('front.pages.home');
-        return view('front.pages.index');
+    }
+    public function terms() {
+        return view('front.pages.terms');
     }
     public function front() {
         return view('front.pages.index');

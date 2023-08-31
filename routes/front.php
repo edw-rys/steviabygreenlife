@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','FrontController@index')->name('front.index');
+Route::get('/terminos-y-condiciones','FrontController@terms')->name('front.terms');
+
 Route::get('/front','FrontController@front');
 
 /**
@@ -35,11 +37,42 @@ Route::get('/store/cart/checkout','CartController@show')->name('front.cart.check
 Route::get('/store/cart/get-items','CartController@show')->name('front.cart.get-items');
 
 
-// Auth
 
-Route::get('/auth/register', 'AuthController@registerShow')->name('auth.register');
-Route::get('/auth/login', 'AuthController@loginShow')->name('auth.login');
-Route::get('/auth/forgot-your-password', 'AuthController@forgorYourPasswordShow')->name('front.forgotyourpassword');
+// Global
+Route::get('/utils/get-county','UtilsController@getCountries')->name('utils.get-country');
+Route::get('/utils/get-states/{country_id}','UtilsController@getStates')->name('utils.get-states');
+Route::get('/utils/get-cities/{state_id}','UtilsController@getCities')->name('utils.get-cities');
 
-Route::post('/auth/login', 'AuthController@login')->name('auth.login.post');
+
+
+Route::middleware(['IsNoAuthenticated'])->group(function () {
+    // Auth
+    Route::get('/auth/register', 'AuthController@registerShow')->name('auth.register');
+    Route::get('/auth/login', 'AuthController@loginShow')->name('auth.login');
+    // Route::get('/auth/login', 'AuthController@loginShow')->name('login');
+    Route::get('/auth/forgot-your-password', 'AuthController@forgorYourPasswordShow')->name('front.forgotyourpassword');
+    
+    Route::post('/auth/login', 'AuthController@login')->name('auth.login.post');
+    Route::post('/auth/signup', 'AuthController@signup')->name('auth.signup.post');
+
+
+    Route::get('forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
+    Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
+    Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
+    Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('user/logout', 'AuthController@logout')->name('user.logout');
+    
+    
+    Route::get('user/perfil', 'UserController@profile')->name('user.profile');
+    Route::get('user/favoritos', 'UserController@favorites')->name('user.favorites');
+    Route::get('user/mis-compras', 'UserController@shopping')->name('user.shopping');
+    Route::get('user/change-password', 'UserController@changePassword')->name('user.change-password');
+
+    Route::post('user/perfil/save', 'UserController@updateProfile')->name('user.profile.save');
+    Route::post('user/change-password/save', 'UserController@updatePassword')->name('user.change-password.save');
+});
 

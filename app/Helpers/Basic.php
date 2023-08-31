@@ -35,6 +35,7 @@ if (!function_exists('getClientIp')) {
                 }
             }
         }
+        return '127.0.0.1';
     }
 }
 

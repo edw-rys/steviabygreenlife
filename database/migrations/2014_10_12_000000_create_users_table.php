@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('last_name');
-            $table->string('identification_number');
+            $table->string('identification_number')->nullable();;
             $table->string('email_shop')->nullable();
             $table->smallInteger('automatic')->default(0);
             $table->string('email')->unique();
@@ -25,9 +25,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
 
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('state_id');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->longText('address');
 
             

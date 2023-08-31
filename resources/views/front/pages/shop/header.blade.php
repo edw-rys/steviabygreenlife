@@ -6,19 +6,20 @@
                     <a href="{{ route('front.index') }}" class="custom-logo-link" rel="home"><img
                             src="{{ asset('images/shop/logo.png') }}" class="logo-light lazyloaded" alt="Logo"
                             data-ll-status="loaded"><noscript><img src="{{ asset('images/shop/logo.png') }}"
-                                class="logo-light" alt="Logo" /></noscript><img
-                            src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
-                            class="logo-dark" alt="Logo"
-                            data-lazy-src="https://demo2wpopal.b-cdn.net/freshio/wp-content/uploads/2020/08/logo-light.svg"><noscript><img
-                                src="https://demo2wpopal.b-cdn.net/freshio/wp-content/uploads/2020/08/logo-light.svg"
-                                class="logo-dark" alt="Logo" /></noscript></a>
+                                class="logo-light" alt="Logo" /></noscript></a>
                 </div>
-                <div class="site-header-cart header-cart-mobile">
-                    <a class="cart-contents" href="https://demo2.pavothemes.com/freshio/cart/"
-                        title="View your shopping cart">
-                        <span class="count">0</span>
-                        <span class="woocommerce-Price-amount amount"><span
-                                class="woocommerce-Price-currencySymbol">£</span>0.00</span> </a>
+
+                <div class="site-header-cart header-cart-mobile" >
+                    <div style="display: grid;grid-template-columns: 1fr 1fr;">
+                        <div class="site-header-account-mobile">
+                            <a href="#!" class="menu-mobile-nav-button"><i class="freshio-icon-user"></i></a>
+                        </div>
+                        <a class="cart-contents" href="{{ route('front.cart.show') }}"
+                            title="View your shopping cart">
+                            <span class="count">0</span>
+                            <span class="woocommerce-Price-amount amount"><span
+                                    class="woocommerce-Price-currencySymbol">$</span>0.00</span> </a>
+                    </div>
 
                 </div>
             </div>
@@ -54,43 +55,56 @@
                         </div>
                     </div>
                     <div class="site-header-account">
-                        <a onclick="openLoginForm()"><i class="freshio-icon-user"></i></a>
-                        <div class="account-dropdown c-pointer" id="modalpanel-login">
-    
-                            <div class="account-wrap" style="display: none;">
-                                <div class="account-inner ">
-    
-                                    <div class="login-form-head">
-                                        <span class="login-form-title">Iniciar sesión</span>
-                                        <span class="pull-right">
-                                            <a class="register-link" href="{{ route('auth.register')}}"
-                                                title="Register">Crear cuenta</a>
-                                        </span>
-                                    </div>
-                                    <form class="freshio-login-form-ajax" data-toggle="validator" method="POST" action="{{ route('auth.login.post')}}">
-                                        @csrf
-                                        <p>
-                                            <label>Email <span class="required">*</span></label>
-                                            <input name="username" type="text" required="" placeholder="Correo electrónico">
-                                        </p>
-                                        <p>
-                                            <label>Contraseña <span class="required">*</span></label>
-                                            <input name="password" type="password" required="" placeholder="Contraseña">
-                                        </p>
-                                        <button type="submit" data-button-action=""
-                                            class="btn btn-primary btn-block w-100 mt-1">Login</button>
-                                        <input type="hidden" name="action" value="freshio_login">
-                                        <input type="hidden" id="security-login" name="security-login"
-                                            value="294708f767"><input type="hidden" name="_wp_http_referer"
-                                            value="/freshio/cart/">
-                                    </form>
-                                    <div class="login-form-bottom">
-                                        <a href="{{ route('front.forgotyourpassword') }}"
-                                            class="lostpass-link" title="Lost your password?">Olvidé mi contraseña</a>
+                        @if (auth()->check())
+                            <a onclick="openLoginForm()"><i class="freshio-icon-user"></i></a>
+                            <div class="account-dropdown c-pointer" id="modalpanel-login">
+        
+                                <div class="account-wrap" style="display: none;">
+                                    <div class="account-inner ">
+                                        @if (auth()->check())
+                                            <p>
+                                                <a class="" href="#!">
+                                                    <span class="menu-title">{{ auth()->user()->full_name }} </span>
+                                                </a>
+                                            </p>
+                                            <p>
+                                                <a class="ref-link-style" href="{{ route('user.profile')}}">
+                                                    <span class="menu-title"> > Mi perfil</span>
+                                                </a>
+                                            </p>
+                                            <p>
+                                                <a class="ref-link-style" href="{{ route('user.favorites')}}">
+                                                    <span class="menu-title"> > Mis favoritos</span>
+                                                </a>
+                                            </p>
+                                                <a class="ref-link-style" href="{{ route('user.shopping')}}">
+                                                    <span class="menu-title"> > Mis compras</span>
+                                                </a>
+                                            </p>
+                                            </p>
+                                                <a class="ref-link-style" href="{{ route('user.logout')}}">
+                                                    <span class="menu-title"> > Cerrar sesión</span>
+                                                </a>
+                                            </p>
+                                        @else
+                                            <p>
+                                                <a class="ref-link-style" href="{{ route('auth.login')}}">
+                                                    <span class="menu-title">Iniciar sesión</span>
+                                                </a>
+                                            </p>
+                                            <p>
+                                                <a class="ref-link-style" href="{{ route('auth.register')}}">
+                                                    <span class="menu-title">Crar usuario</span>
+                                                </a>
+                                            </p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @else
+                            <a href="{{ route('auth.login')}}"><i class="freshio-icon-user"></i></a>
+                            
+                        @endif
                     </div>
                     <div class="site-header-cart menu">
                         <a class="cart-contents" href="{{ route('front.cart.show')}}"

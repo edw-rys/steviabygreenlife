@@ -32,20 +32,6 @@
                     @else
                         @include('front.pages.shop.list-products')
                     @endif
-                {{-- <nav class="woocommerce-pagination">
-                    <ul class="page-numbers">
-                        <li><span aria-current="page" class="page-numbers current">1</span></li>
-                        <li><a class="page-numbers"
-                                href="https://demo2.pavothemes.com/freshio/shop/page/2/?layout=list">2</a></li>
-                        <li><a class="page-numbers"
-                                href="https://demo2.pavothemes.com/freshio/shop/page/3/?layout=list">3</a></li>
-                        <li><a class="page-numbers"
-                                href="https://demo2.pavothemes.com/freshio/shop/page/4/?layout=list">4</a></li>
-                        <li><a class="next page-numbers"
-                                href="https://demo2.pavothemes.com/freshio/shop/page/2/?layout=list"><span>NEXT</span><i
-                                    class="freshio-icon freshio-icon-angle-double-right"></i></a></li>
-                    </ul>
-                </nav> --}}
             </main>
         </div>
         {{-- Categories --}}

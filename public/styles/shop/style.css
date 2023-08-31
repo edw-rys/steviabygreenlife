@@ -10330,6 +10330,31 @@ div[class*=post-style-] .entry-content>a:before {
     word-wrap: normal!important
 }
 
+.site-header-account-mobile {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    background: #e8f8f7;
+    border-radius: 50%;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.site-header-account-mobile>a {
+    white-space: nowrap;
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.ref-link-style{
+    color: #00436B;
+    font-weight: 900;
+}
 html[dir=rtl] .woocommerce-breadcrumb .breadcrumb-separator::after {
     content: ""
 }

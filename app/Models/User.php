@@ -25,14 +25,23 @@ class User extends Authenticatable implements AuditableContract
         'last_name', 
         'email', 
         'password',
-        'username',
+        // 'username',
         'identification_number', 
         'email_shop', 
         'automatic',
+        'country_id',
+        'state_id',
+        'city_id',
         'created_at', 
         'updated_at',
         'deleted_at'
     ];
+
+    protected $appends = ['full_name'];
+
+    public function getFullNameAttribute() {
+        return $this->name . ' '. $this->last_name;
+    }
 
     /**
      * The attributes that should be hidden for arrays.

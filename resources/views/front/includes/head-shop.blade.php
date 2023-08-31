@@ -8,6 +8,8 @@
 {{-- <link rel="stylesheet" href="{{ asset('styles/shop/shop.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('styles/shop/woocommerce.css') }}">
 <link rel="stylesheet" href="{{ asset('styles/shop/style.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/shop/photoswipe/photoswipe.min.css')}}">
+<link rel="stylesheet" href="{{ asset('styles/shop/photoswipe/default-skin/default-skin.min.css')}}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <style id="freshio_options-dynamic-css" title="dynamic-css" class="redux-options-output">
     body,
@@ -66,6 +68,8 @@
         color: #ffffff !important;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/select2.min.css')}}">
+
 <noscript>
     <style id="rocket-lazyload-nojs-css">
         .rll-youtube-player,
