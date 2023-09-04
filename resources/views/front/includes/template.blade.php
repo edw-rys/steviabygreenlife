@@ -161,7 +161,7 @@
                     type: "GET",
                     data: {
                         _token: '{{ csrf_token() }}',
-                        session: localStorage.getItem(enviropments.cartTokenStorage)
+                        tokenCart: localStorage.getItem(enviropments.cartTokenStorage)
                     },
                     success: function(response) {
                         $('.float-count-cart').html(response.count);
