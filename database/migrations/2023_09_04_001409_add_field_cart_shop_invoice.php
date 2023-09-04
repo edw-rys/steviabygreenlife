@@ -15,7 +15,7 @@ class AddFieldCartShopInvoice extends Migration
     {
         Schema::table('cart_shop_invoice', function (Blueprint $table) {
             $table->string('postal_code', 250)->default('')->after('created_at');
-            $table->text('aditional_info')->default('')->after('created_at');
+            $table->text('aditional_info')->nullable()->after('created_at');
         });
     }
 
