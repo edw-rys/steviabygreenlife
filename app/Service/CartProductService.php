@@ -227,7 +227,7 @@ class CartProductService
      * @param $user_id 
      * @return CartShop
      */
-    public function getCartShop($token = null, $user_id = null, $created = true, $with = []) : CartShop {
+    public function getCartShop($token = null, $user_id = null, $created = true, $with = [])  {
 
         $cartByToken = null;
         if($token != null){
