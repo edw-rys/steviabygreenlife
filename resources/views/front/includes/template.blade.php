@@ -161,7 +161,7 @@
                     type: "GET",
                     data: {
                         _token: '{{ csrf_token() }}',
-                        session: localStorage.getItem(enviropments.sessionStorage)
+                        session: localStorage.getItem(enviropments.cartTokenStorage)
                     },
                     success: function(response) {
                         $('.float-count-cart').html(response.count);
@@ -221,7 +221,7 @@
                                 { position:"bottom right",className:"success" }
                             );
                         }
-                        loadCart();
+                        loadCartFloat();
                         $('#price-total-element').html(response.total_format);
                         $('#body-items-products').html(response.html_items);
                         unblock($('#float-panel-cart-items'));

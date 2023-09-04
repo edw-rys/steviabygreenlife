@@ -125,21 +125,6 @@
                             <div class="widget_shopping_cart_content">
                                 <div class="woocommerce-mini-cart-scroll">
                                     <ul class="woocommerce-mini-cart cart_list product_list_widget" id="product_list_widget_icart">
-                                        <li class="woocommerce-mini-cart-item mini_cart_item">
-                                            <a href="https://demo2.pavothemes.com/freshio/cart/?remove_item=d6baf65e0b240ce177cf70da146c8dc8&amp;_wpnonce=306f616ba0"
-                                                class="remove remove_from_cart_button" aria-label="Remove this item"
-                                                data-product_id="264"
-                                                data-cart_item_key="d6baf65e0b240ce177cf70da146c8dc8"
-                                                data-product_sku="enormous-silk-computer-61767652">×</a> <a
-                                                href="https://demo2.pavothemes.com/freshio/product/enormous-silk-computer/">
-                                                <img width="450" height="420"
-                                                    src="https://demo2.pavothemes.com/freshio/wp-content/uploads/2020/08/25-450x420.jpg"
-                                                    class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                                    alt="" decoding="async">Enormous Silk Computer </a>
-                                            <span class="quantity">1 × <span
-                                                    class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">£</span>829.58</bdi></span></span>
-                                        </li>
                                     </ul>
                                 </div>
 

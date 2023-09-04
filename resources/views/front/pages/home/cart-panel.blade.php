@@ -31,7 +31,7 @@
                     </span>
                 </div>
                 <div class="checkout-buttons">
-                    <a href="https://steviabygreenlife.com/store/checkout" value="Realizar compra"
+                    <a href="{{ route('front.cart.checkout')}}" value="Realizar compra"
                         class="primaryColor-bg2 checkout-btn">Realizar compra</a>
                 </div>
             </div>

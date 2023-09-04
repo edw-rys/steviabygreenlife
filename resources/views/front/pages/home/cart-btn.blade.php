@@ -1,7 +1,7 @@
 <div
     class="next-step-popup justify-center flex flex-row align-center with-quick-cart cart-preview-full-height
                ">
-    <a href="https://steviabygreenlife.com/store/checkout" class="store-cart-button">
+    <a href="{{ route('front.shop')}}" class="store-cart-button">
         <svg version="1.1" viewBox="0 0 96 96" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink">
             <path
