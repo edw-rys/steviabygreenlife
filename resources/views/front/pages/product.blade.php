@@ -40,8 +40,8 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
             <div id="primary" class="content-area">
                 <main id="main" class="site-main" role="main">
                     <div class="woocommerce-notices-wrapper"></div>
-                    <div id="product-264"
-                        class="product type-product post-264 status-publish first instock product_cat-uncategorized product_cat-package-foods has-post-thumbnail shipping-taxable purchasable product-type-simple">
+                    <div id="product-{{ $product->id }}"
+                        class="product type-product post-{{ $product->id }} status-publish first instock product_cat-uncategorized product_cat-package-foods has-post-thumbnail shipping-taxable purchasable product-type-simple">
                         <div class="content-single-wrapper">
                             <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images woocommerce-product-gallery-horizontal"
                                 data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out 0s;"><a
@@ -69,17 +69,32 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                     </div>
                                 </figure>
                             </div>
-                            <div class="summary entry-summary">
+                            <div class="summary entry-summary" id="product-cart-item-shop">
                                 <span class="inventory_status">En Stock</span>
-                                <h2 class="product_title entry-title">
-                                    {{ $product->name }}</h2>
-                                <p class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->price_format}}</bdi></span></p>
+                                <h2 class="product_title entry-title">{{ $product->name }}</h2>
+
+
+                                <p class="price">
+                                    @if ($product->discount_percentage > 0)
+                                        <del aria-hidden="true"><span class="woocommerce-Price-amount amount">
+                                            <bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->original_price_format}}</bdi>
+                                        </span></del> 
+                                    @endif
+                                    <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->price_format }}</bdi></span></ins>
+                                </p>
+
+                                {{-- <p class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->price_format}}</bdi></span></p> --}}
+
                                 <div class="woocommerce-product-details__short-description">
                                     {!! $product->description !!}
                                 </div>
-                                <form class="cart"
+                                <form class="cart woocommerce-add-cart-form"
+                                    id="formSave"
                                     action="{{ route('front.shop.add-to-cart', $product->id)}}"
                                     method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id}}">
+                                    <input type="hidden" name="cart_token" id="cart_token">
                                     <div class="quantity buttons_added"><button type="button" class="minus"><i
                                                 class="freshio-icon-angle-down"></i></button>
                                         <input type="number" id="quantity_64ecc73084439" class="input-text qty text"
@@ -88,7 +103,7 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                             autocomplete="off"><button type="button" class="plus"><i
                                                 class="freshio-icon-angle-up"></i></button>
                                     </div>
-                                    <button type="submit" name="add-to-cart" value="264"
+                                    <button type="submit" name="add-to-cart" value="{{ $product->id }}"
                                         class="single_add_to_cart_button button alt wp-element-button">Agregar al carrito</button>
                                 </form>
                                 
@@ -100,7 +115,7 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                             <ul class="products columns-4">
                                 @foreach ($productsBeLink->items as $item)    
                                     <li
-                                        class="product type-product post-262 status-publish first instock product_cat-uncategorized product_cat-package-foods has-post-thumbnail sold-individually shipping-taxable product-type-grouped">
+                                        class="product type-product post-{{ $item->id }} status-publish first instock product_cat-uncategorized product_cat-package-foods has-post-thumbnail sold-individually shipping-taxable product-type-grouped">
                                         <div class="product-block">
                                             <div class="product-transition">
                                                 <div class="product-image"><img width="450" height="420"
@@ -109,15 +124,13 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                                         alt="" decoding="async"></div>
                                                 <div class="group-action">
                                                     <div class="shop-action">
-                                                        <button class="woosw-btn woosw-btn-262" data-id="262"
+                                                        <button class="woosw-btn btn-add-favorites woosw-btn-{{ $item->id }}" data-id="{{ $item->id }}"
                                                             data-product_name="Aerodynamic Linen Knife"
-                                                            data-product_image="{{ $item->url_image }}">Add
-                                                            to wishlist</button><button class="woosc-btn woosc-btn-262 "
-                                                            data-id="262" data-product_name="Aerodynamic Linen Knife"
-                                                            data-product_image="{{ $item->url_image }}">Compare</button><button
-                                                            class="woosq-btn woosq-btn-262" data-id="262"
-                                                            data-effect="mfp-3d-unfold" data-context="default">Quick
-                                                            view</button>
+                                                            data-product_image="{{ $item->url_image }}">Agregar a favorito</button>
+                                                            <a
+                                                            href="{{ route('front.shop.show', $item->id) }}"
+                                                            class="woosq-btn woosq-btn-{{ $item->id }}" data-id="{{ $item->id }}"
+                                                            data-effect="mfp-3d-unfold" data-context="default">Ver</a>
                                                     </div>
                                                 </div>
                                                 <a href="{{ route('front.shop.show', $item->id) }}"
@@ -129,7 +142,7 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                                             class="woocommerce-Price-currencySymbol">$</span>{{ $item->price_format }}</bdi></span>
                                             <a href="{{ route('front.shop.show', $item->id) }}"
                                                 data-quantity="1" class="button wp-element-button product_type_grouped"
-                                                data-product_id="262" data-product_sku="aerodynamic-linen-knife-74234493"
+                                                data-product_id="{{ $item->id }}" data-product_sku="aerodynamic-linen-knife-74234493"
                                                 aria-label="Ver productos en el grupo “{{ $item->name }}"
                                                 rel="nofollow">Ver producto</a>
                                         </div>
@@ -147,39 +160,116 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
 
 
 @section('scripts_body_before')
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="pswp__bg"></div>
-    <div class="pswp__scroll-wrap">
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" aria-label="Share"></button>
-                <button class="pswp__button pswp__button--fs" aria-label="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" aria-label="Share"></button>
+                    <button class="pswp__button pswp__button--fs" aria-label="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-            <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
-            <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
+@endsection
+{{-- After --}}
+@section('scripts_body_after')
+    {{-- @include('front.pages.shop.script-add-favorites') --}}
+    <script src="{{ asset('scripts/common/quantity.js')}}"></script>
+    <script>
+        jQuery( function( $ ) {
+            /**
+             * Handle cart form submit and route to correct logic.
+             *
+             * @param {Object} evt The JQuery event
+             */
+            function cartAddProduct( evt ) {
+                var $submit  = $( document.activeElement ),
+                    $clicked = $( ':input[type=submit][clicked=true]' ),
+                    $form    = $( evt.currentTarget );
     
+                // For submit events, currentTarget is form.
+                // For keypress events, currentTarget is input.
+                if ( ! $form.is( 'form' ) ) {
+                    $form = $( evt.currentTarget ).parents( 'form' );
+                }
+    
+                // if ( 0 === $form.find( '.woocommerce-cart-form__contents' ).length ) {
+                //     return;
+                // }
+    
+                if ( is_blocked( $form ) ) {
+                    return false;
+                }
+                block($form)
+    
+                evt.preventDefault();
+                var tokenCart = localStorage.getItem('tokenCart');
+                if(tokenCart){
+                    $('#cart_token').val(tokenCart);
+                }
+                // Ajax element
+                $.easyAjax({
+                    url: '{{ route('front.cart.add-item') }}',
+                    container: '#formSave',
+                    type: 'POST',
+                    redirect: false,
+                    file: true,
+                    data: $('#formSave').serialize(),
+                    success: (response) => {
+                        if (response.message) {
+                            if (response.action === 'error') {
+                                $.notify(
+                                    response.message, 
+                                    { position:"bottom right",className:"warn" }
+                                );    
+                            } else {
+                                $.notify(
+                                    response.message, 
+                                    { position:"bottom right",className:"success" }
+                                );
+                            }
+                        }
+                        if(response.tokenCart){
+                            localStorage.setItem('tokenCart', response.tokenCart);
+                        }
+                        unblock($form);
+                        if(window.loadCartFloat){
+                            window.loadCartFloat()
+                        }
+                    },
+                    error: function(error) {
+                        notifyErrorGlobal(error);
+                        unblock($form);
+                    }
+                });
+            }
+            $( document ).on('submit','.woocommerce-add-cart-form', cartAddProduct );
+        });
+    </script>
 @endsection

@@ -65,6 +65,5 @@ class UserController extends Controller
             ->with($response->key_status, $response->message);
     }
 
-    public function shopping() {
-    }
+   
 }

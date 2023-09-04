@@ -154,7 +154,10 @@ return [
         'state_id' => 'provincia',
         'city_id' => 'ciudad',
         'confirm_password'  => 'confirmar contraseña',
-        'last_password' => 'última contraseña'
+        'last_password' => 'última contraseña',
+        'cart_product.*.item_id'  => 'producto del carrito',
+        'cart_product.*.qty'  => 'cantidad de productos',
+        'tokenCart'         => 'carrito de compras'
     ],
 
 ];

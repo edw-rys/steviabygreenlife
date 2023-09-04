@@ -197,7 +197,7 @@ theme archive post-type-archive post-type-archive-product wp-embed-responsive th
             });
         }
 
-        getStates('{{ $user->state_id }}');
+        getStates('{{ $user->country_id }}');
     </script>
 @endsection
 

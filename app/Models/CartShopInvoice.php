@@ -13,6 +13,7 @@ class CartShopInvoice extends Model
   protected $table = 'cart_shop_invoice';
   protected $fillable = [
     'id',
+    'uuid',
     'user_id', // default null
     'cart_shop_id',
     'name',
@@ -30,6 +31,7 @@ class CartShopInvoice extends Model
 
     'instruction',
     'business_name',
+    'aditional_info',
 
     'created_at',
     'updated_at',

@@ -12,6 +12,7 @@ class City extends Model
   protected $fillable = [
     'id',
     'name',
+    'delivery_cost',
     'state_id',
     'country_id',
     'created_at',

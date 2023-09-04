@@ -2,7 +2,6 @@
     $( ".btn-add-favorites" ).on( "click", function() {
         var url = '{{ route('user.favorites.add', ':id') }}';
         url = url.replace(':id', $( this ).attr('data-id') );
-        console.log(2);
         $.easyAjax({
             url,
             type: 'POST',

@@ -28,14 +28,19 @@
                             <span class="menu-title"> > Mis compras</span>
                         </a>
                     </li>
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
+                    {{-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
                         <a href="{{ route('user.shopping')}}">
                             <span class="menu-title"> > Mis compras</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
                         <a href="{{ route('user.change-password')}}">
                             <span class="menu-title"> > Cambiar contraseña</span>
+                        </a>
+                    </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
+                        <a href="{{ route('user.logout')}}">
+                            <span class="menu-title"> > Cerrar sesión</span>
                         </a>
                     </li>
                 @else

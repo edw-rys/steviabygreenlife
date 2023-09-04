@@ -10,6 +10,8 @@ class ShopService
 {
     private CategoryProduct $categoryProductMode;
     private Product $productModel;
+
+    
     public function __construct(
         CategoryProduct $categoryProductMode,
         Product         $productModel
@@ -17,6 +19,13 @@ class ShopService
         $this->categoryProductMode = $categoryProductMode;
         $this->productModel = $productModel;
     }
+
+    /**
+     * @param Request $request
+     * @param $category
+     * @param $except_id
+     * @param $myFavorites
+     */
     public function getProducts(Request $request, $category, $except_id = null, $myFavorites = false) {
         // return $this->fakeProducts();
         $countPaginate = 15;
@@ -71,16 +80,21 @@ class ShopService
         ];
     }
 
-
+    /**
+     * @param Request $request
+     */
     public function getCategories(Request $request) {
         return $this->categoryProductMode->all();
     }
 
+    /**
+     * @param $id
+     */
     public function findProduct($id) {
-        // return $this->fakeProduct();
-
         return $this->productModel
             ->find($id);
     }
 
+
+    
 }

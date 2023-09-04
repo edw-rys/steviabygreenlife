@@ -15,20 +15,23 @@
                         <div class="shop-action">
                             @if (auth()->user() != null)
                             <button class="woosw-btn woosw-btn-{{ $item->id }} btn-add-favorites {{ $item->favorites_count != null && $item->favorites_count >= 1 ? 'color-bck-hover-auto': '' }}" data-id="{{ $item->id }}" data-product_name="{{ $item->name }}"
-                                data-product_image="{{ $item->url_image }}">Add
-                                to wishlist</button>
+                                data-product_image="{{ $item->url_image }}">Agregar a favoritos</button>
                             @endif
                             <a href="{{ route('front.shop.show', $item->id) }}"
                                 class="woosq-btn woosq-btn-267" data-id="267" data-effect="mfp-3d-unfold"
-                                data-context="default">Quick view</a>
+                                data-context="default">Ver</a>
                         </div>
                     </div>
                     <a href="{{ route('front.shop.show', $item->id) }}" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"></a>
                 </div>
                 <h3 class="woocommerce-loop-product__title"><a
-                        href="{{ route('front.shop.show', $item->id) }}">{{ $item->name }}</a></h3>
-                <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                class="woocommerce-Price-currencySymbol">$</span>{{ $item->price_format }}</bdi></span></span>
+                    href="{{ route('front.shop.show', $item->id) }}">{{ $item->name }}</a></h3>
+                <span class="price">
+                    @if ($item->discount_percentage > 0)
+                        <del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $item->original_price_format}}</bdi></span></del> 
+                    @endif
+                    <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">£</span>{{ $item->price_format }}</bdi></span></ins>
+                </span>
                 <a href="{{ route('front.shop.show', $item->id) }}" data-quantity="1"
                     class="button wp-element-button product_type_variable add_to_cart_button" data-product_id="267"
                     data-product_sku="" aria-label="Select options for “{{ $item->name }}”" rel="nofollow">Ver producto</a>

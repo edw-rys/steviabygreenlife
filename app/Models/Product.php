@@ -24,6 +24,7 @@ class Product extends Model implements AuditableContract
     'route_image',
 
     // Money values
+    'original_price',
     'price',
     'percentage_tax',
     'total_tax',
@@ -53,12 +54,20 @@ class Product extends Model implements AuditableContract
     'discount_percentage' => 'float',
     'discount_value' => 'float',
   ];
-  protected $appends = ['url_image', 'price_format'];
+  protected $appends = ['url_image', 'price_format', 'tax_div', 'original_price_format'];
 
+  public function getTaxDivAttribute() {
+    return $this->percentage_tax / 100;
+  }
   public function getUrlImageAttribute()
   {
     return asset('images/shop/products/' . $this->route_image);
   }
+  public function getOriginalPriceFormatAttribute()
+  {
+    return twoStringDecimal($this->original_price);
+  }
+  
   public function getPriceFormatAttribute()
   {
     return twoStringDecimal($this->price);

@@ -28,7 +28,8 @@
     <script>
         $ = jQuery;
         const enviropments = {
-            sessionStorage: 'session-client-shop'
+            sessionStorage: 'session-client-shop',
+            cartTokenStorage: 'tokenCart',
         };
     </script>
     <script src="{{ asset('scripts/libraries/jquery.zoom.min.js') }}"></script>
@@ -71,40 +72,168 @@
     <script src="{{ asset('scripts/app.js') }}"></script>
     <script src="{{ asset('scripts/libraries/select2.min.js')}}"></script>
     <script src="{{ asset('scripts/libraries/bootstrap-notify.min.js') }}"></script>
+    {{-- <script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/i18n/es.js"></script>
+    <script src="{{ asset('scripts/libraries/jquery.blockUI.min.js')}}"></script>
+    
     {{-- <script src="{{ asset('scripts/frontend.js')}}"></script> --}}
     @yield('scripts_body_after')
+    <script>
+        /**
+         * Check if a node is blocked for processing.
+         *
+         * @param {JQuery Object} $node
+         * @return {bool} True if the DOM Element is UI Blocked, false if not.
+         */
+        var is_blocked = function( $node ) {
+            return $node.is( '.processing' ) || $node.parents( '.processing' ).length;
+        };
+
+        /**
+         * Block a node visually for processing.
+         *
+         * @param {JQuery Object} $node
+         */
+        var block = function( $node ) {
+            if ( ! is_blocked( $node ) ) {
+                $node.addClass( 'processing' ).block( {
+                    message: null,
+                    overlayCSS: {
+                        background: '#fff',
+                        opacity: 0.6
+                    }
+                } );
+            }
+        };
+
+        /**
+         * Unblock a node after processing is complete.
+         *
+         * @param {JQuery Object} $node
+         */
+        var unblock = function( $node ) {
+            $node.removeClass( 'processing' ).unblock();
+        };
+    </script>
     <script>
         function openLoginForm() {
             $('#modalpanel-login').toggleClass('active');
         }
         function notifyErrorGlobal(params) {
             if (params.status == 500) {
-                $.notify({
-                    icon: 'flaticon-hands-1',
-                    title: 'Error interno',
-                    message: '',
-                }, {
-                    type: 'info',
-                    placement: {
-                        from: "bottom",
-                        align: "right"
+                $.notify(
+                    "Error interno", 
+                    { position:"bottom right" }
+                );
+            }else{
+                if(params.responseJSON.errors){
+                    var errorsKey = Object.keys(params.responseJSON.errors);
+                    for (const keyItem of errorsKey) {
+                        var errorsMessages = params.responseJSON.errors[keyItem];
+                        if(errorsMessages && Array.isArray(errorsMessages)){
+                            for (const errorMessage of errorsMessages) {
+                                $.notify(
+                                    errorMessage, 
+                                    { position:"bottom right",className:"warn" }
+                                );
+                            }
+                        }
+                    }
+                }else{
+                    $.notify(
+                        params.responseJSON.message, 
+                        { position:"bottom right",className:"warn" }
+                    );
+                }
+            }
+        }
+    </script>
+
+    <script>
+        if (document.querySelector('.cart-contents-icon') != null) {
+            $('.cart-contents-icon').hover( function(){
+                console.log('as');
+            });
+            
+            function loadCartFloat() {
+                $.easyAjax({
+                    url: '{{ route('front.cart.get-items') }}',
+                    type: "GET",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        session: localStorage.getItem(enviropments.sessionStorage)
                     },
-                    time: 1000,
+                    success: function(response) {
+                        $('.float-count-cart').html(response.count);
+                        $('.float-total-cart').html(response.total_format);
+                        // Each elements
+                        var elListHTML= '';
+                        for (const item of response.products) {
+                            elListHTML += templateItemCart(item)
+                        }
+                        $('#product_list_widget_icart').html(elListHTML);
+                    },
+                    error: function(error) {},
                 });
             }
-            $.notify({
-                icon: 'flaticon-hands-1',
-                title: params.responseJSON.message,
-                message: '',
-            }, {
-                type: 'warning',
-                placement: {
-                    from: "bottom",
-                    align: "right"
-                },
-                time: 1000,
-            });
+            function templateItemCart(item) {
+                return `
+                <li class="woocommerce-mini-cart-item mini_cart_item">
+                    <a href="#"
+                        onclick="removeItemShopInternal(${item.id})"
+                        class="remove remove_from_cart_button" aria-label="Remove this item"
+                        data-product_id="${item.id}"
+                        data-cart_item_key="d6baf65e0b240ce177cf70da146c8dc8"
+                        data-product_sku="${item.name}-61767652">x</a> <a
+                        
+                        href="${item.route}">
+                        <img width="450" height="420"
+                            src="${item.url_image}"
+                            class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
+                            alt="" decoding="async">${item.name} </a>
+                    <span class="quantity">${item.count} x <span
+                            class="woocommerce-Price-amount amount"><bdi><span
+                                    class="woocommerce-Price-currencySymbol">$</span>${item.total_format}</bdi></span></span>
+                </li>
+                `
+                
+            }
+
+            /**
+             * Remove a item 
+             */
+            function removeItemShopInternal(productCartId) {
+                block($('#float-panel-cart-items'))
+                $.easyAjax({
+                    url: '{{ route('front.cart.remote-item') }}',
+                    container: '#formUpdateItems',
+                    type: "DELETE",
+                    redirect: false,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        tokenCart: localStorage.getItem(enviropments.cartTokenStorage),
+                        product_id: productCartId
+                    },
+                    success: function(response) {
+                        if (response.message) {
+                            $.notify(
+                                response.message, 
+                                { position:"bottom right",className:"success" }
+                            );
+                        }
+                        loadCart();
+                        $('#price-total-element').html(response.total_format);
+                        $('#body-items-products').html(response.html_items);
+                        unblock($('#float-panel-cart-items'));
+                    },
+                    error: function(error) {
+                        unblock($('#float-panel-cart-items'));
+                        notifyErrorGlobal(error);
+                    },
+                });
+                
+            }
+            loadCartFloat();
         }
     </script>
 </body>

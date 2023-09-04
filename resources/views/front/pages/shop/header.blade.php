@@ -15,10 +15,10 @@
                             <a href="#!" class="menu-mobile-nav-button"><i class="freshio-icon-user"></i></a>
                         </div>
                         <a class="cart-contents" href="{{ route('front.cart.show') }}"
-                            title="View your shopping cart">
-                            <span class="count">0</span>
+                            title="Ver su carrito de compras">
+                            <span class="count float-count-cart">0</span>
                             <span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">$</span>0.00</span> </a>
+                                    class="woocommerce-Price-currencySymbol">$</span class="float-total-cart">0.00</span> </a>
                     </div>
 
                 </div>
@@ -107,11 +107,11 @@
                         @endif
                     </div>
                     <div class="site-header-cart menu">
-                        <a class="cart-contents" href="{{ route('front.cart.show')}}"
-                            title="View your shopping cart">
-                            <span class="count">0</span>
+                        <a class="cart-contents cart-contents-icon" href="{{ route('front.cart.show')}}"
+                            title="Ver su carrito de compras">
+                            <span class="count float-count-cart">0</span>
                             <span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">$</span>0.00</span> </a>
+                                    class="woocommerce-Price-currencySymbol">$</span><span class="float-total-cart">0.00</span></span> </a>
 
                         {{-- <div class="widget woocommerce widget_shopping_cart">
                             <div class="widget_shopping_cart_content">
@@ -121,10 +121,10 @@
 
                             </div>
                         </div> --}}
-                        <div class="widget woocommerce widget_shopping_cart">
+                        <div class="widget woocommerce widget_shopping_cart" id="float-panel-cart-items">
                             <div class="widget_shopping_cart_content">
                                 <div class="woocommerce-mini-cart-scroll">
-                                    <ul class="woocommerce-mini-cart cart_list product_list_widget ">
+                                    <ul class="woocommerce-mini-cart cart_list product_list_widget" id="product_list_widget_icart">
                                         <li class="woocommerce-mini-cart-item mini_cart_item">
                                             <a href="https://demo2.pavothemes.com/freshio/cart/?remove_item=d6baf65e0b240ce177cf70da146c8dc8&amp;_wpnonce=306f616ba0"
                                                 class="remove remove_from_cart_button" aria-label="Remove this item"
@@ -140,42 +140,12 @@
                                                     class="woocommerce-Price-amount amount"><bdi><span
                                                             class="woocommerce-Price-currencySymbol">£</span>829.58</bdi></span></span>
                                         </li>
-                                        <li class="woocommerce-mini-cart-item mini_cart_item">
-                                            <a href="https://demo2.pavothemes.com/freshio/cart/?remove_item=f7664060cc52bc6f3d620bcedc94a4b6&amp;_wpnonce=306f616ba0"
-                                                class="remove remove_from_cart_button" aria-label="Remove this item"
-                                                data-product_id="266"
-                                                data-cart_item_key="f7664060cc52bc6f3d620bcedc94a4b6"
-                                                data-product_sku="durable-aluminum-shoes-62990271">×</a> <a
-                                                href="https://demo2.pavothemes.com/freshio/product/durable-aluminum-shoes/">
-                                                <img width="450" height="420"
-                                                    src="https://demo2.pavothemes.com/freshio/wp-content/uploads/2020/08/27-450x420.jpg"
-                                                    class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                                    alt="" decoding="async">Durable Aluminum Shoes </a>
-                                            <span class="quantity">2 × <span
-                                                    class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">£</span>366.90</bdi></span></span>
-                                        </li>
-                                        <li class="woocommerce-mini-cart-item mini_cart_item">
-                                            <a href="https://demo2.pavothemes.com/freshio/cart/?remove_item=4ff6731e7d7a3f65920d41c42cb864fb&amp;_wpnonce=306f616ba0"
-                                                class="remove remove_from_cart_button" aria-label="Remove this item"
-                                                data-product_id="285"
-                                                data-cart_item_key="4ff6731e7d7a3f65920d41c42cb864fb"
-                                                data-product_sku="">×</a> <a
-                                                href="https://demo2.pavothemes.com/freshio/product/ergonomic-iron-clock/?attribute_pa_numeric-size=16">
-                                                <img width="450" height="420"
-                                                    src="https://demo2.pavothemes.com/freshio/wp-content/uploads/2020/08/image-43-copyright-min-450x420.jpg"
-                                                    class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                                    alt="" decoding="async">Ergonomic Iron Clock - 16 </a>
-                                            <span class="quantity">1 × <span
-                                                    class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">£</span>930.97</bdi></span></span>
-                                        </li>
                                     </ul>
                                 </div>
 
                                 <p class="woocommerce-mini-cart__total total">
                                     <strong>Subtotal:</strong> <span class="woocommerce-Price-amount amount"><bdi><span
-                                                class="woocommerce-Price-currencySymbol">$</span>2,494.35</bdi></span>
+                                                class="woocommerce-Price-currencySymbol">$</span><span class="float-total-cart">0.00</span></bdi></span>
                                 </p>
 
 

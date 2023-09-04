@@ -31,10 +31,16 @@ Route::post('/store/product/{id}/add-to-cart','ShopController@show')->name('fron
 
 
 Route::get('/store/cart/show','CartController@show')->name('front.cart.show');
-Route::get('/store/cart/checkout','CartController@show')->name('front.cart.checkout');
+Route::get('/store/cart/checkout','CartController@checkout')->name('front.cart.checkout');
+Route::post('/store/cart/save-checkout','CartController@saveCheckout')->name('front.cart.save-checkout');
+
+Route::put('/store/cart/billing/change-city','CartController@changeCityRecalculateDelivery')->name('front.cart.billing.change-city');
 
 // api
-Route::get('/store/cart/get-items','CartController@show')->name('front.cart.get-items');
+Route::get('/store/cart/get-items','CartController@getMyItems')->name('front.cart.get-items');
+Route::post('/store/cart/add-product', 'CartController@addProduct')->name('front.cart.add-item');
+Route::post('/store/cart/change-items-counts', 'CartController@changeItemsProducts')->name('front.cart.change-items-count');
+Route::delete('/store/cart/remove-item', 'CartController@removeItem')->name('front.cart.remote-item');
 
 
 
@@ -70,10 +76,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user/perfil', 'UserController@profile')->name('user.profile');
     Route::get('user/favoritos', 'ClientController@favorites')->name('user.favorites');
     Route::post('user/favoritos/{id}/add', 'ClientController@addFavorites')->name('user.favorites.add');
-    Route::get('user/mis-compras', 'UserController@shopping')->name('user.shopping');
+    Route::get('user/mis-compras', 'ClientController@shopping')->name('user.shopping');
     Route::get('user/change-password', 'UserController@changePassword')->name('user.change-password');
 
     Route::post('user/perfil/save', 'UserController@updateProfile')->name('user.profile.save');
     Route::post('user/change-password/save', 'UserController@updatePassword')->name('user.change-password.save');
 });
+
+
 

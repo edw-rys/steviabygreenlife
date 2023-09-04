@@ -23,7 +23,11 @@ class UtilsService
     }
 
     public function getMyCountry() {
-        $country = $this->country->find(auth()->user()->country_id);
+        if(auth()->check()){
+            $country = $this->country->find(auth()->user()->country_id);
+        }else{
+            $country = null;
+        }
         if($country == null){
             $country = $this->country->first();
         }

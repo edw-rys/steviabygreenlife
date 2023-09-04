@@ -15,27 +15,76 @@
 
 {{-- Scripts --}}
 @section('scripts_body_after')
-    <script>
-        function loadCart(params) {
+@if ($cart != null)
 
+    <script>
+        localStorage.setItem(enviropments.cartTokenStorage, '{{ $cart->uuid}}');
+
+        function activeButtonRestartCart() {
+            $('#update_cart').removeAttr('disabled')
+        }
+        function changeItemsCount(evt){
+            evt.preventDefault();
+            block($('#post-show-items-cart'))
+            $('#tokenCartVal').val(localStorage.getItem(enviropments.cartTokenStorage));
             $.easyAjax({
-                url: '{{ route('front.cart.get-items') }}',
+                url: '{{ route('front.cart.change-items-count') }}',
+                container: '#formUpdateItems',
                 type: "POST",
+                redirect: false,
+                data: $('#formUpdateItems').serialize(),
+                success: function(response) {
+                    if (response.message) {
+                        $.notify(
+                            response.message, 
+                            { position:"bottom right",className:"success" }
+                        );
+                    }
+                    $('#price-total-element').html(response.total_format);
+                    $('#body-items-products').html(response.html_items);
+                    unblock($('#post-show-items-cart'));
+                },
+                error: function(error) {
+                    unblock($('#post-show-items-cart'));
+                    notifyErrorGlobal(error);
+                },
+            });
+        }
+
+        /**
+         * Remove a item 
+         */
+        function removeItemShop(productCartId) {
+            block($('#post-show-items-cart'))
+            $.easyAjax({
+                url: '{{ route('front.cart.remote-item') }}',
+                container: '#formUpdateItems',
+                type: "DELETE",
+                redirect: false,
                 data: {
                     _token: '{{ csrf_token() }}',
-                    session: localStorage.getItem(enviropments.sessionStorage)
+                    tokenCart: localStorage.getItem(enviropments.cartTokenStorage),
+                    product_id: productCartId
                 },
                 success: function(response) {
-                    if (response.status == 'uploaded_pages') {
-                        $(element).html(response.html)
-                        $(element).removeClass('reload-noupload');
+                    if (response.message) {
+                        $.notify(
+                            response.message, 
+                            { position:"bottom right",className:"success" }
+                        );
                     }
+                    $('#price-total-element').html(response.total_format);
+                    $('#body-items-products').html(response.html_items);
+                    unblock($('#post-show-items-cart'));
                 },
-                error: function(error) {},
+                error: function(error) {
+                    unblock($('#post-show-items-cart'));
+                    notifyErrorGlobal(error);
+                },
             });
-            
         }
     </script>
+@endif
 @endsection
 
 @section('main-content')
@@ -59,13 +108,16 @@
             <div id="primary">
                 <main id="main" class="site-main" role="main">
 
-                    <article id="post-75" class="post-75 page type-page status-publish hentry">
+                    <article id="post-show-items-cart" class="post-75 page type-page status-publish hentry">
                         <div class="entry-content">
                             <div class="woocommerce">
                                 <div class="woocommerce-notices-wrapper"></div>
-                                <form class="woocommerce-cart-form" action="https://demo2.pavothemes.com/freshio/cart/"
+                                <form class="woocommerce-cart-form" id="formUpdateItems" action="{{route('front.cart.change-items-count')}}" onsubmit="changeItemsCount(event)"
                                     method="post">
-
+                                    @if ($cart != null)
+                                        <input type="hidden" name="tokenCart" id="tokenCartVal" value="{{ $cart->uuid }}">
+                                    @endif
+                                    @csrf
                                     <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents"
                                         cellspacing="0">
                                         <thead>
@@ -78,152 +130,43 @@
                                                 <th class="product-subtotal">Subtotal</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr class="woocommerce-cart-form__cart-item cart_item">
-
-                                                <td class="product-remove">
-                                                    <a href="https://demo2.pavothemes.com/freshio/cart/?remove_item=f7664060cc52bc6f3d620bcedc94a4b6&amp;_wpnonce=306f616ba0"
-                                                        class="remove" aria-label="Remove this item" data-product_id="266"
-                                                        data-product_sku="durable-aluminum-shoes-62990271">×</a>
-                                                </td>
-
-                                                <td class="product-thumbnail">
-                                                    <a
-                                                        href="https://demo2.pavothemes.com/freshio/product/durable-aluminum-shoes/"><img
-                                                            width="450" height="420"
-                                                            src="https://demo2.pavothemes.com/freshio/wp-content/uploads/2020/08/27-450x420.jpg"
-                                                            class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                                            alt="" decoding="async"></a>
-                                                </td>
-
-                                                <td class="product-name" data-title="Product">
-                                                    <a
-                                                        href="https://demo2.pavothemes.com/freshio/product/durable-aluminum-shoes/">Durable
-                                                        Aluminum Shoes</a>
-                                                </td>
-
-                                                <td class="product-price" data-title="Price">
-                                                    <span class="woocommerce-Price-amount amount"><bdi><span
-                                                                class="woocommerce-Price-currencySymbol">£</span>366.90</bdi></span>
-                                                </td>
-
-                                                <td class="product-quantity" data-title="Quantity">
-                                                    <div class="quantity">
-                                                        <label class="screen-reader-text"
-                                                            for="quantity_64ed187aef1a4">Durable Aluminum Shoes
-                                                            quantity</label>
-                                                        <input type="number" id="quantity_64ed187aef1a4"
-                                                            class="input-text qty text" step="1" min="0"
-                                                            max="97"
-                                                            name="cart[f7664060cc52bc6f3d620bcedc94a4b6][qty]"
-                                                            value="2" title="Qty" size="4" placeholder=""
-                                                            inputmode="numeric" autocomplete="off">
-                                                    </div>
-                                                </td>
-
-                                                <td class="product-subtotal" data-title="Subtotal">
-                                                    <span class="woocommerce-Price-amount amount"><bdi><span
-                                                                class="woocommerce-Price-currencySymbol">£</span>733.80</bdi></span>
-                                                </td>
-                                            </tr>
-                                            <tr class="woocommerce-cart-form__cart-item cart_item">
-
-                                                <td class="product-remove">
-                                                    <a href="https://demo2.pavothemes.com/freshio/cart/?remove_item=4ff6731e7d7a3f65920d41c42cb864fb&amp;_wpnonce=306f616ba0"
-                                                        class="remove" aria-label="Remove this item" data-product_id="285"
-                                                        data-product_sku="">×</a>
-                                                </td>
-
-                                                <td class="product-thumbnail">
-                                                    <a
-                                                        href="https://demo2.pavothemes.com/freshio/product/ergonomic-iron-clock/?attribute_pa_numeric-size=16"><img
-                                                            width="450" height="420"
-                                                            src="https://demo2.pavothemes.com/freshio/wp-content/uploads/2020/08/image-43-copyright-min-450x420.jpg"
-                                                            class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                                            alt="" decoding="async"></a>
-                                                </td>
-
-                                                <td class="product-name" data-title="Product">
-                                                    <a
-                                                        href="https://demo2.pavothemes.com/freshio/product/ergonomic-iron-clock/?attribute_pa_numeric-size=16">Ergonomic
-                                                        Iron Clock - 16</a>
-                                                </td>
-
-                                                <td class="product-price" data-title="Price">
-                                                    <span class="woocommerce-Price-amount amount"><bdi><span
-                                                                class="woocommerce-Price-currencySymbol">£</span>930.97</bdi></span>
-                                                </td>
-
-                                                <td class="product-quantity" data-title="Quantity">
-                                                    1 <input type="hidden"
-                                                        name="cart[4ff6731e7d7a3f65920d41c42cb864fb][qty]" value="1">
-                                                </td>
-
-                                                <td class="product-subtotal" data-title="Subtotal">
-                                                    <span class="woocommerce-Price-amount amount"><bdi><span
-                                                                class="woocommerce-Price-currencySymbol">£</span>930.97</bdi></span>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <td colspan="6" class="actions">
-
-                                                    <div class="coupon">
-                                                        <label for="coupon_code">Coupon:</label> <input type="text"
-                                                            name="coupon_code" class="input-text" id="coupon_code"
-                                                            value="" placeholder="Coupon code"> <button
-                                                            type="submit" class="button wp-element-button"
-                                                            name="apply_coupon" value="Apply coupon">Apply coupon</button>
-                                                    </div>
-
-                                                    <button type="submit" class="button wp-element-button"
-                                                        name="update_cart" value="Update cart" disabled=""
-                                                        aria-disabled="true">Update cart</button>
-
-
-                                                    <input type="hidden" id="woocommerce-cart-nonce"
-                                                        name="woocommerce-cart-nonce" value="306f616ba0"><input
-                                                        type="hidden" name="_wp_http_referer" value="/freshio/cart/">
-                                                </td>
-                                            </tr>
-
+                                        <tbody id="body-items-products">
+                                            @include('front.pages.cart.body-table')
                                         </tbody>
                                     </table>
                                 </form>
 
+                                @if ($cart != null)
 
                                 <div class="cart-collaterals">
                                     <div class="cart_totals ">
 
 
-                                        <h2>Cart totals</h2>
+                                        <h2>Valor a pagar</h2>
 
                                         <table cellspacing="0" class="shop_table shop_table_responsive">
 
                                             <tbody>
-                                                <tr class="cart-subtotal">
+                                                {{-- <tr class="cart-subtotal">
                                                     <th>Subtotal</th>
                                                     <td data-title="Subtotal"><span
                                                             class="woocommerce-Price-amount amount"><bdi><span
                                                                     class="woocommerce-Price-currencySymbol">£</span>1,664.77</bdi></span>
                                                     </td>
-                                                </tr>
-
-
-
-
-
-
+                                                </tr> --}}
                                                 <tr class="order-total">
                                                     <th>Total</th>
-                                                    <td data-title="Total"><strong><span
-                                                                class="woocommerce-Price-amount amount"><bdi><span
-                                                                        class="woocommerce-Price-currencySymbol">£</span>1,664.77</bdi></span></strong>
+                                                    <td data-title="Total">
+                                                        <strong>
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <bdi>
+                                                                    <span class="woocommerce-Price-currencySymbol">$</span>
+                                                                    <span id="price-total-element">{{ $cart->total_format}}</span>
+                                                                </bdi>
+                                                            </span>
+                                                        </strong>
                                                     </td>
                                                 </tr>
-
-
                                             </tbody>
                                         </table>
 
@@ -233,9 +176,9 @@
                                                 class="checkout-button button alt wc-forward wp-element-button">
                                                 Proceder a pagar</a>
                                         </div>
-
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div><!-- .entry-content -->
                     </article><!-- #post-## -->

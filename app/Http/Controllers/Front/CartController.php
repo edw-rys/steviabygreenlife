@@ -3,10 +3,46 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cart\AddProductToCartRequest;
+use App\Http\Requests\Cart\ChangeCityBillingToCartRequest;
+use App\Http\Requests\Cart\ChangeItemsToCartRequest;
+use App\Http\Requests\Cart\RemoveItemToCartRequest;
+use App\Service\CartProductService;
+use App\Service\ConstantsService;
+use App\Service\UserService;
+use App\Service\UtilsService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    private CartProductService $cartProductService;
+    private UserService $userService;
+    private UtilsService $utilsService;
+
+
+
+    public function __construct(
+        CartProductService $cartProductService,
+        UtilsService $utilsService,
+        UserService $userService
+    ) {
+        $this->cartProductService = $cartProductService;
+        $this->utilsService = $utilsService;
+        $this->userService = $userService;
+    }
+
+    /**
+     * @param AddProductToCartRequest $request
+     */
+    public function addProduct(AddProductToCartRequest $request) {
+        $result = $this->cartProductService->addProductToCart($request, auth()->check() ? auth()->user()->id : null);
+        return response()->json([
+            'message'   => 'Producto agregado',
+            'tokenCart' => $result->cart->uuid
+        ]);
+    }
+
+
     public function cart() {
         $response = '
         {
@@ -168,6 +204,115 @@ class CartController extends Controller
     }
 
     public function show() {
-        return view('front.pages.cart');
+        $cart = $this->cartProductService->getCartShop(null, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        if($cart == null){
+            return view('front.pages.cart')
+                ->with('cart', null);
+        }
+        if($cart->products->isEmpty()){
+            return view('front.pages.cart')
+                ->with('cart', null);
+        }
+
+        return view('front.pages.cart')
+            ->with('cart', $cart);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function getMyItems(Request $request) {
+
+        $cart = $this->cartProductService->getProductsByTokenCart($request->tokenCart, auth()->check() ? auth()->user()->id : null);
+        if($cart['status'] == 'error'){
+            return response()->json($cart, 404);
+        }
+        return response()->json($cart, 200);
+        
+    }
+
+    /**
+     * @param ChangeItemsToCartRequest $request
+     */
+    public function changeItemsProducts(ChangeItemsToCartRequest $request) {
+        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        if($cart == null){
+            return response()->json(['message'=> 'Su carrito no fue encontrado'], 400);
+        }
+        if($cart->products->isEmpty()){
+            return response()->json(['message'=> 'Su carrito no tiene productos'], 400);
+        }
+        $response = $this->cartProductService->restoreCartProduct($request, $cart);
+        return response()->json($response, $response['code']);
+    }
+    /**
+     * @param RemoveItemToCartRequest $request
+     */
+    public function removeItem(RemoveItemToCartRequest $request) {
+        $response = $this->cartProductService->removeItemToCart($request, auth()->check() ? auth()->user()->id : null);
+        // $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        return response()->json($response, $response['code']);
+    }
+    /**
+     * 
+     */
+    public function checkout() {
+        $cart = $this->cartProductService->getCartShop(null, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing']);
+        if($cart == null){
+            return redirect()->route('cart.shop');
+        }
+        if($cart->products->isEmpty()){
+            return redirect()->route('cart.shop');
+        }
+
+        $cart->delivery_cost = 0; 
+        if (auth()->check()) {
+            $city = $this->userService->getCityByUserId(auth()->user()->id);
+            if($city != null){
+                $cart->delivery_cost = $city->delivery_cost; 
+            }
+        }
+
+        $country = $this->utilsService->getMyCountry();
+
+        $cart->total_more_delivery = $cart->delivery_cost + $cart->total;
+        $cart->save();
+
+        $this->cartProductService->changeStatusCart($cart, ConstantsService::$CART_STATUS_PENDING_PAYMENT);
+
+        if($cart->billing == null){
+            $cart->billing = (object)[
+                'user_id'       => auth()->check() ? auth()->user()->id : null, // default null
+                'uuid'          => $cart->uuid,
+                'cart_shop_id'  => $cart->id,
+                'name'          => auth()->check() ? auth()->user()->name : '',
+                'last_name'     => auth()->check() ? auth()->user()->name : '',
+                // Location
+                'country_id'    => auth()->check() ? auth()->user()->country_id : $country->id,
+                'state_id'      => auth()->check() ? auth()->user()->state_id : null,
+                'city_id'       => auth()->check() ? auth()->user()->city_id : null,
+                'address'       => '',
+                'apartamento'   => null,
+                // End location
+    
+                'phone'         => null,
+                'email'         => auth()->check() ? auth()->user()->email : null,
+                'instruction'   => null,
+                'business_name' => null,
+                'postal_code'   => '',
+                'aditional_info'=> ''
+            ];
+            // $cart->billing = $this->cartProductService->createBillingInfo($cart);
+        }
+
+        
+        return view('front.pages.checkout')
+            ->with('cart', $cart)
+            ->with('country', $country);
+    }
+
+    public function changeCityRecalculateDelivery(ChangeCityBillingToCartRequest $request) {
+        $response = $this->cartProductService->changeCityRecalculateDelivery($request->tokenCart, $request->city_id);
+        return response()->json($response, $response['code']);
     }
 }

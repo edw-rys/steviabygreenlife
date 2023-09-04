@@ -53,6 +53,7 @@ class AuthController extends Controller
      */
     public function logout(){
         Auth::logout();
-        return redirect()->route('front.shop');
+        return redirect()->route('front.shop')
+            ->with('delete_shop', 'delete');
     }
 }

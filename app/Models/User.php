@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Location\City;
+use App\Models\Location\Country;
+use App\Models\Location\State;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -67,5 +71,17 @@ class User extends Authenticatable implements AuditableContract
     public function roles()
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    public function country() : BelongsTo {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function state() : BelongsTo {
+        return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function city() : BelongsTo {
+        return $this->belongsTo(City::class, 'city_id');
     }
 }

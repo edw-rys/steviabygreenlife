@@ -18,6 +18,10 @@ class UserService
     ) {
         $this->user = $user;
     }
+
+    /**
+     * @param Request $request
+     */
     public function login(Request $request) {
         $credentials = $request->only('email','password');
        
@@ -102,8 +106,15 @@ class UserService
      * @param Request $request
      * @param $email
      */
-    function updatePassword($request, $email)  {
+    public function updatePassword($request, $email)  {
         $this->user->where('email', $email)
             ->update(['password' => bcrypt($request->password)]);
+    }
+    /**
+     * @param $user_id
+     */
+    public function getCityByUserId($user_id) {
+        $user = $this->user->with('city')->find($user_id);
+        return $user != null ? $user->city : null;
     }
 }

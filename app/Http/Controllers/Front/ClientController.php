@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdatePasswordRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Service\CartProductService;
 use App\Service\ClientService;
 use App\Service\ShopService;
 use Illuminate\Http\Request;
@@ -13,15 +14,18 @@ class ClientController extends Controller
 {
     private ShopService $shopService;
     private ClientService $clientService;
+    private CartProductService $cartProductService;
     
 
     /**
      * @param ShopService $shopService
      * @param ClientService $clientService
+     * @param CartProductService $cartProductService
      */
-    public function __construct(ShopService $shopService, ClientService $clientService) {
+    public function __construct(ShopService $shopService, ClientService $clientService, CartProductService $cartProductService) {
         $this->shopService = $shopService;
         $this->clientService = $clientService;
+        $this->cartProductService = $cartProductService;
     }
 
    

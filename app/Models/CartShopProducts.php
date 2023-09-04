@@ -23,31 +23,49 @@ class CartShopProducts extends Model
     
     'count',
     // Money values
+    'price',
     'price_unit',
-    'percentage_tax',
-    'total_tax',
+    'subtotal_before_discount',
     'discount_percentage',
     'discount_value',
+    'total_before_tax', // antes de imps
+    'percentage_tax',
+    'total_tax',
+    'subtotal_after_tax', // después de imps
     'total',
     // end money values
-    'status', // 'created', 'deleted', 'finished'
+    'status', // 'created', 'deleted', 'pending_pay', 'finished'
     'created_at',
     'updated_at',
     'deleted_at',
   ];
 
+  protected $appends = [ 'price_format', 'total_format'];
+
+  public function getPriceFormatAttribute()
+  {
+    return twoStringDecimal($this->price);
+  }
+  public function getTotalFormatAttribute()
+  {
+    return twoStringDecimal($this->total);
+  }
   /**
    * The attributes that should be cast.
    *
    * @var array
    */
   protected $casts = [
-    'price_unit' => 'float',
-    'percentage_tax' => 'float',
-    'total_tax' => 'float',
+    'price'               => 'float',
+    'price_unit'          => 'float',
+    'percentage_tax'      => 'float',
+    'total_tax'           => 'float',
+    'subtotal_before_discount'  => 'float',
     'discount_percentage' => 'float',
-    'discount_value' => 'float',
-    'total' => 'float',
+    'discount_value'      => 'float',
+    'subtotal_after_tax'  => 'float',
+    'total'               => 'float',
+    'total_before_tax'    => 'float'
   ];
 
   function product() : BelongsTo {

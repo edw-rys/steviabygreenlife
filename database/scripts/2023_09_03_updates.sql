@@ -1,0 +1,1 @@
+UPDATE `city` set delivery_cost = '5' WHERE id not in (75, 178)

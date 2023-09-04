@@ -13,3 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('random', function(){
+    echo generateRandomString(75);
+});
