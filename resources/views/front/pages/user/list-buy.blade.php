@@ -140,7 +140,7 @@
                                                     </div>
                                                 </div>
                                             @empty
-                                                <p>No se encontraron productos
+                                                <p>No se encontraron compras
                                             @endforelse
                                             {{ $purcharses->links() }}
                                         </div>
