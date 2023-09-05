@@ -15,7 +15,7 @@ class AddFieldCartShopInvoice2 extends Migration
     {
         Schema::table('cart_shop_invoice', function (Blueprint $table) {
             $table->string('identification_number', 250)->nullable()->after('created_at');
-            $table->unsignedBigInteger('user_id')->nullable();
+            // $table->unsignedBigInteger('user_id')->nullable();
         });
     }
 
