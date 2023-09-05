@@ -6,7 +6,7 @@ if (! function_exists('getLasNumberOrder')) {
     function getLasNumberOrder() {
         $result = CartShop::select('number_order')
             ->whereNotNull('number_order')
-            ->orderBy('number_order')->take('1')->first();
+            ->orderBy('number_order','desc')->take('1')->first();
         if($result == null){
             return 1;
         }
