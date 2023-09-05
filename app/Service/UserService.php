@@ -121,4 +121,6 @@ class UserService
         $user = $this->user->with('city')->find($user_id);
         return $user != null ? $user->city : null;
     }
+
+
 }

@@ -263,8 +263,24 @@ class CartProductService
             ->with(['billing.country'])
             ->with(['billing.state'])
             ->with(['billing.city'])
-            ->orderBy('created_at', 'desc')
-            ->paginate($countPaginate);
+            ->orderBy('bought_at', 'desc');
+
+        if(request('start_date')!= null && request('start_date') != '' && !empty(request('start_date'))){
+            $items->whereDate('bought_at', '>=', request('start_date'));
+        }
+        if(request('end_date')!= null && request('end_date') != '' && !empty(request('end_date'))){
+            $items->whereDate('bought_at', '<=', request('end_date'));
+        }
+
+        if(request('status_delivery')!= null && request('status_delivery') != '' && !empty(request('status_delivery'))){
+            $items->where('status_delivery', request('status_delivery'));
+        }
+        if(request('client_id')!= null && request('client_id') != '' && !empty(request('client_id'))){
+            $items->where('user_id', request('client_id'));
+        }
+        
+
+        $items = $items->paginate($countPaginate);
         return $items;
     }
 

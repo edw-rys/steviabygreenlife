@@ -70,6 +70,9 @@
     .hidden{
         display: none !important;
     }
+    .c-pointer{
+        cursor: pointer;
+    }
 </style>
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/select2.min.css')}}">
 

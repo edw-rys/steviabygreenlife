@@ -7,7 +7,7 @@
                 data-id="7ade6a3" data-element_type="widget"
                 data-widget_type="heading.default">
                 <div class="elementor-widget-container">
-                    <h3 class="elementor-heading-title elementor-size-default"> <a href="{{ route('front.result.pay', base64_encode($cart->transaction_code))}}">Pedido #{{ $cart->numero_pedido}} realizado el: {{$cart->created_at_format }}</a> <span class="badge {{ badgeStatusStore($cart->status) }}" style="font-size: 13px;padding: 7px;"> @lang('global.status-label.'. ( $cart->status ?? 'in-process'))</span></h3>
+                    <h3 class="elementor-heading-title elementor-size-default"> <a href="{{ route('front.result.pay', base64_encode($cart->transaction_code))}}">Pedido #{{ $cart->numero_pedido}} realizado el: {{$cart->bought_at_format }}</a> <span class="badge {{ badgeStatusStore($cart->status) }}" style="font-size: 13px;padding: 7px;"> @lang('global.status-label.'. ( $cart->status ?? 'in-process'))</span></h3>
                 </div>
             </div>
             <div class="elementor-element elementor-element-adc11cd elementor-widget__width-initial elementor-widget-tablet__width-inherit elementor-widget elementor-widget-text-editor"

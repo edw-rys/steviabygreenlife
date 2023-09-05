@@ -13,6 +13,7 @@ use App\Service\CartProductService;
 use App\Service\ConstantsService;
 use App\Service\UserService;
 use App\Service\UtilsService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -444,6 +445,7 @@ class CartController extends Controller
             $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
             $user->save();
             $cart['cart']->user_id = $user->id;
+            $cart['cart']->bought_at = Carbon::now();
             $cart['cart']->save();
         }
 

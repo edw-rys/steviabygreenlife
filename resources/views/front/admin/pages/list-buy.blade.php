@@ -75,17 +75,14 @@
                                 <div class="col-12">
                                     {{-- <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-5 offset-xl-3"> --}}
                                     <div class="card card-primary">
-                                        <div class="card-header">
-                                            <h4>Compras realizadas</h4>
-                                        </div>
-
+                                        @include('front.admin.pages.shop.filters')
                                         <div class="card-body" style="    padding-left: 5px;padding-right: 5px;">
                                             @forelse($purcharses as $cart)
                                                 @include('front.admin.pages.shop.item-buy-card')
                                             @empty
                                                 <p>No se encontraron compras
                                             @endforelse
-                                            {{ $purcharses->links() }}
+                                            {{ $purcharses->appends(request()->input())->links() }}
                                         </div>
                                     </div>
                                 </div>
@@ -102,5 +99,6 @@
 
 @section('scripts_body_after')
     <script src="{{ asset('scripts/off-canvas.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     @include('front.pages.shop.script-add-favorites')
 @endsection

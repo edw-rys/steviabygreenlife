@@ -45,6 +45,7 @@ class CartShop extends Model
     'status', // 'created', 'deleted', 'finished'
     'created_at',
     'updated_at',
+    'bought_at',
     'deleted_at',
   ];
 
@@ -67,8 +68,9 @@ class CartShop extends Model
     'number_order'          => 'integer'
   ];
 
+  protected $dates = ['bought_at'];
 
-  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int', 'created_at_format', 'numero_pedido'];
+  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int', 'created_at_format', 'bought_at_format', 'numero_pedido'];
 
   public function getNumeroPedidoAttribute() {
     if($this->number_order == null){
@@ -76,6 +78,12 @@ class CartShop extends Model
     }
     return str_pad($this->number_order, 9, "0", STR_PAD_LEFT);
   }
+  
+
+  public function getBoughtAtFormatAttribute(){
+    return $this->bought_at != null ? $this->bought_at->format('d/m/Y'): '';
+  }
+
   public function getCreatedAtFormatAttribute(){
     return $this->created_at != null ? $this->created_at->format('d/m/Y'): '';
   }
