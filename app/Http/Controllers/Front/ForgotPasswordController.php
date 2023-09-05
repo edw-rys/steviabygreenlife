@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Mail\User\ForgotUserPasswordMail;
 use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -45,11 +46,9 @@ class ForgotPasswordController extends Controller
             'token' => $token,
             'created_at' => Carbon::now()
         ]);
+
         try {
-            Mail::send('email.user.forgetPassword', ['token' => $token], function ($message) use ($request) {
-                $message->to($request->email);
-                $message->subject('Restablecer mi contraseña');
-            });
+            Mail::to($request->email)->queue( new ForgotUserPasswordMail($token));
         } catch (\Throwable $th) {
             Log::error($th->getMessage().': ForgotPasswordController::submitForgetPasswordForm', [
                 'message'   => $th->getMessage(),
