@@ -29,6 +29,7 @@ class NotifyOrderMail extends Mailable
     public function build()
     {
         return $this->markdown('email.shop.confirm-buy')
+            ->subject('Nueva compra realizada en Stevia, pedido #'.$this->cart->numero_pedido)
             ->with('cart',$this->cart);
     }
 }
