@@ -8,11 +8,14 @@ use App\Http\Requests\Cart\ChangeCityBillingToCartRequest;
 use App\Http\Requests\Cart\ChangeItemsToCartRequest;
 use App\Http\Requests\Cart\RemoveItemToCartRequest;
 use App\Http\Requests\Cart\StoreBillingToCartRequest;
+use App\Mail\Shop\NotifyOrderMail;
 use App\Service\CartProductService;
 use App\Service\ConstantsService;
 use App\Service\UserService;
 use App\Service\UtilsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -445,6 +448,18 @@ class CartController extends Controller
         }
 
         // Send mail
+        try {
+            Mail::to([$cart['cart']->billing->email])
+                ->cc(config('app.emails_admin'))
+                ->queue( new NotifyOrderMail($cart['cart']));
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage().': CartController::checkPay', [
+                'message'   => $th->getMessage(),
+                'code'      => $th->getCode(),
+                'line'      => $th->getLine(),
+                'trace'     => $th->getTrace()
+            ]);
+        }
         
         
         return redirect()->route('front.result.pay', ['transaction' => base64_encode($cart['transaction']->transaction) ] )
@@ -464,7 +479,7 @@ class CartController extends Controller
         $remove_token = session('remove_token') ?? false;
         if($remove_token == 'yes'){
             session()->forget('remove_token');
-        }
+        }            
         return view('front.pages.checkout.result')
             ->with('cart', $cart['cart'])
             ->with('transaction', $cart['transaction'])

@@ -42,5 +42,9 @@ class ClientController extends Controller
         ]);
     }
     public function shopping(Request $request) {
+        $items = $this->cartProductService->getPurchases(auth()->user()->id);
+        // dd($items);
+        return view('front.pages.user.list-buy')
+            ->with('purcharses', $items);
     }
 }

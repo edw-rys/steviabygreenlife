@@ -231,6 +231,31 @@ class CartProductService
     }
 
     /**
+     * @param $user_id
+     */
+    public function getPurchases($user_id) {
+        $countPaginate = 4;
+        $items = $this->cartShop->where('user_id', $user_id)
+            ->where('status', ConstantsService::$CART_STATUS_FINISHED)
+            ->with(['billing'])
+            ->with('products')
+            ->with(['billing.country'])
+            ->with(['billing.state'])
+            ->with(['billing.city'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($countPaginate);
+        return $items;
+        return (object)[
+            'count'         => $items->total(),
+            'items'         => $items->items(),
+            'currentPage'   => $items->currentPage(),
+            'lastPaginate'  => $items->lastPage(),
+            'showStart'     => ($items->currentPage()-1)*$countPaginate +1,
+            'showEnd'       => ($items->currentPage()-1)*$countPaginate + count($items->items()),
+            'paginator'     => $items
+        ];
+    }
+    /**
      * @param $transactionKey
      */
     public function getCartByTrCode($transactionKey) {
@@ -247,6 +272,9 @@ class CartProductService
                 $query->with('product');
             }])
             ->with(['billing'])
+            ->with(['billing.country'])
+            ->with(['billing.state'])
+            ->with(['billing.city'])
             ->find($transactionObject->shop_cart_id);
         return [
             'cart'  => $cart,
@@ -308,7 +336,7 @@ class CartProductService
         $cart = $this->cartShop
             ->with(['products', 'products.product'])
             ->find($cart->id);
-
+        $cart->number_order = getLasNumberOrder();
         $this->restoreCart($cart);
     }
 

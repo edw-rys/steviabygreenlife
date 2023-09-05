@@ -12,10 +12,10 @@
 @section('head-content')
     @include('front.includes.head-shop')
     <style>
-        #order_review {
+        /* #order_review {
             float: initial !important;
             margin: 0 auto;
-        }
+        } */
 
         ._failed {
             border-bottom: solid 4px red !important;
@@ -53,6 +53,9 @@
             color: #495057;
             font-weight: 500;
         }
+        .bold{
+            font-weight: 900;
+        }
     </style>
 @endsection
 
@@ -76,6 +79,119 @@
                             <div class="woocommerce">
                                 <div class="woocommerce-notices-wrapper"></div>
 
+                                <div class="col2-set" id="customer_details">
+                                    <div class="col-1">
+                                        <div class="woocommerce-billing-fields">
+                                            <h3>Datos de facturación para pedido # {{$cart->numero_pedido}}</h3>
+                                            <div class="woocommerce-billing-fields__field-wrapper">
+                                                <p class="form-row form-row-first validate-required" data-priority="10">
+                                                    <label class="bold">Nombres: </label>
+                                                    {{ $cart->billing->name }}
+                                                </p>
+                                                <p class="form-row form-row-last validate-required" data-priority="20">
+                                                    <label class="bold">Apelllidos&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->last_name }}
+                                                    </span>
+                                                </p>
+                                                
+                                                
+                                                {{-- Company name --}}
+                                                <p class="form-row @if ($cart->billing->business_name) form-row-first @else form-row-wide @endif" id="billing_identification_number_field" data-priority="30">
+                                                    <label class="bold">Cédula&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->identification_number }}
+                                                    </span>
+                                                </p>
+                                                @if ($cart->billing->business_name)
+                                                    {{-- Company name --}}
+                                                    <p class="form-row form-row-last" id="billing_company_field" data-priority="30">
+                                                        <label  class="bold">Nombre de la compañía&nbsp;</label>
+                                                        <span class="woocommerce-input-wrapper">
+                                                            {{$cart->billing->business_name}}
+                                                        </span>
+                                                    </p>
+                                                @endif
+                                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required" id="billing_country_field" data-priority="40">
+                                                    <label class="bold">País:</label>
+                                                    <span>
+                                                        {{ $cart->billing->country->name ?? '-' }}
+                                                    </span>
+                                                </p>
+                                                {{-- states --}}
+                                                <p class="form-row form-row-first address-field update_totals_on_change validate-required" data-priority="40">
+                                                    <label class="bold">Provincia&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->state->name ?? '-' }}
+                                                    </span>
+                                                </p>
+
+                                                {{-- cities --}}
+                                                <p class="form-row form-row-last address-field update_totals_on_change validate-required" data-priority="40">
+                                                    <label class="bold">Ciudad&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->city->name ?? '-' }}
+                                                    </span>
+                                                </p>
+                                                {{-- Address --}}
+                                                <p class="form-row address-field validate-required @if ($cart->billing->apartamento) form-row-wide @else form-row-first @endif" data-priority="50">
+                                                    <label class="bold">Dirección&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->address }}
+                                                    </span>
+                                                </p>
+                                                @if ($cart->billing->apartamento)
+                                                    {{-- Apartamento --}}
+                                                    <p class="form-row address-field form-row-first" data-priority="60">
+                                                        <label  class="bold">Apartamento, suite, unidad, etc.&nbsp;</label>
+                                                        <span class="woocommerce-input-wrapper">
+                                                            {{ $cart->billing->apartamento }}
+                                                        </span>
+                                                    </p>
+                                                    
+                                                @endif
+                                                {{-- Postal code --}}
+                                                <p class="form-row address-field form-row-last" data-priority="90" >
+                                                    <label class="bold">Código Postal &nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->postal_code }}
+                                                    </span>
+                                                </p>
+                                                {{-- Phone --}}
+                                                <p class="form-row form-row-first validate-required validate-phone" data-priority="100">
+                                                    <label class="bold">Celular&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->phone }}
+                                                    </span>
+                                                </p>
+                                                {{-- Email --}}
+                                                <p class="form-row form-row-last validate-required validate-email" data-priority="110">
+                                                    <label class="bold">Dirección de correo electrónico&nbsp;</label>
+                                                    <span class="woocommerce-input-wrapper">
+                                                        {{ $cart->billing->email }}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if ( $cart->billing->aditional_info )
+                                        <div class="col-2">
+                                            <div class="woocommerce-shipping-fields">
+                                            </div>
+                                            <div class="woocommerce-additional-fields">
+                                                <h3>Información adicional</h3>
+                                                <div class="woocommerce-additional-fields__field-wrapper">
+                                                    <p class="form-row notes" id="order_comments_field" data-priority="">
+                                                        <label class="bold">Notas sobre la entrega&nbsp;</label><span
+                                                            class="woocommerce-input-wrapper">
+                                                            {{ $cart->billing->aditional_info }}
+                                                        </span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                </div>
                                 <div id="order_review" class="woocommerce-checkout-review-order">
                                     {{-- <h3 id="order_review_heading">Su orden</h3> --}}
                                     @if ($transaction->status_pay_code == 3)

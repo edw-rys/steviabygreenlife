@@ -241,5 +241,9 @@ return [
         'token'         => env('PAYMENT_PP_TOKEN'),
         'client_id'     => env('PAYMENT_PP_CLIENT_ID'),
     ],
-    'paymentapp'    => env('PAYMENT_APP')
+    'paymentapp'    => env('PAYMENT_APP'),
+    'emails_admin'        => [
+        'edw-toni@hotmail.com',
+        'reyes-edw@hotmail.com'
+    ]
 ];

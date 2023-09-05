@@ -39,8 +39,12 @@ class CartShopProducts extends Model
     'deleted_at',
   ];
 
-  protected $appends = [ 'price_format', 'total_format'];
+  protected $appends = [ 'price_format', 'total_format', 'url_image'];
 
+  public function getUrlImageAttribute()
+  {
+    return asset('images/shop/products/' . $this->route_image);
+  }
   public function getPriceFormatAttribute()
   {
     return twoStringDecimal($this->price);

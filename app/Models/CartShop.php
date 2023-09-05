@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Location\City;
+use App\Models\Location\Country;
+use App\Models\Location\State;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,6 +37,7 @@ class CartShop extends Model
     'total_more_delivery',
     // end money values
 
+    'number_order',
 
     'status', // 'created', 'deleted', 'finished'
     'created_at',
@@ -57,17 +61,27 @@ class CartShop extends Model
     'total_items_products'  => 'integer',
     'delivery_cost'         => 'float',
     'total_more_delivery'   => 'float',
+    'number_order'          => 'integer'
   ];
 
 
-  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int'];
+  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int', 'created_at_format', 'numero_pedido'];
 
+  public function getNumeroPedidoAttribute() {
+    if($this->number_order == null){
+      return '';
+    }
+    return str_pad($this->number_order, 9, "0", STR_PAD_LEFT);
+  }
+  public function getCreatedAtFormatAttribute(){
+    return $this->created_at != null ? $this->created_at->format('d/m/Y'): '';
+  }
   public function getTotalFormatAttribute()
   {
     return twoStringDecimal($this->total);
   }
   public function getTotalMoreDeliveryIntAttribute() {
-    return round((+twoStringDecimal($this->total)) * 100, 0);
+    return round((+twoStringDecimal($this->total_more_delivery)) * 100, 0);
   }
 
   public function getDeliveryCostFormatAttribute()
