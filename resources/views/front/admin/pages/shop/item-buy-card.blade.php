@@ -92,7 +92,7 @@
                                                 style="width: auto"
                                                 class="select2" onchange="changeStatusDelivery('{{ $cart->id}}', this.value, 'row-el-item-buy-{{ $cart->id}}')">
                                                 @foreach ($statusesDelivery as $statusItem)
-                                                    <option value="{{ $statusItem->id }}">{{ $statusItem->title}}</option>
+                                                    <option value="{{ $statusItem->id }}" {{ $cart->status_delivery == $statusItem->code ? 'selected':''}}>{{ $statusItem->title}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

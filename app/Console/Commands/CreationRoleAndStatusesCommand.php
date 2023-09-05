@@ -41,6 +41,7 @@ class CreationRoleAndStatusesCommand extends Command
      */
     public function handle()
     {
+        return ;
         $roleClient = Role::findOrCreate('client','Cliente');
         $roleAdmin = Role::findOrCreate('admin','Administrador');
 
