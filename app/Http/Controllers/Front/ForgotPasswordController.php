@@ -50,6 +50,12 @@ class ForgotPasswordController extends Controller
                 $message->subject('Restablecer mi contraseña');
             });
         } catch (\Throwable $th) {
+            Log::error($th->getMessage().': ForgotPasswordController::submitForgetPasswordForm', [
+                'message'   => $th->getMessage(),
+                'code'      => $th->getCode(),
+                'line'      => $th->getLine(),
+                'trace'     => $th->getTrace()
+            ]);
             return back()->with('error_message', 'No hemos podido enviar su el correo electrónico, vuelva a intentarlo más tarde.');
         }
 
