@@ -8,33 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CartShop extends Model 
+class CartShopProductsStore extends Model 
 {
-  use SoftDeletes;
-  protected $table = 'cart_shop';
+  // use SoftDeletes;
+  protected $table = 'cart_shop_products_store';
   protected $fillable = [
     'id',
-    'uuid', // Session in local storage
-    'user_id', // default null
-    'count_products',
-    'ip_address',
-    'total_items_products',
-
-    // Money values
-    
-    'subtotal',
-    'subtotal_before_discount',
-    'discount',
-    'total_before_tax',
-    'percentage_tax',
-    'total_tax',
-    'subtotal_after_tax',
-    'total',
-    'delivery_cost',
-    'total_more_delivery',
+    'product_shop_id',
+    'cart_shop_store_id',
+    'shop_cart_id',
+    'transaction',
+    'count',
     // end money values
-
-
     'status', // 'created', 'deleted', 'finished'
     'created_at',
     'updated_at',
@@ -60,15 +45,13 @@ class CartShop extends Model
   ];
 
 
-  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int'];
+  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format'];
 
   public function getTotalFormatAttribute()
   {
     return twoStringDecimal($this->total);
   }
-  public function getTotalMoreDeliveryIntAttribute() {
-    return round((+twoStringDecimal($this->total)) * 100, 0);
-  }
+  
 
   public function getDeliveryCostFormatAttribute()
   {

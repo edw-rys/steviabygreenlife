@@ -4,13 +4,14 @@ namespace App\Service;
 use App\Models\CartShop;
 use App\Models\CartShopInvoice;
 use App\Models\CartShopProducts;
-use App\Models\CategoryProduct;
+use App\Models\CartShopProductsStore;
+use App\Models\CartShopStore;
 use App\Models\Location\City;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Schema;
 
 class CartProductService 
 {
@@ -18,18 +19,24 @@ class CartProductService
     private CartShop $cartShop;
     private CartShopInvoice  $cartShopInvoice;
     private CartShopProducts $cartShopProducts;
+    private CartShopProductsStore $productStore;
+    private CartShopStore $cartShopStore;
     private City $cityModel;
 
     
     public function __construct(
+        CartShopProductsStore $productStore,
         CartShopProducts $cartShopProducts,
         CartShopInvoice  $cartShopInvoice,
+        CartShopStore    $cartShopStore,
         CartShop         $cartShop,
         Product          $productModel,
         City         $cityModel
     ) {
         $this->cartShop = $cartShop;
+        $this->cartShopStore = $cartShopStore;
         $this->productModel = $productModel;
+        $this->productStore = $productStore;
         $this->cartShopInvoice = $cartShopInvoice;
         $this->cartShopProducts = $cartShopProducts;
         $this->cityModel = $cityModel;
@@ -104,8 +111,9 @@ class CartProductService
             $productCart = $this->calculateItemValues($productCart, $productShopReq['qty'], $productCart->product);
             $productCart->save();
         }
-        $this->restoreCart($cart);
         $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        $this->restoreCart($cart);
+        // $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
 
         return [
             'status'    => 'success',
@@ -223,6 +231,88 @@ class CartProductService
     }
 
     /**
+     * @param $transactionKey
+     */
+    public function getCartByTrCode($transactionKey) {
+        $transactionObject = $this->cartShopStore
+            ->where('transaction', $transactionKey)
+            ->first();
+
+        if($transactionObject == null){
+            return null;
+        }
+
+        $cart = $this->cartShop
+            ->with(['products'=> function($query){
+                $query->with('product');
+            }])
+            ->with(['billing'])
+            ->find($transactionObject->shop_cart_id);
+        return [
+            'cart'  => $cart,
+            'transaction'   => $transactionObject
+        ];
+    }
+    /**
+     * @param $transactionKey
+     * @param $with
+     */
+    public function getCartByTransaction($transactionKey) {
+        $transactionObject = $this->cartShopStore
+            ->where('transaction', $transactionKey)
+            ->with('products')
+            ->first();
+
+        if($transactionObject == null){
+            return null;
+        }
+        $cart = $this->cartShop
+            ->with(['products'=> function($query) use($transactionObject){
+                $query->with('product')
+                    ->withTrashed()
+                    ->whereIn('id',$transactionObject->products->map(function($item){ return $item->product_shop_id;}));
+            }])
+            ->with(['billing'])
+            ->find($transactionObject->shop_cart_id);
+        return [
+            'cart'  => $cart,
+            'transaction'   => $transactionObject
+        ];
+    }
+
+    /**
+     * @param $cart
+     */
+    public function resetPorductsAllowInStore($cart, $transactionObject) {
+        $cart->status = ConstantsService::$CART_STATUS_FINISHED;
+        $cart->transaction_code = $transactionObject->transaction;
+        $cart->save();
+        foreach ($cart->products as $key => $productShop) {
+            $productShop->status = ConstantsService::$CART_STATUS_FINISHED;
+            $productShop->save();
+        }
+        $this->cartShopProducts->where('cart_shop_id', $cart->id)
+            ->where('status', '<>', ConstantsService::$CART_STATUS_FINISHED)
+            ->delete();
+        
+        foreach ($cart->products as $key => $productCart) {
+            $productCart->count = 0;
+            $elItem = $transactionObject->products->firstWhere('product_shop_id', $productCart->id);
+            if($elItem == null){
+                continue;
+            }
+            $productCart = $this->calculateItemValues($productCart, $elItem->count, $productCart->product);
+            $productCart->save();
+        }
+
+        $cart = $this->cartShop
+            ->with(['products', 'products.product'])
+            ->find($cart->id);
+
+        $this->restoreCart($cart);
+    }
+
+    /**
      * @param $token 
      * @param $user_id 
      * @return CartShop
@@ -242,10 +332,10 @@ class CartProductService
         }
         if($cartByToken == null && $user_id != null){
             $cartByToken = $this->cartShop->where('user_id', $user_id )
-            ->where(function($query){
-                $query->where('status', ConstantsService::$CART_STATUS_CREATED)
-                    ->orWhere('status', ConstantsService::$CART_STATUS_PENDING_PAYMENT);
-            })
+                ->where(function($query){
+                    $query->where('status', ConstantsService::$CART_STATUS_CREATED)
+                        ->orWhere('status', ConstantsService::$CART_STATUS_PENDING_PAYMENT);
+                })
                 ->with($with)
                 ->first();
         }
@@ -317,27 +407,33 @@ class CartProductService
     /**
      * @param $cart
      */
-    public function createBillingInfo($cart) : CartShopInvoice {
-        return $this->cartShopInvoice->create([
-            'user_id'       => auth()->check() ? auth()->user()->id : null, // default null
-            'uuid'          => $cart->uuid,
-            'cart_shop_id'  => $cart->id,
-            'name'          => auth()->check() ? auth()->user()->name : '',
-            'last_name'     => auth()->check() ? auth()->user()->name : '',
-            // Location
-            'country_id'    => auth()->check() ? auth()->user()->country_id : null,
-            'state_id'      => auth()->check() ? auth()->user()->state_id : null,
-            'city_id'       => auth()->check() ? auth()->user()->city_id : null,
-            'address'       => '',
-            'apartamento'   => null,
-            // End location
+    public function updateBillingInfo(Request $request, $cart)  {
+        if($cart->billing == null){
+            $billing = $this->cartShopInvoice->newInstance();
+            $billing->uuid          = $cart->uuid;
+            $billing->cart_shop_id  = $cart->id;
+        }else{
+            $billing = $cart->billing;
 
-            'phone'         => null,
-            'email'         => auth()->check() ? auth()->user()->email : null,
-            'instruction'   => null,
-            'postal_code'   => null,
-            'business_name' => null,
-        ]);
+        }
+        $billing->user_id       = auth()->check() ? auth()->user()->id : null;
+        $billing->identification_number = $request->billing_identification_number;
+        $billing->name          = $request->billing_first_name;
+        $billing->last_name     = $request->billing_last_name;
+        // Location
+        $billing->country_id    = $request->billing_country_id;
+        $billing->state_id      = $request->billing_state_id;
+        $billing->city_id       = $request->billing_city_id;
+        $billing->address       = $request->billing_address;
+        $billing->apartamento   = $request->billing_apartamento;
+        // End location
+        $billing->phone         = $request->billing_phone;
+        $billing->email         = $request->billing_email;
+        $billing->aditional_info= $request->order_comments ?? '';
+        $billing->postal_code   = $request->billing_postal_code;
+        $billing->business_name = $request->billing_company;
+        $billing->save();
+        return $billing;
     }
 
     /**
@@ -345,7 +441,7 @@ class CartProductService
      * @param $status
      */
     public function changeStatusCart($cart, $status) {
-        if(!in_array( $status, [  ConstantsService::$CART_STATUS_CREATED, ConstantsService::$CART_STATUS_PENDING_PAYMENT, ConstantsService::$CART_STATUS_PENDING_FINISHED ])){
+        if(!in_array( $status, [  ConstantsService::$CART_STATUS_CREATED, ConstantsService::$CART_STATUS_PENDING_PAYMENT, ConstantsService::$CART_STATUS_FINISHED ])){
             return false;
         }
         DB::beginTransaction();
@@ -403,6 +499,88 @@ class CartProductService
             'html_order'  => view('front.pages.checkout.order-review')
                 ->with('cart', $cart)->render(),
         ];
+    }
 
+    /**
+     * @param $cart
+     */
+    public function processToPayment($cart) {
+        $cart->transaction_code = generateRandomString(5) . $cart->id .generateRandomString(5);
+        $cart->save();
+
+        $transactionShop = $this->cartShopStore->create([
+            'transaction'   => $cart->transaction_code,
+            'shop_cart_id'  => $cart->id
+        ]);
+
+        foreach ($cart->products as $key => $productShop) {
+            $this->productStore->create([
+                'product_shop_id'       => $productShop->id,
+                'shop_cart_id'      => $cart->id,
+                'transaction'       => $cart->transaction_code,
+                'cart_shop_store_id'=> $transactionShop->id,
+                'count'             => $productShop->count
+            ]);
+        }
+
+
+    }
+
+    /**
+     * @param Request $request
+     * @param $transaction
+     */
+    public function validatePayment(Request $request, $transaction) {
+        $apiRequestService = new ApiRequestService(config('app.custompay.checkpaymenturl'));
+        try {
+            $responseApi = $apiRequestService->validatrPayment($request->input('id'), $request->input('clientTransactionId'));
+            if(!$responseApi ){
+                throw new Exception("No nos hemos podido comunicar con ". config('app.paymentapp') .", por favor, espere la verificación", 1);
+            }
+            if(!isset($responseApi->statusCode)){
+                throw new Exception(isset($responseApi['message'])? $responseApi['message']: 'No hemos recibido alguna respuesta por parte de '. config('app.paymentapp'), 1);
+            }
+            $transaction->response = $responseApi ? json_encode($responseApi) : null;
+            $transaction->request = json_encode([
+                'id'            => $request->input('id'),
+                'clientTxId'    => $request->input('clientTransactionId')
+            ]);
+            $transaction->response_id = $request->input('id');
+            $transaction->card_type = isset($responseApi->cardType)?   $responseApi->cardType  : null;
+            $transaction->last_digits = isset($responseApi->lastDigits)?   $responseApi->lastDigits  : null;
+            $transaction->card_brand = isset($responseApi->cardBrand)?   $responseApi->cardBrand  : null;
+            $transaction->card_brand_code = isset($responseApi->cardBrandCode)?   $responseApi->cardBrandCode  : null;
+            $transaction->amount = isset($responseApi->amount)?   $responseApi->amount : null;
+            $transaction->status_pay = isset($responseApi->transactionStatus)?   $responseApi->transactionStatus  : null;
+            $transaction->status_pay_code = isset($responseApi->statusCode)?   $responseApi->statusCode  : null;
+            $transaction->message = isset($responseApi->message)?   $responseApi->message  : null;
+            $transaction->message_code = isset($responseApi->messageCode)?   $responseApi->messageCode  : null;
+            
+            $transaction->document = isset($responseApi->document)?   $responseApi->document  : null;
+            $transaction->currency = isset($responseApi->currency)?   $responseApi->currency  : null;
+            $transaction->authorization_code = isset($responseApi->authorizationCode) ? $responseApi->authorizationCode  : null;
+            $transaction->save();
+
+            return [
+                'response'  => json_encode($responseApi),
+                'message'   => 'Transacción '. $transaction->message,
+                'continue'  => $responseApi->statusCode == 3,
+                'status'    => 'success',
+            ];
+        } catch (\Throwable $th) {
+            // dd($th);
+            Log::error($th->getMessage().': CartProductService::validatePayment', [
+                'message'   => $th->getMessage(),
+                'code'      => $th->getCode(),
+                'line'      => $th->getLine(),
+                'trace'     => $th->getTrace()
+            ]);
+            return [
+                'status'    => 'error',
+                'message'   => $th->getMessage(),
+                'continue'  => false
+            ];
+        }
+        
     }
 }

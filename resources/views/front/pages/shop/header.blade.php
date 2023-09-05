@@ -134,11 +134,13 @@
                                 </p>
 
 
-                                <p class="woocommerce-mini-cart__buttons buttons"><a
+                                <p class="woocommerce-mini-cart__buttons buttons">
+                                    <a
                                         href="{{ route('front.cart.show') }}"
-                                        class="button wc-forward wp-element-button">Ir al carrito</a><a
-                                        href="{{ route('front.cart.checkout') }}"
-                                        class="button checkout wc-forward wp-element-button">Pagar</a></p>
+                                        class="button wc-forward wp-element-button">Ir al carrito</a>
+                                    <a
+                                        href=""
+                                        class="checkout-button-route button checkout wc-forward wp-element-button">Pagar</a></p>
 
 
 

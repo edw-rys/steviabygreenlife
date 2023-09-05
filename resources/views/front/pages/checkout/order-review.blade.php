@@ -31,14 +31,6 @@
 
         </tbody>
         <tfoot>
-
-            {{-- <tr class="cart-subtotal">
-                                                        <th>Subtotal</th>
-                                                        <td><span class="woocommerce-Price-amount amount"><bdi><span
-                                                                        class="woocommerce-Price-currencySymbol">£</span>3,063.75</bdi></span>
-                                                        </td>
-                                                    </tr> --}}
-
             <tr class="order-total">
                 <th>Total</th>
                 <td><strong><span class="woocommerce-Price-amount amount"><bdi><span
@@ -50,17 +42,8 @@
 
         </tfoot>
     </table>
-
 </div>
 <div id="payment" class="woocommerce-checkout-payment">
-    {{-- <ul class="wc_payment_methods payment_methods methods">
-                                                <li class="woocommerce-notice woocommerce-notice--info woocommerce-info">
-                                                    <span
-                                                        class="woocommerce-no-available-payment-methods-message e-description">Sorry,
-                                                        it seems that there are no available payment methods for your state.
-                                                        Please contact us if you require assistance or wish to make
-                                                        alternate arrangements.</span></li>
-                                            </ul> --}}
     <div class="form-row place-order">
 
         <div class="woocommerce-terms-and-conditions-wrapper">
@@ -71,7 +54,7 @@
             </div>
         </div>
 
-
+        <div id="pp-button"></div>
         <button type="submit" class="button alt wp-element-button" name="woocommerce_checkout_place_order"
             id="place_order" value="Place order" data-value="Place order">Realizar pedido</button>
 

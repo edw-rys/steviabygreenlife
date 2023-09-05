@@ -67,6 +67,9 @@
     .color-white{
         color: #ffffff !important;
     }
+    .hidden{
+        display: none !important;
+    }
 </style>
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/select2.min.css')}}">
 

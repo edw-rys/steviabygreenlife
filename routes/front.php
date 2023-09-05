@@ -31,8 +31,13 @@ Route::post('/store/product/{id}/add-to-cart','ShopController@show')->name('fron
 
 
 Route::get('/store/cart/show','CartController@show')->name('front.cart.show');
-Route::get('/store/cart/checkout','CartController@checkout')->name('front.cart.checkout');
-Route::post('/store/cart/save-checkout','CartController@saveCheckout')->name('front.cart.save-checkout');
+Route::get('/store/cart/checkout/{token}','CartController@checkout')->name('front.cart.checkout');
+Route::post('/store/cart/save-checkout','CartController@processCheckout')->name('front.cart.save-checkout');
+
+// PAY
+Route::get('/store/process-pay','CartController@checkPay')->name('front.process-pay');
+Route::get('/store/process-result-pay/{transaction}','CartController@resultPay')->name('front.result.pay');
+Route::get('/store/process-error-pay','CartController@showErrorPay')->name('front.result.error_pay');
 
 Route::put('/store/cart/billing/change-city','CartController@changeCityRecalculateDelivery')->name('front.cart.billing.change-city');
 
@@ -40,6 +45,7 @@ Route::put('/store/cart/billing/change-city','CartController@changeCityRecalcula
 Route::get('/store/cart/get-items','CartController@getMyItems')->name('front.cart.get-items');
 Route::post('/store/cart/add-product', 'CartController@addProduct')->name('front.cart.add-item');
 Route::post('/store/cart/change-items-counts', 'CartController@changeItemsProducts')->name('front.cart.change-items-count');
+Route::get('/store/cart/reload-items', 'CartController@getReloadItems')->name('front.cart.reload-items');
 Route::delete('/store/cart/remove-item', 'CartController@removeItem')->name('front.cart.remote-item');
 
 

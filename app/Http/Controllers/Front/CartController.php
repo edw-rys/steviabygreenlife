@@ -7,6 +7,7 @@ use App\Http\Requests\Cart\AddProductToCartRequest;
 use App\Http\Requests\Cart\ChangeCityBillingToCartRequest;
 use App\Http\Requests\Cart\ChangeItemsToCartRequest;
 use App\Http\Requests\Cart\RemoveItemToCartRequest;
+use App\Http\Requests\Cart\StoreBillingToCartRequest;
 use App\Service\CartProductService;
 use App\Service\ConstantsService;
 use App\Service\UserService;
@@ -25,7 +26,7 @@ class CartController extends Controller
         CartProductService $cartProductService,
         UtilsService $utilsService,
         UserService $userService
-    ) {
+        ) {
         $this->cartProductService = $cartProductService;
         $this->utilsService = $utilsService;
         $this->userService = $userService;
@@ -247,6 +248,29 @@ class CartController extends Controller
         $response = $this->cartProductService->restoreCartProduct($request, $cart);
         return response()->json($response, $response['code']);
     }
+
+    /**
+     * @param Request $request
+     */
+    public function getReloadItems(Request $request) {
+        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        if($cart == null){
+            return response()->json(['message'=> 'Su carrito no fue encontrado'], 400);
+        }
+        if($cart->products->isEmpty()){
+            return response()->json(['message'=> 'Su carrito no tiene productos'], 400);
+        }
+        return response()->json(
+            [
+                'status'    => 'success',
+                'code'      => '200',
+                'message'   => 'Se ha actualizado la sección',
+                'total_format'  => $cart->total_format,
+                'html_items'  => view('front.pages.cart.body-table')
+                    ->with('cart', $cart)->render(),
+            ], 200
+        );
+    }
     /**
      * @param RemoveItemToCartRequest $request
      */
@@ -258,8 +282,9 @@ class CartController extends Controller
     /**
      * 
      */
-    public function checkout() {
-        $cart = $this->cartProductService->getCartShop(null, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing']);
+    public function checkout($token) {
+        $cart = $this->cartProductService->getCartShop($token, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing']);
+
         if($cart == null){
             return redirect()->route('front.shop');
         }
@@ -301,6 +326,7 @@ class CartController extends Controller
                 'email'         => auth()->check() ? auth()->user()->email : null,
                 'instruction'   => null,
                 'business_name' => null,
+                'identification_number' => '',
                 'postal_code'   => '',
                 'aditional_info'=> ''
             ];
@@ -313,8 +339,141 @@ class CartController extends Controller
             ->with('country', $country);
     }
 
+    /**
+     * @param 
+     */
     public function changeCityRecalculateDelivery(ChangeCityBillingToCartRequest $request) {
         $response = $this->cartProductService->changeCityRecalculateDelivery($request->tokenCart, $request->city_id);
         return response()->json($response, $response['code']);
+    }
+
+    /**
+     * @param StoreBillingToCartRequest $request
+     */
+    public function processCheckout(StoreBillingToCartRequest $request) {
+        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing']);
+
+        if($cart == null){
+            return response()->json(['message'=> 'Su carrito no fue encontrado'], 400);
+        }
+        if($cart->products->isEmpty()){
+            return response()->json(['message'=> 'Su carrito no tiene productos'], 400);
+        }
+        // Save billing info
+        $billing = $this->cartProductService->updateBillingInfo($request, $cart);
+
+        $city = $billing->city;
+        $cart->delivery_cost = $city->delivery_cost;         
+        $cart->total_more_delivery = $cart->delivery_cost + $cart->total;
+        $cart->save();
+
+        $this->cartProductService->processToPayment($cart);
+
+        $this->cartProductService->changeStatusCart($cart, ConstantsService::$CART_STATUS_PENDING_PAYMENT);
+
+        
+        return response()->json([
+            'total'     => $cart->total_more_delivery_int,
+            'tokenCart' => $cart->uuid,
+            'html_order'  => view('front.pages.checkout.order-review')
+                ->with('cart', $cart)->render(),
+            'products'  => $cart->products->map(function($item){
+                return [
+                    'id'    => $item->id,
+                    'count'    => $item->count,
+                ];
+            }),
+            'billing'   => [
+                'name'  => $billing->name,
+                'last_name'  => $billing->last_name,
+                'identification_number' => $billing->identification_number,
+                'address'               => $billing->address,
+                'email'                 => $billing->email,
+                'phone'                 => $billing->phone,
+            ],
+            'payment'   => [
+                'id_app'    => config('app.custompay.id_app'),
+                'token'     => config('app.custompay.token'),
+                'client_id' => $cart->transaction_code,
+            ],
+            'currency'  => "USD"
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function checkPay(Request $request) {
+        $request->validate([
+            'id'    => ['required', 'integer'],
+            'clientTransactionId'   => ['required']
+        ]);
+
+        $cart = $this->cartProductService->getCartByTransaction($request->clientTransactionId);
+        
+        if($cart == null || $cart['cart'] == null){
+            return redirect()->route('front.shop');
+        }
+        if($cart['cart']->status == ConstantsService::$CART_STATUS_FINISHED){
+            // return redirect()->route('front.result.pay', ['transaction' => $cart['transaction']->transaction ] );
+        }
+
+        $result = $this->cartProductService->validatePayment($request, $cart['transaction']);
+        if(!$result['continue']){
+            if($result['status'] == 'error'){
+                return redirect()->route('front.result.error_pay');
+            }
+            return redirect()->route('front.result.pay', ['transaction' => base64_encode($cart['transaction']->transaction) ] );
+        }
+
+        $this->cartProductService->resetPorductsAllowInStore( $cart['cart'], $cart['transaction']);
+        // Check user
+        if($cart['cart']->user_id == null){
+            $randomString = generateRandomString('4');
+            $request->merge([
+                'name'      => $cart['cart']->billing->name,
+                'last_name' => $cart['cart']->billing->last_name,
+                'email'     => $cart['cart']->billing->email . '__' . $randomString,
+                'email_shop'=> $cart['cart']->billing->email,
+                'password'  => $cart['cart']->billing->email
+            ]);
+            $user = $this->userService->create($request, 1);
+            $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
+            $user->save();
+            $cart['cart']->user_id = $user->id;
+            $cart['cart']->save();
+        }
+
+        // Send mail
+        
+        
+        return redirect()->route('front.result.pay', ['transaction' => base64_encode($cart['transaction']->transaction) ] )
+            ->with('remove_token', 'yes');
+    }
+
+    /**
+     * @param $transaction
+     */
+    public function resultPay($transaction) {
+        $transaction = base64_decode($transaction);
+        $cart = $this->cartProductService->getCartByTrCode($transaction);
+        if($cart == null){
+            abort(404);
+        }
+
+        $remove_token = session('remove_token') ?? false;
+        if($remove_token == 'yes'){
+            session()->forget('remove_token');
+        }
+        return view('front.pages.checkout.result')
+            ->with('cart', $cart['cart'])
+            ->with('transaction', $cart['transaction'])
+            ->with('remove_token', $remove_token);
+    }
+    /**
+     * @param Request $request
+     */
+    public function showErrorPay(Request $request) {
+        return view('front.pages.checkout.error');
     }
 }

@@ -37,14 +37,16 @@ class UserService
 
     /**
      * @param Request $request
+     * @param $automatic
      */
-    public function create(Request $request) {
+    public function create(Request $request, $automatic = 0) {
         $user = $this->user->create([
             'name'          => $request->input('name'), 
             'last_name'     => $request->input('last_name'), 
             'email'         => $request->input('email'), 
             'password'      => bcrypt($request->input('password')),
-            'automatic'     => 0,
+            'automatic'     => $automatic,
+            'email_shop'    => $request->input('email_shop'),
             'country_id'    => 1
         ]);
         return $user;

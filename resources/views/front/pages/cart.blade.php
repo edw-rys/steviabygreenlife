@@ -14,11 +14,11 @@
 @endsection
 
 {{-- Scripts --}}
-@section('scripts_body_after')
-@if ($cart != null)
-
+@section('scripts_body_last')
     <script>
+        @if($cart != null)
         localStorage.setItem(enviropments.cartTokenStorage, '{{ $cart->uuid}}');
+        @endif
 
         function activeButtonRestartCart() {
             $('#update_cart').removeAttr('disabled')
@@ -43,6 +43,27 @@
                     $('#price-total-element').html(response.total_format);
                     $('#body-items-products').html(response.html_items);
                     unblock($('#post-show-items-cart'));
+                },
+                error: function(error) {
+                    unblock($('#post-show-items-cart'));
+                    notifyErrorGlobal(error);
+                },
+            });
+        }
+
+        function reloadItems() {
+            block($('#post-show-items-cart'))
+            $.easyAjax({
+                url: '{{ route('front.cart.reload-items') }}',
+                container: '#formUpdateItems',
+                type: "GET",
+                redirect: false,
+                data: {tokenCart: localStorage.getItem(enviropments.cartTokenStorage)},
+                success: function(response) {
+                    $('#price-total-element').html(response.total_format);
+                    $('#body-items-products').html(response.html_items);
+                    unblock($('#post-show-items-cart'));
+                    $('.cart-collaterals').removeClass('hidden');
                 },
                 error: function(error) {
                     unblock($('#post-show-items-cart'));
@@ -83,8 +104,9 @@
                 },
             });
         }
+
+        reloadItems();
     </script>
-@endif
 @endsection
 
 @section('main-content')
@@ -114,9 +136,7 @@
                                 <div class="woocommerce-notices-wrapper"></div>
                                 <form class="woocommerce-cart-form" id="formUpdateItems" action="{{route('front.cart.change-items-count')}}" onsubmit="changeItemsCount(event)"
                                     method="post">
-                                    @if ($cart != null)
-                                        <input type="hidden" name="tokenCart" id="tokenCartVal" value="{{ $cart->uuid }}">
-                                    @endif
+                                    <input type="hidden" name="tokenCart" id="tokenCartVal" value="">
                                     @csrf
                                     <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents"
                                         cellspacing="0">
@@ -136,9 +156,9 @@
                                     </table>
                                 </form>
 
-                                @if ($cart != null)
+                                
 
-                                <div class="cart-collaterals">
+                                <div class="cart-collaterals @if ($cart == null) hidden @endif">
                                     <div class="cart_totals ">
 
 
@@ -161,7 +181,7 @@
                                                             <span class="woocommerce-Price-amount amount">
                                                                 <bdi>
                                                                     <span class="woocommerce-Price-currencySymbol">$</span>
-                                                                    <span id="price-total-element">{{ $cart->total_format}}</span>
+                                                                    <span id="price-total-element">{{ $cart != null ? $cart->total_format : '0.00'}}</span>
                                                                 </bdi>
                                                             </span>
                                                         </strong>
@@ -172,13 +192,13 @@
 
                                         <div class="wc-proceed-to-checkout">
 
-                                            <a href="{{ route('front.cart.checkout')}}"
-                                                class="checkout-button button alt wc-forward wp-element-button">
+                                            <a href=""
+                                                class="checkout-button-route checkout-button button alt wc-forward wp-element-button">
                                                 Proceder a pagar</a>
                                         </div>
                                     </div>
                                 </div>
-                                @endif
+                                
                             </div>
                         </div><!-- .entry-content -->
                     </article><!-- #post-## -->

@@ -31,7 +31,7 @@
                     </span>
                 </div>
                 <div class="checkout-buttons">
-                    <a href="{{ route('front.cart.checkout')}}" value="Realizar compra"
+                    <a href="{{ route('front.cart.show')}}" value="Realizar compra"
                         class="primaryColor-bg2 checkout-btn">Realizar compra</a>
                 </div>
             </div>

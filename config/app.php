@@ -235,4 +235,11 @@ return [
 
     ],
 
+    'custompay' => [
+        'checkpaymenturl'=> env('PAYMENT_PP_CHEKURL'),
+        'id_app'        => env('PAYMENT_PP_ID_APP'),
+        'token'         => env('PAYMENT_PP_TOKEN'),
+        'client_id'     => env('PAYMENT_PP_CLIENT_ID'),
+    ],
+    'paymentapp'    => env('PAYMENT_APP')
 ];

@@ -15,6 +15,7 @@
 
 {{-- Scripts --}}
 @section('scripts_body_after')
+<script src="https://pay.payphonetodoesposible.com/api/button/js?appId={{ config('app.custompay.id_app')}}"></script>
 <script>
     $('.select2').select2();
 
@@ -105,7 +106,70 @@
             },
         });
     }
-    getStates('{{ $cart->billing->country_id }}');
+
+    function processCheckout(evt){
+        evt.preventDefault();
+        block($('#form-checkout'))
+        $('#tokenCartVal').val(localStorage.getItem(enviropments.cartTokenStorage));
+        $.easyAjax({
+            url: '{{ route('front.cart.save-checkout') }}',
+            container: '#form-checkout',
+            type: "POST",
+            redirect: false,
+            data: $('#form-checkout').serialize(),
+            success: function(response) {
+                if (response.message) {
+                    $.notify(
+                        response.message, 
+                        { position:"bottom right",className:"success" }
+                    );
+                }
+                $('#order_review').html(response.html_order);
+                unblock($('#form-checkout'));
+                $('#place_order').addClass('hidden');
+                payphone.Button({
+                    //token obtenido desde la consola de developer
+                    token: response.payment.token,
+                    //PARÁMETROS DE CONFIGURACIÓN
+                    btnHorizontal: true,
+                    btnCard: true,
+                    createOrder: function(actions){
+                    //Se ingresan los datos de la transaccion ej. monto, impuestos, etc
+                    return actions.prepare({
+                            amount: response.total,
+                            amountWithoutTax: response.total,
+                            currency: response.currency,
+                            clientTransactionId: response.payment.client_id,
+                            lang: "es",
+                            email: response.billing.email,
+                            // phoneNumber: response.billing.phone,
+                            documentId: response.billing.identification_number
+                        }).then(function(paramlog){
+                            console.log(paramlog);
+                            return paramlog;
+                        }).catch(function(paramlog2){
+                            // location.reload();
+                            console.log(paramlog2);
+                            return paramlog2;
+                        });
+                    },
+
+                    onComplete: function(model, actions){
+                        console.log("Modelo:");
+                        console.log(model);
+                    }
+                }).render("#pp-button");
+                        
+            },
+            error: function(error) {
+                unblock($('#form-checkout'));
+                notifyErrorGlobal(error);
+            },
+        });
+    }
+
+    
+    getStates('{{ $cart->billing->state_id }}');
 
 </script>
 @endsection
@@ -122,7 +186,6 @@
         </div>
     </div>
     {{-- form --}}
-
     <div id="content" class="site-content" tabindex="-1">
         <div class="col-full">
             <div id="primary">
@@ -132,10 +195,15 @@
                             <div class="woocommerce">
                                 <div class="woocommerce-notices-wrapper"></div>
                                 <form name="checkout" method="post" class="checkout woocommerce-checkout"
+                                    id="form-checkout"
                                     action="{{ route('front.cart.save-checkout')}}" enctype="multipart/form-data"
-                                    novalidate="novalidate">
+                                    novalidate="novalidate"
+                                    onsubmit="processCheckout(event)">
                                     <div class="col2-set" id="customer_details">
                                         <div class="col-1">
+                                            @csrf
+                                            {{-- tokenCart --}}
+                                            <input type="hidden" id="tokenCartVal" value="" name="tokenCart">
                                             <div class="woocommerce-billing-fields">
                                                 <h3>Datos de facturación</h3>
                                                 <div class="woocommerce-billing-fields__field-wrapper">
@@ -160,6 +228,15 @@
                                                         </span>
                                                     </p>
                                                     
+                                                    
+                                                    {{-- Company name --}}
+                                                    <p class="form-row form-row-wide" id="billing_identification_number_field" data-priority="30">
+                                                        <label for="billing_identification_number" class="">Cédula&nbsp;<abbr class="required" title="required">*</abbr></label>
+                                                        <span class="woocommerce-input-wrapper">
+                                                            <input type="text" class="input-text " name="billing_identification_number" id="billing_identification_number" placeholder="" value="{{ $cart->billing->identification_number }}" autocomplete="organization">
+                                                            {!!$errors->first("billing_identification_number", "<span class='text-danger'>:message</span>")!!}
+                                                        </span>
+                                                    </p>
                                                     {{-- Company name --}}
                                                     <p class="form-row form-row-wide" id="billing_company_field" data-priority="30">
                                                         <label for="billing_company" class="">Nombre de la compañía&nbsp;<span class="optional">(opcional)</span></label>
@@ -171,6 +248,7 @@
                                                     <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
                                                         id="billing_country_field" data-priority="40"><label
                                                             for="billing_country" class="">País: <strong> {{ $country->name }}</strong></label>
+                                                        <input type="hidden" value="{{ $country->id}}" name="billing_country_id">
                                                     </p>
                                                     {{-- states --}}
                                                     <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
@@ -178,7 +256,7 @@
                                                             for="form-states" class="">Provincia&nbsp;<abbr class="required"
                                                                 title="required">*</abbr></label><span
                                                             class="woocommerce-input-wrapper">
-                                                        <select id="form-states" name="billing_state_id" class="select2" onchange="getCities(this.value)"></select>
+                                                        <select id="form-states" name="billing_state_id" class="select2" onchange="getCities(this.value, {{$cart->billing->city_id ?? 'null'}})"></select>
                                                         {!!$errors->first("billing_state_id", "<span class='text-danger'>:message</span>")!!}
                                                     </p>
 
@@ -228,11 +306,9 @@
                                                         </span>
                                                     </p>
                                                     {{-- Phone --}}
-                                                    <p class="form-row form-row-wide validate-required validate-phone"
-                                                        id="billing_phone_field" data-priority="100"><label
-                                                            for="billing_phone" class="">Celular&nbsp;<abbr
-                                                                class="required" title="required">*</abbr></label><span
-                                                            class="woocommerce-input-wrapper"><input type="tel"
+                                                    <p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field" data-priority="100">
+                                                        <label for="billing_phone" class="">Celular&nbsp;<abbr class="required" title="required">*</abbr></label><span class="woocommerce-input-wrapper">
+                                                            <input type="tel"
                                                                 class="input-text " name="billing_phone"
                                                                 id="billing_phone" placeholder="" value="{{ $cart->billing->phone }}"
                                                                 autocomplete="tel"></span></p>

@@ -157,7 +157,20 @@ return [
         'last_password' => 'última contraseña',
         'cart_product.*.item_id'  => 'producto del carrito',
         'cart_product.*.qty'  => 'cantidad de productos',
-        'tokenCart'         => 'carrito de compras'
+        'tokenCart'         => 'carrito de compras',
+
+        'billing_first_name'    => 'nombres',
+        'billing_last_name'     => 'apellidos',
+        'billing_company'       => 'dompañia',
+        'billing_address'       => 'dirección',
+        'billing_apartamento'   => 'apartamento',
+        'billing_postal_code'   => 'código Postal',
+        'billing_phone'         => 'celular',
+        'billing_email'         => 'correo electrónico',
+        'order_comments'        => 'comentarios',
+        'billing_state_id'      => 'provincia',
+        'billing_city_id'       => 'ciudad',
+        'billing_identification_number' => 'número de identificación'
     ],
 
 ];

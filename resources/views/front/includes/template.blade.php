@@ -236,6 +236,19 @@
             loadCartFloat();
         }
     </script>
+    @yield('scripts_body_last')
+
+    <script>
+        !function(a) {
+            function resetRouteCheckout() {
+                var route = '{{ route('front.cart.checkout', ':token')}}';
+                route = route.replace(':token', localStorage.getItem(enviropments.cartTokenStorage));
+                $('.checkout-button-route').attr('href', route);
+            }
+            resetRouteCheckout();
+        }(jQuery);
+        
+    </script>
 </body>
 
 </html>
