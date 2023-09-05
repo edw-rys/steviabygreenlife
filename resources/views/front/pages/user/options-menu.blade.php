@@ -4,8 +4,12 @@
 
         <ul class="product-categories">
             <li class="cat-item cat-item-186"><a href="{{ route('user.profile') }}">Mi perfil</a></li>
-            <li class="cat-item cat-item-186"><a href="{{ route('user.favorites') }}">Mi favoritos</a></li>
-            <li class="cat-item cat-item-186"><a href="{{ route('user.shopping') }}">Mi compras</a></li>
+            @if (auth()->user()->hasRole(getAdminName()))
+                <li class="cat-item cat-item-186"><a href="{{ route('admin.shopping') }}">Ver compras realizadas</a></li>
+            @else
+                <li class="cat-item cat-item-186"><a href="{{ route('user.favorites') }}">Mi favoritos</a></li>
+                <li class="cat-item cat-item-186"><a href="{{ route('user.shopping') }}">Mi compras</a></li>
+            @endif
             <li class="cat-item cat-item-186"><a href="{{ route('user.change-password') }}">Cambiar contraseña</a></li>
         </ul>
     </div>

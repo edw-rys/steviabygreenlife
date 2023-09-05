@@ -72,15 +72,24 @@
                                                     <span class="menu-title"> > Mi perfil</span>
                                                 </a>
                                             </p>
-                                            <p>
-                                                <a class="ref-link-style" href="{{ route('user.favorites')}}">
-                                                    <span class="menu-title"> > Mis favoritos</span>
-                                                </a>
-                                            </p>
-                                                <a class="ref-link-style" href="{{ route('user.shopping')}}">
-                                                    <span class="menu-title"> > Mis compras</span>
-                                                </a>
-                                            </p>
+                                            @if (auth()->user()->hasRole(getAdminName()))
+                                                </p>
+                                                    <a class="ref-link-style" href="{{ route('admin.shopping')}}">
+                                                        <span class="menu-title"> > Ver compras</span>
+                                                    </a>
+                                                </p>
+                                            @else
+                                                <p>
+                                                    <a class="ref-link-style" href="{{ route('user.favorites')}}">
+                                                        <span class="menu-title"> > Mis favoritos</span>
+                                                    </a>
+                                                </p>
+                                                    <a class="ref-link-style" href="{{ route('user.shopping')}}">
+                                                        <span class="menu-title"> > Mis compras</span>
+                                                    </a>
+                                                </p>
+                                            @endif
+
                                             </p>
                                                 <a class="ref-link-style" href="{{ route('user.logout')}}">
                                                     <span class="menu-title"> > Cerrar sesión</span>

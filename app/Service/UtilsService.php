@@ -4,20 +4,24 @@ namespace App\Service;
 use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Location\State;
+use App\Models\StatusDelivery;
 
 class UtilsService 
 {
+    private StatusDelivery $statusDelivery;
     private Country $country;
     private State $state;
     private City $city;
 
 
     public function __construct(
+        StatusDelivery $statusDelivery,
         Country $country,
         State $state,
         City $city
     ) {
         $this->country = $country;
+        $this->statusDelivery = $statusDelivery;
         $this->state = $state;
         $this->city = $city;
     }
@@ -47,4 +51,10 @@ class UtilsService
         return $this->city->where('state_id', $state_id)->get();
     }
     
+    public function getStatusesDelivery() {
+        return $this->statusDelivery->newQuery()->get();
+    }
+    public function findStatusDelivery($id) {
+        return $this->statusDelivery->find($id);
+    }
 }

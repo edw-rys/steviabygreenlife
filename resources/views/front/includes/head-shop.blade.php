@@ -6,8 +6,8 @@
 @include('front.includes.metadata')
 <link rel="stylesheet" href="{{ asset('styles/shop/font-awesome.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('styles/shop/shop.css') }}"> --}}
-<link rel="stylesheet" href="{{ asset('styles/shop/woocommerce.css') }}">
-<link rel="stylesheet" href="{{ asset('styles/shop/style.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/shop/woocommerce.css') }}?v={{ config('app.website_version')}}">
+<link rel="stylesheet" href="{{ asset('styles/shop/style.css') }}?v={{ config('app.website_version')}}">
 <link rel="stylesheet" href="{{ asset('styles/shop/photoswipe/photoswipe.min.css')}}">
 <link rel="stylesheet" href="{{ asset('styles/shop/photoswipe/default-skin/default-skin.min.css')}}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">

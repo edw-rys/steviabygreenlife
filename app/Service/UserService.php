@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
+use Spatie\Permission\Models\Role;
 
 class UserService
 {
@@ -49,6 +50,7 @@ class UserService
             'email_shop'    => $request->input('email_shop'),
             'country_id'    => 1
         ]);
+        $roleClient = Role::findOrCreate('Cliente','client');
         return $user;
     }
 

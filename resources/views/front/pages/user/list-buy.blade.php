@@ -53,14 +53,15 @@
                                                                 data-id="7ade6a3" data-element_type="widget"
                                                                 data-widget_type="heading.default">
                                                                 <div class="elementor-widget-container">
-                                                                    <h3 class="elementor-heading-title elementor-size-default"> <a href="{{ route('front.result.pay', base64_encode($cart->transaction_code))}}">Pedido # {{ $cart->numero_pedido}} realizado el: {{$cart->created_at_format }}</a></h3>
+                                                                    <h3 class="elementor-heading-title elementor-size-default"> <a href="{{ route('front.result.pay', base64_encode($cart->transaction_code))}}">Pedido #{{ $cart->numero_pedido}} realizado el: {{$cart->created_at_format }}</a> <span class="badge {{ badgeStatusStore($cart->status) }}" style="font-size: 13px;padding: 7px;"> @lang('global.status-label.'. ( $cart->status ?? 'in-process'))</span></h3>
                                                                 </div>
                                                             </div>
                                                             <div class="elementor-element elementor-element-adc11cd elementor-widget__width-initial elementor-widget-tablet__width-inherit elementor-widget elementor-widget-text-editor"
                                                                 data-id="adc11cd" data-element_type="widget"
                                                                 data-widget_type="text-editor.default">
                                                                 <div class="elementor-widget-container">
-                                                                    <div class="elementor-text-editor elementor-clearfix">Enviar a: <strong>{{ $cart->billing->country->name ?? '-'}}-{{ $cart->billing->state->name ?? '-'}}-{{ $cart->billing->city->name ?? '-'}}</strong></div>
+                                                                    <div class="elementor-text-editor elementor-clearfix">Enviar a: <strong>{{ $cart->billing->country->name ?? '-'}}-{{ $cart->billing->state->name ?? '-'}}-{{ $cart->billing->city->name ?? '-'}} </strong> <span>| Estado de envío <strong style="border-bottom: 3px solid {{ $cart->status_delivery_color }};">{{ $cart->status_delivery_lang }}</strong></span></div>
+                                                                    {{-- <div class="elementor-text-editor elementor-clearfix">Enviar a: <strong>{{ $cart->billing->country->name ?? '-'}}-{{ $cart->billing->state->name ?? '-'}}-{{ $cart->billing->city->name ?? '-'}}</strong></div> --}}
                                                                 </div>
                                                             </div>
                                                             <div class="elementor-element elementor-element-d91d3b4 elementor-widget elementor-widget-freshio-single-product"
@@ -101,7 +102,7 @@
                                                                                         <div class="woosb-title">
                                                                                             <div class="woosb-title-inner">
                                                                                                 <a href="{{ route('front.shop.show', $item->product_id) }}">{{ $item->name}}</a>
-                                                                                                <span> <strong> ({{ $item->count}} items)</strong></span>
+                                                                                                <span> <strong> ({{ $item->count}} {{ $item->count == 1 ? 'item' : 'items'}})</strong></span>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="woosb-price">

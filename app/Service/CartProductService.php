@@ -88,6 +88,10 @@ class CartProductService
         ];
     }
 
+    /**
+     * @param Request $request 
+     * @param CartShop $cart
+     */
     public function restoreCartProduct(Request $request, CartShop $cart) {
         $productsShop = $request->input('cart_product');
         if ($productsShop == null || !is_array($productsShop)|| count($productsShop) == 0) {
@@ -236,7 +240,7 @@ class CartProductService
     public function getPurchases($user_id) {
         $countPaginate = 4;
         $items = $this->cartShop->where('user_id', $user_id)
-            ->where('status', ConstantsService::$CART_STATUS_FINISHED)
+            ->whereIn('status', [ConstantsService::$CART_STATUS_FINISHED, ConstantsService::$CART_STATUS_CANCELLED])
             ->with(['billing'])
             ->with('products')
             ->with(['billing.country'])
@@ -245,16 +249,25 @@ class CartProductService
             ->orderBy('created_at', 'desc')
             ->paginate($countPaginate);
         return $items;
-        return (object)[
-            'count'         => $items->total(),
-            'items'         => $items->items(),
-            'currentPage'   => $items->currentPage(),
-            'lastPaginate'  => $items->lastPage(),
-            'showStart'     => ($items->currentPage()-1)*$countPaginate +1,
-            'showEnd'       => ($items->currentPage()-1)*$countPaginate + count($items->items()),
-            'paginator'     => $items
-        ];
     }
+
+
+    /**
+     */
+    public function getAllPurchases() {
+        $countPaginate = 5;
+        $items = $this->cartShop
+            ->whereIn('status', [ConstantsService::$CART_STATUS_FINISHED, ConstantsService::$CART_STATUS_CANCELLED])
+            ->with(['billing'])
+            ->with('products')
+            ->with(['billing.country'])
+            ->with(['billing.state'])
+            ->with(['billing.city'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($countPaginate);
+        return $items;
+    }
+
     /**
      * @param $transactionKey
      */
@@ -390,6 +403,15 @@ class CartProductService
             ]);
         }
         return $cartByToken;
+    }
+
+    /**
+     * @param $id
+     */
+    public function findCartShop($id, $with = []) {
+        return $this->cartShop
+            ->with($with)
+            ->find($id);
     }
     
     /**

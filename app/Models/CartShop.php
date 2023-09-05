@@ -36,6 +36,9 @@ class CartShop extends Model
     'delivery_cost',
     'total_more_delivery',
     // end money values
+    'status_delivery',
+    'status_delivery_lang',
+    'status_delivery_color',
 
     'number_order',
 

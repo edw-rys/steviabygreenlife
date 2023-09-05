@@ -68,6 +68,47 @@
 @endif
 @endsection
 
+@section('scripts_body_last')
+    @if (auth()->check() && auth()->user()->hasRole(getAdminName()))
+        <script>
+            /**
+             * Remove a item 
+             */
+            function cancelOrder() {
+                if (!confirm('¿Está seguro/a de continuar con la cancelación de la orden?')) {
+                    return;
+                }
+                block($('#order_review'))
+                $.easyAjax({
+                    url: '{{ route('admin.cancel.order', $cart->id) }}',
+                    type: "DELETE",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        cart_id: '{{ $cart->id }}'
+                    },
+                    redirect: false,
+                    success: function(response) {
+                        if (response.message) {
+                            $.notify(
+                                response.message, 
+                                { position:"bottom right",className:"success" }
+                            );
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                        unblock($('#order_review'));
+                    },
+                    error: function(error) {
+                        unblock($('#order_review'));
+                        notifyErrorGlobal(error);
+                    },
+                });
+            }
+        </script>
+    @endif
+@endsection
+
 @section('main-content')
     @include('front.pages.shop.header')
     <div id="content" class="site-content" tabindex="-1">
@@ -83,6 +124,7 @@
                                     <div class="col-1">
                                         <div class="woocommerce-billing-fields">
                                             <h3>Datos de facturación para pedido # {{$cart->numero_pedido}}</h3>
+                                            <span class="badge {{ badgeStatusStore($cart->status) }}" style="font-size: 13px;padding: 7px;"> @lang('global.status-label.'. ( $cart->status ?? 'in-process'))</span>
                                             <div class="woocommerce-billing-fields__field-wrapper">
                                                 <p class="form-row form-row-first validate-required" data-priority="10">
                                                     <label class="bold">Nombres: </label>
@@ -200,7 +242,7 @@
                                                 <div class="message-box _success">
                                                     <i class="fa fa-check-circle" aria-hidden="true"></i>
                                                     <h3> Transacción Aprobada </h3>
-                                                <p>Gracias por su pago. estaremos <br> en contacto con más detalles en breve</p>      
+                                                    <p>Gracias por su pago. estaremos <br> en contacto con más detalles en breve</p>      
                                                 </div> 
                                             </div> 
                                         </div> 
@@ -260,6 +302,9 @@
 
                                             </tfoot>
                                         </table>
+                                        @if (auth()->check() && auth()->user()->hasRole(getAdminName()) && $cart->status != statusCancelled())
+                                            <button onclick="cancelOrder()" class="btn btn-sm btn-danger">Cancelar pedido</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

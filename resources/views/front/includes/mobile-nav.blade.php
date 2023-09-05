@@ -17,17 +17,25 @@
                         </a>
                     </li>
 
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
-                        <a href="{{ route('user.favorites')}}">
-                            <span class="menu-title"> > Mis favoritos</span>
-                        </a>
-                    </li>
-
-                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
-                        <a href="{{ route('user.shopping')}}">
-                            <span class="menu-title"> > Mis compras</span>
-                        </a>
-                    </li>
+                    
+                    @if (auth()->user()->hasRole(getAdminName()))
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
+                            <a href="{{ route('admin.shopping')}}">
+                                <span class="menu-title"> > Ver Compras</span>
+                            </a>
+                        </li>
+                    @else
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
+                            <a href="{{ route('user.favorites')}}">
+                                <span class="menu-title"> > Mis favoritos</span>
+                            </a>
+                        </li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
+                            <a href="{{ route('user.shopping')}}">
+                                <span class="menu-title"> > Mis compras</span>
+                            </a>
+                        </li>
+                    @endif
                     {{-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
                         <a href="{{ route('user.shopping')}}">
                             <span class="menu-title"> > Mis compras</span>

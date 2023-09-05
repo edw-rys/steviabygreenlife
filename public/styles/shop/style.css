@@ -10402,3 +10402,83 @@ html[dir=rtl] .site-main nav.navigation .nav-next a::after {
 html[dir=rtl] .mega-menu.mega-stretchwidth {
     right: auto!important
 }
+
+
+.badges .badge {
+    margin: 0 8px 10px 0; }
+  
+  .badge {
+    vertical-align: middle;
+    padding: 7px 12px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    border-radius: 30px;
+    font-size: 12px; }
+    .badge.badge-warning {
+      color: #fff; }
+    .badge.badge-primary {
+      background-color: #00BAB4; }
+    .badge.badge-secondary {
+      background-color: #cdd3d8; }
+    .badge.badge-success {
+      background-color: #47c363; }
+    .badge.badge-info {
+      background-color: #3abaf4; }
+    .badge.badge-danger {
+      background-color: #fc544b; }
+    .badge.badge-light {
+      background-color: #e3eaef;
+      color: #191d21; }
+    .badge.badge-white {
+      background-color: #ffffff;
+      color: #191d21; }
+    .badge.badge-dark {
+      background-color: #191d21; }
+  
+  h1 .badge {
+    font-size: 24px;
+    padding: 16px 21px; }
+  
+  h2 .badge {
+    font-size: 22px;
+    padding: 14px 19px; }
+  
+  h3 .badge {
+    font-size: 18px;
+    padding: 11px 16px; }
+  
+  h4 .badge {
+    font-size: 16px;
+    padding: 8px 13px; }
+  
+  h5 .badge {
+    font-size: 14px;
+    padding: 5px 10px; }
+  
+  h6 .badge {
+    font-size: 11px;
+    padding: 3px 8px; }
+  
+  .btn .badge {
+    margin-left: 5px;
+    padding: 4px 7px; }
+    .btn .badge.badge-transparent {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #fff; }
+
+.badge-success {
+        color: #fff;
+    background-color: #28a745;
+}
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.btn-danger, .btn-danger.disabled {
+    box-shadow: 0 2px 6px #fd9b96;
+    background-color: #fc544b;
+    border-color: #fc544b;
+    color: #fff; }
+    .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.disabled:hover, .btn-danger.disabled:focus, .btn-danger.disabled:active {
+        background-color: #fb160a !important; }

@@ -12,12 +12,14 @@ use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use OwenIt\Auditing\Auditable;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements AuditableContract
 {
     use Auditable;
     use Notifiable;
     use SoftDeletes;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
