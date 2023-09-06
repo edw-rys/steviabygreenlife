@@ -445,7 +445,6 @@ class CartController extends Controller
             $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
             $user->save();
             $cart['cart']->user_id = $user->id;
-            $cart['cart']->bought_at = Carbon::now();
             $cart['cart']->save();
         }
 

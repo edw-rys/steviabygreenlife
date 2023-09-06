@@ -9,6 +9,7 @@ use App\Models\CartShopStore;
 use App\Models\Location\City;
 use App\Models\Location\State;
 use App\Models\Product;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -347,6 +348,7 @@ class CartProductService
     public function resetPorductsAllowInStore($cart, $transactionObject) {
         $cart->status = ConstantsService::$CART_STATUS_FINISHED;
         $cart->transaction_code = $transactionObject->transaction;
+        $cart->bought_at = Carbon::now();
         $cart->save();
         foreach ($cart->products as $key => $productShop) {
             $productShop->status = ConstantsService::$CART_STATUS_FINISHED;
