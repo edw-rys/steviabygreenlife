@@ -13,6 +13,7 @@ class State extends Model
     'id',
     'name',
     'country_id',
+    'delivery_cost',
     'created_at',
     'updated_at',
     'deleted_at',

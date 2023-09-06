@@ -49,6 +49,7 @@
     function getCities(id, myStateId) {
         $('#billing_state_id').val(null).trigger('change');
         if(!id){return;}
+        changeCityDelivery(id);
         var url = '{{route('utils.get-cities', ':id')}}';
         url = url.replace(':id', id);
         $.easyAjax({
@@ -266,7 +267,7 @@
                                                             for="form-cities" class="">Ciudad&nbsp;<abbr class="required"
                                                                 title="required">*</abbr></label><span
                                                             class="woocommerce-input-wrapper">
-                                                        <select id="form-cities" name="billing_city_id" class="select2" onchange="changeCityDelivery(this.value)"></select>
+                                                        <select id="form-cities" name="billing_city_id" class="select2"></select>
                                                         {!!$errors->first("billing_city_id", "<span class='text-danger'>:message</span>")!!}
                                                     </p>
                                                     {{-- Address --}}

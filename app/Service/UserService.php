@@ -122,5 +122,13 @@ class UserService
         return $user != null ? $user->city : null;
     }
 
+    /**
+     * @param $user_id
+     */
+    public function getStateByUserId($user_id) {
+        $user = $this->user->with('state')->find($user_id);
+        return $user != null ? $user->state : null;
+    }
+
 
 }

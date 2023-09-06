@@ -7,6 +7,7 @@ use App\Models\CartShopProducts;
 use App\Models\CartShopProductsStore;
 use App\Models\CartShopStore;
 use App\Models\Location\City;
+use App\Models\Location\State;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class CartProductService
     private CartShopProductsStore $productStore;
     private CartShopStore $cartShopStore;
     private City $cityModel;
+    private State $stateModel;
 
     
     public function __construct(
@@ -31,7 +33,8 @@ class CartProductService
         CartShopStore    $cartShopStore,
         CartShop         $cartShop,
         Product          $productModel,
-        City         $cityModel
+        State            $stateModel,
+        City             $cityModel
     ) {
         $this->cartShop = $cartShop;
         $this->cartShopStore = $cartShopStore;
@@ -40,6 +43,7 @@ class CartProductService
         $this->cartShopInvoice = $cartShopInvoice;
         $this->cartShopProducts = $cartShopProducts;
         $this->cityModel = $cityModel;
+        $this->stateModel = $stateModel;
     }
 
     /**
@@ -397,7 +401,7 @@ class CartProductService
                 ->first();
         }
         // Check allowed this user
-        if($user_id != null && $cartByToken != null && $cartByToken->user_id != null && $cartByToken->user_id != $user_id){
+        if( $cartByToken != null && $cartByToken->user_id != null && $cartByToken->user_id != $user_id){
             $cartByToken = null;
         }
 
@@ -536,7 +540,7 @@ class CartProductService
      * @param $tokenCart
      * @param $city_id
      */
-    public function changeCityRecalculateDelivery($tokenCart, $city_id) {
+    public function changeCityRecalculateDelivery($tokenCart, $state_id) {
         $cart = $this->getCartShop($tokenCart, null, false, ['products', 'products.product']);
         if($cart == null){
             return [
@@ -545,15 +549,17 @@ class CartProductService
                 'message'   => 'Carrito de compras no existe',
             ];
         }
-        $city = $this->cityModel->find($city_id);
-        if($city == null){
+
+        // PRECIO POR DELIVERY
+        $state = $this->stateModel->find($state_id);
+        if($state == null){
             return [
                 'status'    => 'error',
                 'code'      => '404',
                 'message'   => 'Ciudad no existe',
             ];
         }
-        $cart->delivery_cost = $city->delivery_cost;
+        $cart->delivery_cost = $state->delivery_cost;
         $cart->total_more_delivery = $cart->delivery_cost + $cart->total;
         $cart->save();
         $this->changeStatusCart($cart, ConstantsService::$CART_STATUS_PENDING_PAYMENT);
