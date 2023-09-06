@@ -474,7 +474,7 @@ class CartController extends Controller
     public function resultPay($transaction) {
         $transaction = base64_decode($transaction);
         $cart = $this->cartProductService->getCartByTrCode($transaction);
-        if($cart == null){
+        if($cart == null || $cart['cart'] == null){
             abort(404);
         }
 

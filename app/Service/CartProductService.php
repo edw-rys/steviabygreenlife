@@ -267,7 +267,7 @@ class CartProductService
             ->with(['billing.country'])
             ->with(['billing.state'])
             ->with(['billing.city'])
-            ->orderBy('bought_at', 'desc');
+            ->orderBy('number_order', 'desc');
 
         if(request('start_date')!= null && request('start_date') != '' && !empty(request('start_date'))){
             $items->whereDate('bought_at', '>=', request('start_date'));
