@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\CartShop;
+use App\Models\Location\City;
 use App\Models\Location\State;
 use App\Service\ConstantsService;
 use Illuminate\Console\Command;
@@ -45,6 +46,13 @@ class UpdateStateDeliveryCartShopCommand extends Command
         foreach ($list as $key => $state) {
             $state->delivery_cost = 5;
             $state->save();
+        }
+
+        $list = City::where('id', '!=', 75)
+            ->get();
+        foreach ($list as $key => $city) {
+            $city->delivery_cost = 8;
+            $city->save();
         }
         return 0;
     }

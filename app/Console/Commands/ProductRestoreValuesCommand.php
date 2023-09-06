@@ -38,6 +38,7 @@ class ProductRestoreValuesCommand extends Command
      */
     public function handle()
     {
+        return;
         $products = Product::all();
         foreach ($products as $key => $product) {
             // Save original price

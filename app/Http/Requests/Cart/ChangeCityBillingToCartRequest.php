@@ -28,7 +28,7 @@ class ChangeCityBillingToCartRequest extends FormRequest
     public function rules()
     {
         return [
-            'state_id'    => ['required', new Exists((new City())->getTable(), 'id')],
+            'city_id'    => ['required', new Exists((new City())->getTable(), 'id')],
             'tokenCart'     => ['required', 'string', new Exists((new CartShop())->getTable(), 'uuid')]
         ];
     }

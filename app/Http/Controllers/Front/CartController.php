@@ -298,9 +298,9 @@ class CartController extends Controller
 
         $cart->delivery_cost = 0; 
         if (auth()->check()) {
-            $state = $this->userService->getStateByUserId(auth()->user()->id);
-            if($state != null){
-                $cart->delivery_cost = $state->delivery_cost; 
+            $city = $this->userService->getCityByUserId(auth()->user()->id);
+            if($city != null){
+                $cart->delivery_cost = $city->delivery_cost; 
             }
         }
 
@@ -347,7 +347,7 @@ class CartController extends Controller
      * @param 
      */
     public function changeCityRecalculateDelivery(ChangeCityBillingToCartRequest $request) {
-        $response = $this->cartProductService->changeCityRecalculateDelivery($request->tokenCart, $request->state_id);
+        $response = $this->cartProductService->changeCityRecalculateDelivery($request->tokenCart, $request->city_id);
         return response()->json($response, $response['code']);
     }
 
@@ -366,8 +366,8 @@ class CartController extends Controller
         // Save billing info
         $billing = $this->cartProductService->updateBillingInfo($request, $cart);
 
-        $state = $billing->state;
-        $cart->delivery_cost = $state->delivery_cost;         
+        $city = $billing->city;
+        $cart->delivery_cost = $city->delivery_cost;         
         $cart->total_more_delivery = $cart->delivery_cost + $cart->total;
         $cart->save();
 

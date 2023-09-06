@@ -553,15 +553,15 @@ class CartProductService
         }
 
         // PRECIO POR DELIVERY
-        $state = $this->stateModel->find($state_id);
-        if($state == null){
+        $city = $this->cityModel->find($state_id);
+        if($city == null){
             return [
                 'status'    => 'error',
                 'code'      => '404',
                 'message'   => 'Ciudad no existe',
             ];
         }
-        $cart->delivery_cost = $state->delivery_cost;
+        $cart->delivery_cost = $city->delivery_cost;
         $cart->total_more_delivery = $cart->delivery_cost + $cart->total;
         $cart->save();
         $this->changeStatusCart($cart, ConstantsService::$CART_STATUS_PENDING_PAYMENT);

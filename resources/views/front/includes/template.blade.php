@@ -172,6 +172,9 @@
                             elListHTML += templateItemCart(item)
                         }
                         $('#product_list_widget_icart').html(elListHTML);
+                        var route = '{{ route('front.cart.checkout', ':token')}}';
+                        route = route.replace(':token', localStorage.getItem(enviropments.cartTokenStorage));
+                        $('.checkout-button-route').attr('href', route);
                     },
                     error: function(error) {},
                 });
