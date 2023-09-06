@@ -249,6 +249,11 @@
         }(jQuery);
         
     </script>
+    @if($remove_token == 'yes')
+    <script>
+        localStorage.removeItem(enviropments.cartTokenStorage);
+    </script>
+    @endif
 </body>
 
 </html>

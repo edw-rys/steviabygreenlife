@@ -61,11 +61,6 @@
 
 {{-- Scripts --}}
 @section('scripts_body_after')
-@if($remove_token == 'yes')
-<script>
-    localStorage.removeItem(enviropments.cartTokenStorage);
-</script>
-@endif
 @endsection
 
 @section('scripts_body_last')

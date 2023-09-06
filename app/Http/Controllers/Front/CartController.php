@@ -290,10 +290,10 @@ class CartController extends Controller
         $cart = $this->cartProductService->getCartShop($token, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing']);
 
         if($cart == null){
-            return redirect()->route('front.shop');
+            return redirect()->route('front.shop')->with('remove_token', 'yes');
         }
         if($cart->products->isEmpty()){
-            return redirect()->route('front.shop');
+            return redirect()->route('front.shop')->with('remove_token', 'yes');
         }
 
         $cart->delivery_cost = 0; 

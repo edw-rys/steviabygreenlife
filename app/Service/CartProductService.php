@@ -401,7 +401,7 @@ class CartProductService
                 ->first();
         }
         // Check allowed this user
-        if( $cartByToken != null && $cartByToken->user_id != null && $cartByToken->user_id != $user_id){
+        if($user_id != null && $cartByToken != null && $cartByToken->user_id != null && $cartByToken->user_id != $user_id){
             $cartByToken = null;
         }
 
