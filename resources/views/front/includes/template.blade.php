@@ -249,10 +249,11 @@
         }(jQuery);
         
     </script>
-    @if($remove_token == 'yes')
+    @if(session('remove_token') && session('remove_token') == 'yes')
     <script>
         localStorage.removeItem(enviropments.cartTokenStorage);
     </script>
+    {{ session()->forget('remove_token') }}
     @endif
 </body>
 
