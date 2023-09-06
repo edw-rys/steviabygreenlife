@@ -89,7 +89,7 @@
             data: {
                 _token: '{{ csrf_token() }}',
                 tokenCart: '{{ $cart->uuid }}',
-                city_id: id
+                state_id: id
             },
             success: function(response) {
                 if (response.message) {
