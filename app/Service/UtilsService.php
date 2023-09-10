@@ -1,6 +1,7 @@
 <?php
 namespace App\Service;
 
+use App\Models\AccountsBank;
 use App\Models\Location\City;
 use App\Models\Location\Country;
 use App\Models\Location\State;
@@ -12,15 +13,18 @@ class UtilsService
     private Country $country;
     private State $state;
     private City $city;
+    private AccountsBank $accountsBank;
 
 
     public function __construct(
         StatusDelivery $statusDelivery,
+        AccountsBank $accountsBank,
         Country $country,
         State $state,
         City $city
     ) {
         $this->country = $country;
+        $this->accountsBank = $accountsBank;
         $this->statusDelivery = $statusDelivery;
         $this->state = $state;
         $this->city = $city;
@@ -56,5 +60,8 @@ class UtilsService
     }
     public function findStatusDelivery($id) {
         return $this->statusDelivery->find($id);
+    }
+    public function getBankAccounts() {
+        return $this->accountsBank->newQuery()->get();
     }
 }

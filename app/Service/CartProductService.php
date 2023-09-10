@@ -6,6 +6,7 @@ use App\Models\CartShopInvoice;
 use App\Models\CartShopProducts;
 use App\Models\CartShopProductsStore;
 use App\Models\CartShopStore;
+use App\Models\FileUploadTransfer;
 use App\Models\Location\City;
 use App\Models\Location\State;
 use App\Models\Product;
@@ -23,12 +24,14 @@ class CartProductService
     private CartShopProducts $cartShopProducts;
     private CartShopProductsStore $productStore;
     private CartShopStore $cartShopStore;
+    private FileUploadTransfer $fileUploadTransfer;
     private City $cityModel;
     private State $stateModel;
 
     
     public function __construct(
         CartShopProductsStore $productStore,
+        FileUploadTransfer $fileUploadTransfer,
         CartShopProducts $cartShopProducts,
         CartShopInvoice  $cartShopInvoice,
         CartShopStore    $cartShopStore,
@@ -45,6 +48,7 @@ class CartProductService
         $this->cartShopProducts = $cartShopProducts;
         $this->cityModel = $cityModel;
         $this->stateModel = $stateModel;
+        $this->fileUploadTransfer = $fileUploadTransfer;
     }
 
     /**
@@ -245,7 +249,7 @@ class CartProductService
     public function getPurchases($user_id) {
         $countPaginate = 4;
         $items = $this->cartShop->where('user_id', $user_id)
-            ->whereIn('status', [ConstantsService::$CART_STATUS_FINISHED, ConstantsService::$CART_STATUS_CANCELLED])
+            ->whereIn('status', [ConstantsService::$CART_STATUS_FINISHED, ConstantsService::$CART_STATUS_CANCELLED, ConstantsService::$CART_PENDING_CHECK_TRANSFER])
             ->with(['billing'])
             ->with('products')
             ->with(['billing.country'])
@@ -262,7 +266,7 @@ class CartProductService
     public function getAllPurchases() {
         $countPaginate = 5;
         $items = $this->cartShop
-            ->whereIn('status', [ConstantsService::$CART_STATUS_FINISHED, ConstantsService::$CART_STATUS_CANCELLED])
+            ->whereIn('status', [ConstantsService::$CART_STATUS_FINISHED, ConstantsService::$CART_STATUS_CANCELLED, ConstantsService::$CART_PENDING_CHECK_TRANSFER])
             ->with(['billing'])
             ->with('products')
             ->with(['billing.country'])
@@ -277,13 +281,16 @@ class CartProductService
             $items->whereDate('bought_at', '<=', request('end_date'));
         }
 
-        if(request('status_delivery')!= null && request('status_delivery') != '' && !empty(request('status_delivery'))){
+        if(request('status_delivery')!= null && request('status_delivery') != '' && !empty(request('status_delivery')) && request('status_delivery') != 'all'){
             $items->where('status_delivery', request('status_delivery'));
         }
         if(request('client_id')!= null && request('client_id') != '' && !empty(request('client_id'))){
             $items->where('user_id', request('client_id'));
         }
-        
+
+        if(request('status_cart')!= null && request('status_cart') != '' && !empty(request('status_cart')) && request('status_cart') != 'all'){
+            $items->where('status', request('status_cart'));
+        }
 
         $items = $items->paginate($countPaginate);
         return $items;
@@ -345,17 +352,17 @@ class CartProductService
     /**
      * @param $cart
      */
-    public function resetPorductsAllowInStore($cart, $transactionObject) {
-        $cart->status = ConstantsService::$CART_STATUS_FINISHED;
+    public function resetPorductsAllowInStore($cart, $transactionObject, $statusEnd) {
+        $cart->status = $statusEnd;
         $cart->transaction_code = $transactionObject->transaction;
         $cart->bought_at = Carbon::now();
         $cart->save();
         foreach ($cart->products as $key => $productShop) {
-            $productShop->status = ConstantsService::$CART_STATUS_FINISHED;
+            $productShop->status = $statusEnd;
             $productShop->save();
         }
         $this->cartShopProducts->where('cart_shop_id', $cart->id)
-            ->where('status', '<>', ConstantsService::$CART_STATUS_FINISHED)
+            ->where('status', '<>', $statusEnd)
             ->delete();
         
         foreach ($cart->products as $key => $productCart) {
@@ -571,6 +578,7 @@ class CartProductService
             'code'      => '200',
             'message'   => 'Registro actualizado',
             'html_order'  => view('front.pages.checkout.order-review')
+                ->with('process', false)
                 ->with('cart', $cart)->render(),
         ];
     }
@@ -655,6 +663,20 @@ class CartProductService
                 'continue'  => false
             ];
         }
-        
+    }
+    /**
+     * @param $cart_id
+     * @param $files
+     */
+    public function uploadFilesTransfer($cart_id, $files) {
+        foreach ($files as $key => $fileUpload) {
+            $this->fileUploadTransfer->create([
+                'original_name' => $fileUpload['original_name'],
+                'filename'      => $fileUpload['filename'],
+                'extension'     => $fileUpload['extension'],
+                'size'          => $fileUpload['size'],
+                'cart_shop_id'  => $cart_id
+            ]);
+        }
     }
 }

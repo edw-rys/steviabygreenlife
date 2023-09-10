@@ -106,7 +106,10 @@
             },
         });
     }
-
+    /**
+     * Proceder a la verificación
+     * @argument
+     */
     function processCheckout(evt){
         evt.preventDefault();
         block($('#form-checkout'))
@@ -127,6 +130,7 @@
                 $('#order_review').html(response.html_order);
                 unblock($('#form-checkout'));
                 $('#place_order').addClass('hidden');
+                $('#clientTransactionIdBill').val(response.payment.client_id);
                 payphone.Button({
                     //token obtenido desde la consola de developer
                     token: response.payment.token,
@@ -155,8 +159,6 @@
                     },
 
                     onComplete: function(model, actions){
-                        console.log("Modelo:");
-                        console.log(model);
                     }
                 }).render("#pp-button");
                         
@@ -167,7 +169,96 @@
             },
         });
     }
+    /**
+     * Proceder a enviar comprobantes de pago
+     * @argument
+     */
+    function processToSolicitud() {
+        block($('#form-checkout'))
+        $('#tokenCartVal').val(localStorage.getItem(enviropments.cartTokenStorage));
+        $.easyAjax({
+            url: '{{ route('front.cart.save-solicitud-transfer') }}',
+            container: '#form-checkout',
+            type: "POST",
+            redirect: true,
+            file:true,
+            data: $('#form-checkout').serialize(),
+            error: function(error) {
+                unblock($('#form-checkout'));
+                notifyErrorGlobal(error);
+            },
+        });
+    }
 
+    function addNewFile() {
+        var newId = generateRandomString(10);
+        var newEl = addTemplateFileCompany(newId);
+        $('#contentsFileUpload').append(newEl);
+        $('#file-bank-comprobante-'+newId).trigger('click');
+    }
+
+    function changeFileComprobante(event, idEl) {
+        if (event.target.files && event.target.files[0]) {
+            if (event.target.files[0].size > enviropments.max_size_img *1000000 ) {
+                $.notify(
+                    'Peso máximo '+enviropments.max_size_img + 'MB', 
+                    { position:"bottom right",className:"warn" }
+                );
+                return;
+            }
+        }
+        $('#span-file-add-'+idEl).html(event.target.files[0].name);
+        if($('.images-files-transfers-el').length >= 3){
+            $('#add-file-transfer-btn').addClass('hidden');
+        }else{
+            $('#add-file-transfer-btn').removeClass('hidden');
+        }
+    }
+
+    function processSelectMethodPayment() {
+        $('#process-to-checkout-methods').addClass('hidden')
+        if ($('#payment_method_payphone').prop('checked')) {
+            $('#mode-pay-tc').removeClass('hidden');
+        }else{
+            $('#mode-pay-tc').addClass('hidden');
+        }
+        if($('#payment_method_bacs').prop('checked')){
+            $('#mode-pay-transferencia').removeClass('hidden');
+        }else{
+            $('#mode-pay-transferencia').addClass('hidden');
+        }
+    }
+
+    function resetSelectMethodPayment() {
+        $('#process-to-checkout-methods').removeClass('hidden');
+        $('#mode-pay-tc').addClass('hidden');
+        $('#mode-pay-transferencia').addClass('hidden');
+    }
+    /**
+     * Eliminar archivo
+     * @argument
+     */
+    function deleteFileUpload(id) {
+        $('#item-new-file-'+id).remove();
+        if($('.images-files-transfers-el').length >= 3){
+            $('#add-file-transfer-btn').addClass('hidden');
+        }else{
+            $('#add-file-transfer-btn').removeClass('hidden');
+        }
+    }    
+
+    function addTemplateFileCompany(newId) {
+        return `<a
+            id="item-new-file-${newId}"
+            href="javascript:;" data-toggle="modal" 
+            class="d-grid-temp-files item-image-photo images-files-transfers-el">
+            <div class="pos__ticket__item-name truncate mr-1" style="overflow: hidden;">
+                <span id="span-file-add-${newId}">Agregando archivo...</span>
+            </div>
+            <div class="ml-auto font-medium" onclick="deleteFileUpload('${newId}')"><i class="fa fas fa-trash"></i></div>
+            <input type="file" name="transferencias[]" id="file-bank-comprobante-${newId}" class="d-none hidden" accept=".png, .jpg, .jpeg, .pdf" onchange="changeFileComprobante(event, '${newId}')">
+        </a>`;
+    }
     
     getStates('{{ $cart->billing->state_id }}');
 
@@ -202,6 +293,7 @@
                                     <div class="col2-set" id="customer_details">
                                         <div class="col-1">
                                             @csrf
+                                            <input type="hidden" name="clientTransactionId" id="clientTransactionIdBill">
                                             {{-- tokenCart --}}
                                             <input type="hidden" id="tokenCartVal" value="" name="tokenCart">
                                             <div class="woocommerce-billing-fields">
@@ -233,7 +325,7 @@
                                                     <p class="form-row form-row-wide" id="billing_identification_number_field" data-priority="30">
                                                         <label for="billing_identification_number" class="">Cédula&nbsp;<abbr class="required" title="required">*</abbr></label>
                                                         <span class="woocommerce-input-wrapper">
-                                                            <input type="text" class="input-text " name="billing_identification_number" id="billing_identification_number" placeholder="" value="{{ $cart->billing->identification_number }}" autocomplete="organization">
+                                                            <input type="text" class="input-text " name="billing_identification_number" id="billing_identification_number" placeholder="" value="{{ $cart->billing->identification_number }}">
                                                             {!!$errors->first("billing_identification_number", "<span class='text-danger'>:message</span>")!!}
                                                         </span>
                                                     </p>

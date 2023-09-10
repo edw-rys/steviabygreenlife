@@ -21,6 +21,8 @@ if (! function_exists('badgeStatusStore')) {
                 return 'badge-success';
             case ConstantsService::$CART_STATUS_CANCELLED:
                 return 'badge-danger';
+            case ConstantsService::$CART_PENDING_CHECK_TRANSFER:
+                return 'badge-warning';
         }
         return '#fff';
     }

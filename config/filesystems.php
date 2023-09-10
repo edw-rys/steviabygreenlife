@@ -47,6 +47,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        'transferencias' => [
+            'driver' => 'local',
+            'root' => storage_path('app/transferencias'),
+        ],
 
         'public' => [
             'driver' => 'local',

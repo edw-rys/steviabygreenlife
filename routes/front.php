@@ -33,6 +33,7 @@ Route::post('/store/product/{id}/add-to-cart','ShopController@show')->name('fron
 Route::get('/store/cart/show','CartController@show')->name('front.cart.show');
 Route::get('/store/cart/checkout/{token}','CartController@checkout')->name('front.cart.checkout');
 Route::post('/store/cart/save-checkout','CartController@processCheckout')->name('front.cart.save-checkout');
+Route::post('/store/cart/save-transfer','CartController@saveTransfer')->name('front.cart.save-solicitud-transfer');
 
 // PAY
 Route::get('/store/process-pay','CartController@checkPay')->name('front.process-pay');

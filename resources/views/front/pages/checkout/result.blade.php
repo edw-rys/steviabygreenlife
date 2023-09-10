@@ -100,6 +100,39 @@
                     },
                 });
             }
+
+
+            function finishedOrder() {
+                if (!confirm('¿Está seguro/a de aceptar la orden?')) {
+                    return;
+                }
+                block($('#order_review'))
+                $.easyAjax({
+                    url: '{{ route('admin.accept.order', $cart->id) }}',
+                    type: "PUT",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        cart_id: '{{ $cart->id }}'
+                    },
+                    redirect: false,
+                    success: function(response) {
+                        if (response.message) {
+                            $.notify(
+                                response.message, 
+                                { position:"bottom right",className:"success" }
+                            );
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                        unblock($('#order_review'));
+                    },
+                    error: function(error) {
+                        unblock($('#order_review'));
+                        notifyErrorGlobal(error);
+                    },
+                });
+            }
         </script>
     @endif
 @endsection
@@ -299,6 +332,10 @@
                                         </table>
                                         @if (auth()->check() && auth()->user()->hasRole(getAdminName()) && $cart->status != statusCancelled())
                                             <button onclick="cancelOrder()" class="btn btn-sm btn-danger">Cancelar pedido</button>
+                                        @endif
+
+                                        @if (auth()->check() && auth()->user()->hasRole(getAdminName()) && $cart->status == statusPendingCheck())
+                                            <button onclick="finishedOrder()" class="btn btn-sm btn-success">Aceptar Pedido</button>
                                         @endif
                                     </div>
                                 </div>

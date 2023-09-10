@@ -11,13 +11,18 @@ class NotifyOrderMail extends Mailable
 {
     use Queueable, SerializesModels;
     private $cart;
+    private $titleMail;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($cart)
+    public function __construct($cart, $titleMail = null)
     {
+        $this->titleMail = 'Nueva compra realizada en Stevia';
+        if($titleMail != null){
+            $this->titleMail = $titleMail;
+        }
         $this->cart = $cart;
     }
 
@@ -29,7 +34,7 @@ class NotifyOrderMail extends Mailable
     public function build()
     {
         return $this->markdown('email.shop.confirm-buy')
-            ->subject('Nueva compra realizada en Stevia, pedido #'.$this->cart->numero_pedido)
+            ->subject($this->titleMail. ', pedido#'.$this->cart->numero_pedido)
             ->with('cart',$this->cart);
     }
 }

@@ -30,6 +30,18 @@
         const enviropments = {
             sessionStorage: 'session-client-shop',
             cartTokenStorage: 'tokenCart',
+            max_size_img: 10
+        };
+
+        const generateRandomString = (length) => {
+            let result = '';
+            const characters =
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
         };
     </script>
     <script src="{{ asset('scripts/libraries/jquery.zoom.min.js') }}"></script>
@@ -151,9 +163,6 @@
 
     <script>
         if (document.querySelector('.cart-contents-icon') != null) {
-            $('.cart-contents-icon').hover( function(){
-                console.log('as');
-            });
             
             function loadCartFloat() {
                 $.easyAjax({

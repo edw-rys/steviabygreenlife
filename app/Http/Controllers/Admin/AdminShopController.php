@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Shop\NotifyOrderMail;
 use App\Service\CartProductService;
 use App\Service\ConstantsService;
 use App\Service\ShopService;
 use App\Service\UtilsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Exists;
 
 class AdminShopController extends Controller
@@ -34,6 +37,7 @@ class AdminShopController extends Controller
 
         return view('front.admin.pages.list-buy')
             ->with('statusesDelivery', $statusesDelivery)
+            ->with('statusesCart', listStatusesCart())
             ->with('purcharses', $items);
     }
 
@@ -52,6 +56,39 @@ class AdminShopController extends Controller
         $cart->save();
         return response()->json([
             'message'   => 'La orden ha sido cancelada, recargando la página...'
+        ]);
+    }
+
+    /**
+     * Aceptar orden
+     * @param $id
+     */
+    public function acceptOrder($id) {
+        $cart = $this->cartProductService->findCartShop($id, ['billing', 'products', 'products.product']);
+        if(!$cart ){
+            return response()->json([
+                'message'   => 'La orden no ha sido encontrada.'
+            ], 404);
+        }
+        $cart->status = ConstantsService::$CART_STATUS_FINISHED;
+        $cart->save();
+
+        // Send mail
+        try {
+            Mail::to([$cart->billing->email])
+                ->cc(config('app.emails_admin'))
+                ->queue( new NotifyOrderMail($cart, 'Su compra ha sido aceptada en stevia'));
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage().': CartController::acceptOrder', [
+                'message'   => $th->getMessage(),
+                'code'      => $th->getCode(),
+                'line'      => $th->getLine(),
+                'trace'     => $th->getTrace()
+            ]);
+        }
+
+        return response()->json([
+            'message'   => 'La orden ha sido aceptada, recargando la página...'
         ]);
     }
 

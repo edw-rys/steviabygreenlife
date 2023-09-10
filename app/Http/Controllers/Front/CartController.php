@@ -7,6 +7,7 @@ use App\Http\Requests\Cart\AddProductToCartRequest;
 use App\Http\Requests\Cart\ChangeCityBillingToCartRequest;
 use App\Http\Requests\Cart\ChangeItemsToCartRequest;
 use App\Http\Requests\Cart\RemoveItemToCartRequest;
+use App\Http\Requests\Cart\SaveTransferRequest;
 use App\Http\Requests\Cart\StoreBillingToCartRequest;
 use App\Mail\Shop\NotifyOrderMail;
 use App\Service\CartProductService;
@@ -17,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
@@ -337,10 +339,91 @@ class CartController extends Controller
             // $cart->billing = $this->cartProductService->createBillingInfo($cart);
         }
 
+        $accountsBank = $this->utilsService->getBankAccounts();
         
         return view('front.pages.checkout')
+            ->with('accountsBank', $accountsBank)
             ->with('cart', $cart)
             ->with('country', $country);
+    }
+
+    /**
+     * @param SaveTransferRequest $request
+     */
+    public function saveTransfer(SaveTransferRequest $request) {
+        $cart = $this->cartProductService->getCartByTransaction($request->clientTransactionId);
+        if($cart == null || $cart['cart'] == null){
+            return response()->json([
+                "status" => "warning",
+                "message" => 'No se puede encontrar su carrito de compras',
+                "action" => "redirect",
+                "url" => route('front.shop')
+            ]);
+        }
+        if($cart['cart']->status == ConstantsService::$CART_STATUS_FINISHED){
+            return response()->json([
+                "status" => "warning",
+                "message" => 'No se puede encontrar su carrito de compras',
+                "action" => "redirect",
+                "url" => route('front.shop')
+            ]);
+        }
+        set_time_limit(0);
+        storage_exists($cart['cart']->id, 'transferencias');
+
+        $files = [];
+        foreach($request->file('transferencias') as $key => $file){
+            $filename = str_replace( '.'.$file->extension() , '', $file->getClientOriginalName());
+            $filename = $filename  .time().rand(1,99).'.'.$file->extension();
+            $files[] = [
+                'size'              => $file->getSize(),
+                'extension'         => $file->extension(),
+                'filename'          => $filename,
+                'original_name'     => $file->getClientOriginalName()
+            ];
+            $file->move(storage_path('app/transferencias/').$cart['cart']->id, $filename);
+        }
+        $this->cartProductService->uploadFilesTransfer($cart['cart']->id, $files);
+
+        $this->cartProductService->resetPorductsAllowInStore( $cart['cart'], $cart['transaction'], ConstantsService::$CART_PENDING_CHECK_TRANSFER);
+
+
+        // Check user
+        if($cart['cart']->user_id == null){
+            $randomString = generateRandomString('4');
+            $request->merge([
+                'name'      => $cart['cart']->billing->name,
+                'last_name' => $cart['cart']->billing->last_name,
+                'email'     => $cart['cart']->billing->email . '__' . $randomString,
+                'email_shop'=> $cart['cart']->billing->email,
+                'password'  => $cart['cart']->billing->email
+            ]);
+            $user = $this->userService->create($request, 1);
+            $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
+            $user->save();
+            $cart['cart']->user_id = $user->id;
+            $cart['cart']->save();
+        }
+
+        // Send mail
+        try {
+            Mail::to([$cart['cart']->billing->email])
+                ->cc(config('app.emails_admin'))
+                ->queue( new NotifyOrderMail($cart['cart']));
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage().': CartController::saveTransfer', [
+                'message'   => $th->getMessage(),
+                'code'      => $th->getCode(),
+                'line'      => $th->getLine(),
+                'trace'     => $th->getTrace()
+            ]);
+        }
+        return response()->json([
+            "status" => "success",
+            "message" => 'Transacción ha sido solicitada para su aprobación',
+            "action" => "redirect",
+            "url" => route('front.result.pay', ['transaction' => base64_encode($cart['transaction']->transaction) ] )
+        ]);
     }
 
     /**
@@ -358,10 +441,10 @@ class CartController extends Controller
         $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing']);
 
         if($cart == null){
-            return response()->json(['message'=> 'Su carrito no fue encontrado'], 400);
+            return response()->json(['message'=> 'Su carrito de compras no fue encontrado'], 400);
         }
         if($cart->products->isEmpty()){
-            return response()->json(['message'=> 'Su carrito no tiene productos'], 400);
+            return response()->json(['message'=> 'Su carrito de compras no tiene productos'], 400);
         }
         // Save billing info
         $billing = $this->cartProductService->updateBillingInfo($request, $cart);
@@ -375,11 +458,14 @@ class CartController extends Controller
 
         $this->cartProductService->changeStatusCart($cart, ConstantsService::$CART_STATUS_PENDING_PAYMENT);
 
+        $accountsBank = $this->utilsService->getBankAccounts();
         
         return response()->json([
             'total'     => $cart->total_more_delivery_int,
             'tokenCart' => $cart->uuid,
             'html_order'  => view('front.pages.checkout.order-review')
+                ->with('process', true)
+                ->with('accountsBank', $accountsBank)
                 ->with('cart', $cart)->render(),
             'products'  => $cart->products->map(function($item){
                 return [
@@ -419,7 +505,7 @@ class CartController extends Controller
             return redirect()->route('front.shop');
         }
         if($cart['cart']->status == ConstantsService::$CART_STATUS_FINISHED){
-            // return redirect()->route('front.result.pay', ['transaction' => $cart['transaction']->transaction ] );
+            return redirect()->route('front.result.pay', ['transaction' => $cart['transaction']->transaction ] );
         }
 
         $result = $this->cartProductService->validatePayment($request, $cart['transaction']);
@@ -430,7 +516,7 @@ class CartController extends Controller
             return redirect()->route('front.result.pay', ['transaction' => base64_encode($cart['transaction']->transaction) ] );
         }
 
-        $this->cartProductService->resetPorductsAllowInStore( $cart['cart'], $cart['transaction']);
+        $this->cartProductService->resetPorductsAllowInStore( $cart['cart'], $cart['transaction'], ConstantsService::$CART_STATUS_FINISHED);
         // Check user
         if($cart['cart']->user_id == null){
             $randomString = generateRandomString('4');

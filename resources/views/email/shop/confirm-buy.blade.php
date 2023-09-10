@@ -1,6 +1,40 @@
 @component('mail::message')
-<h1>Nueva compra realizada, pedido # {{$cart->numero_pedido}}</h1>
+<style>
+      .badge.badge-warning {
+        background-color: #ff990d;
+      color: #fff; }
+      .badge.badge-primary {
+      background-color: #00BAB4; }
+    .badge.badge-secondary {
+      background-color: #cdd3d8; }
+    .badge.badge-success {
+      background-color: #47c363; }
+    .badge.badge-info {
+      background-color: #3abaf4; }
+    .badge.badge-danger {
+      background-color: #fc544b; }
+      .badges .badge {
+    margin: 0 8px 10px 0; }
+  
+  .badge {
+    vertical-align: middle;
+    padding: 7px 12px;
+    font-weight: 600;
+    letter-spacing: .3px;
+    border-radius: 30px;
+    font-size: 12px; }
+    .badge-success {
+        color: #fff;
+    background-color: #28a745;
+}
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
 
+</style>
+<h1>Nueva compra realizada, pedido # {{$cart->numero_pedido}}</h1>
+<span class="badge {{ badgeStatusStore($cart->status) }}" style="font-size: 13px;padding: 7px;"> @lang('global.status-label.'. ( $cart->status ?? 'in-process'))</span>
 <h3 style="font-weight: bold">Datos de envío</h3>
 
 <table style="width: 100%">

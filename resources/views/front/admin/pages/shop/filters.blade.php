@@ -25,8 +25,20 @@
 
             <div class="col-md-4 col-12">
                 <div class="form-group">
+                    <label>Estado de la compra</label>
+                    <select style="width: 100%" class="select2" name="status_cart">
+                        <option value="all">Todos</option>
+                        @foreach (listStatusesCart() as $statusCart)
+                            <option value="{{ $statusCart['status'] }}" {{ request('status_cart') == $statusCart['status'] ? 'selected':''}}>{{ $statusCart['title']}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="form-group">
                     <label>Estado de entrega</label>
                     <select style="width: 100%" class="select2" name="status_delivery">
+                        <option value="all">Todos</option>
                         @foreach ($statusesDelivery as $statusItem)
                             <option value="{{ $statusItem->code }}" {{ request('status_delivery') == $statusItem->code ? 'selected':''}}>{{ $statusItem->title}}</option>
                         @endforeach
