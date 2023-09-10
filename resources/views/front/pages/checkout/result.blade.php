@@ -337,7 +337,7 @@
                                         @if (auth()->check() && auth()->user()->hasRole(getAdminName()) && $cart->status == statusPendingCheck())
                                             <button onclick="finishedOrder()" class="btn btn-sm btn-success">Aceptar Pedido</button>
                                         @endif
-                                        @if (auth()->check() && $cart->files && $cart->files->isNotEmpty())
+                                        @if (auth()->check() && auth()->user()->hasRole(getAdminName()) && $cart->files && $cart->files->isNotEmpty())
                                             <div class="border-2 border-dashed dark:border-dark-5 rounded-md pt-4 ng-star-inserted"
                                                 style="margin-top: 10px;margin-bottom: 20px">
                                                 <h3 class="ml-1" style="margin: 0; padding-left: 20px;">Comprobantes de pago</h3>
