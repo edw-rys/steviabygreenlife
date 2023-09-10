@@ -111,4 +111,7 @@ class CartShop extends Model
   public function billing() : BelongsTo{
     return $this->belongsTo(CartShopInvoice::class, 'id','cart_shop_id');
   }
+  public function files() {
+    return $this->hasMany(FileUploadTransfer::class, 'cart_shop_id');
+  }
 }

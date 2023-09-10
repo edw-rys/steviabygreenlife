@@ -337,6 +337,23 @@
                                         @if (auth()->check() && auth()->user()->hasRole(getAdminName()) && $cart->status == statusPendingCheck())
                                             <button onclick="finishedOrder()" class="btn btn-sm btn-success">Aceptar Pedido</button>
                                         @endif
+                                        @if (auth()->check() && $cart->files && $cart->files->isNotEmpty())
+                                            <div class="border-2 border-dashed dark:border-dark-5 rounded-md pt-4 ng-star-inserted"
+                                                style="margin-top: 10px;margin-bottom: 20px">
+                                                <h3 class="ml-1" style="margin: 0; padding-left: 20px;">Comprobantes de pago</h3>
+                                                <div class="pos__ticket box p-2 ng-star-inserted">
+                                                    @foreach ($cart->files as $fileUpload)
+                                                        <a href="{{ route('admin.order.show-file', $fileUpload->id)}}" class="item-image-photo  text-center" target="_blank">
+                                                            <div class="pos__ticket__item-name truncate mr-1 border-dashed">
+                                                                <span>{{ $fileUpload->original_name}}</span>
+                                                            </div>
+                                                        </a>
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>

@@ -312,6 +312,7 @@ class CartProductService
             ->with(['products'=> function($query){
                 $query->with('product');
             }])
+            ->with('files')
             ->with(['billing'])
             ->with(['billing.country'])
             ->with(['billing.state'])
@@ -678,5 +679,12 @@ class CartProductService
                 'cart_shop_id'  => $cart_id
             ]);
         }
+    }
+
+    /**
+     * @param $id
+     */
+    public function getFileById($id) {
+        return $this->fileUploadTransfer->find($id);
     }
 }

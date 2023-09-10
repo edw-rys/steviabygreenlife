@@ -11,6 +11,7 @@ use App\Service\UtilsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Exists;
 
 class AdminShopController extends Controller
@@ -117,5 +118,25 @@ class AdminShopController extends Controller
                 ->with('statusesDelivery', $statusesDelivery)
                 ->render()
         ]);
+    }
+    /**
+     * @param $id
+     */
+    public function showFile($id) {
+        $fileData = $this->cartProductService->getFileById($id);
+        if($fileData == null){
+            abort(404);
+        }
+        $filename = $fileData->cart_shop_id . '/'.$fileData->filename;
+        if (!Storage::disk('transferencias')->exists($filename)) {
+            abort(404);
+        }
+        $file = Storage::disk('transferencias')->get($filename);
+        
+        $type = Storage::disk('transferencias')->mimeType($filename);
+
+        $response = response()->make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
     }
 }
