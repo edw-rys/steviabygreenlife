@@ -390,19 +390,24 @@ class CartController extends Controller
 
         // Check user
         if($cart['cart']->user_id == null){
-            $randomString = generateRandomString('4');
-            $request->merge([
-                'name'      => $cart['cart']->billing->name,
-                'last_name' => $cart['cart']->billing->last_name,
-                'email'     => $cart['cart']->billing->email . '__' . $randomString,
-                'email_shop'=> $cart['cart']->billing->email,
-                'password'  => $cart['cart']->billing->email
-            ]);
-            $user = $this->userService->create($request, 1);
-            $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
-            $user->save();
-            $cart['cart']->user_id = $user->id;
-            $cart['cart']->save();
+            if(auth()->check()){
+                $cart['cart']->user_id = auth()->user()->id;
+                $cart['cart']->save();
+            }else{
+                $randomString = generateRandomString('4');
+                $request->merge([
+                    'name'      => $cart['cart']->billing->name,
+                    'last_name' => $cart['cart']->billing->last_name,
+                    'email'     => $cart['cart']->billing->email . '__' . $randomString,
+                    'email_shop'=> $cart['cart']->billing->email,
+                    'password'  => $cart['cart']->billing->email
+                ]);
+                $user = $this->userService->create($request, 1);
+                $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
+                $user->save();
+                $cart['cart']->user_id = $user->id;
+                $cart['cart']->save();
+            }
         }
 
         // Send mail
@@ -519,19 +524,24 @@ class CartController extends Controller
         $this->cartProductService->resetPorductsAllowInStore( $cart['cart'], $cart['transaction'], ConstantsService::$CART_STATUS_FINISHED);
         // Check user
         if($cart['cart']->user_id == null){
-            $randomString = generateRandomString('4');
-            $request->merge([
-                'name'      => $cart['cart']->billing->name,
-                'last_name' => $cart['cart']->billing->last_name,
-                'email'     => $cart['cart']->billing->email . '__' . $randomString,
-                'email_shop'=> $cart['cart']->billing->email,
-                'password'  => $cart['cart']->billing->email
-            ]);
-            $user = $this->userService->create($request, 1);
-            $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
-            $user->save();
-            $cart['cart']->user_id = $user->id;
-            $cart['cart']->save();
+            if(auth()->check()){
+                $cart['cart']->user_id = auth()->user()->id;
+                $cart['cart']->save();
+            }else{
+                $randomString = generateRandomString('4');
+                $request->merge([
+                    'name'      => $cart['cart']->billing->name,
+                    'last_name' => $cart['cart']->billing->last_name,
+                    'email'     => $cart['cart']->billing->email . '__' . $randomString,
+                    'email_shop'=> $cart['cart']->billing->email,
+                    'password'  => $cart['cart']->billing->email
+                ]);
+                $user = $this->userService->create($request, 1);
+                $user->email = str_replace('__'.$randomString, '_' .$user->id , $user->email);
+                $user->save();
+                $cart['cart']->user_id = $user->id;
+                $cart['cart']->save();
+            }
         }
 
         // Send mail
