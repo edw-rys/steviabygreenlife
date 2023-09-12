@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('random', function(){
-    echo generateRandomString(75);
-});
+// Route::get('random', function(){
+//     echo generateRandomString(75);
+// });
 
-Route::get('find-cart', function(CartProductService $cartProductService){
-    $cart = CartShop::with(['products', 'products.product'])->find(26);
-    $cartProductService->restoreCart($cart);
-    dd($cart->toArray());
-});
+// Route::get('find-cart', function(CartProductService $cartProductService){
+//     $cart = CartShop::with(['products', 'products.product'])->find(26);
+//     $cartProductService->restoreCart($cart);
+//     dd($cart->toArray());
+// });
