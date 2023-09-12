@@ -68,6 +68,22 @@
                                         </div>
                                     </div>
                                 @endforeach
+                                @if ($cart->discount_code && $cart->discountCart != null)
+                                    <div class="m-0 woosb-product"> 
+                                        <div class="woosb-title">
+                                            <div class="woosb-title-inner" style="color: red">
+                                                Descuento con cupón: <strong>{{ $cart->discountCart->code }}</strong>
+                                            </div>
+                                        </div>
+                                        <div class="woosb-price">
+                                            <div class="woosb-price-ori">
+                                                <span class="woocommerce-Price-amount amount"><bdi>
+                                                    <span class="woocommerce-Price-currencySymbol" style="color: red">- ${{ $cart->discount_code_format }}</span> </bdi></span>
+                                            </div>
+                                            <div class="woosb-price-new"></div>
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="m-0 woosb-product"> 
                                     <div class="woosb-title">
                                         <div class="woosb-title-inner">
@@ -82,6 +98,7 @@
                                         <div class="woosb-price-new"></div>
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="woosb-total woosb-text">Costo total + envío: <span
                                     class="woocommerce-Price-amount amount"><span

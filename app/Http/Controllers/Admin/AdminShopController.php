@@ -65,7 +65,7 @@ class AdminShopController extends Controller
      * @param $id
      */
     public function acceptOrder($id) {
-        $cart = $this->cartProductService->findCartShop($id, ['billing', 'products', 'products.product']);
+        $cart = $this->cartProductService->findCartShop($id, ['billing', 'products', 'products.product','discountCart']);
         if(!$cart ){
             return response()->json([
                 'message'   => 'La orden no ha sido encontrada.'
@@ -138,5 +138,11 @@ class AdminShopController extends Controller
         $response = response()->make($file, 200);
         $response->header("Content-Type", $type);
         return $response;
+    }
+
+    public function discountCodes(Request $request) {
+        $list = $this->utilsService->discountList();
+        return view('front.admin.pages.list-discounts')
+            ->with('discounts', $list);
     }
 }

@@ -80,7 +80,7 @@
                                             @forelse($purcharses as $cart)
                                                 @include('front.admin.pages.shop.item-buy-card')
                                             @empty
-                                                <p>No se encontraron compras
+                                                <p>No se encontraron compras</p>
                                             @endforelse
                                             {{ $purcharses->appends(request()->input())->links() }}
                                         </div>

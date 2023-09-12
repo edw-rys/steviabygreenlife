@@ -124,7 +124,7 @@ class CartProductService
             $productCart = $this->calculateItemValues($productCart, $productShopReq['qty'], $productCart->product);
             $productCart->save();
         }
-        $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'discountCart']);
         $this->restoreCart($cart);
         // $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
 
@@ -133,6 +133,7 @@ class CartProductService
             'code'      => '200',
             'message'   => 'Se ha actualizado la sección',
             'total_format'  => $cart->total_format,
+            'discount_format'  => $cart->discount_code_format,
             'html_items'  => view('front.pages.cart.body-table')
                 ->with('cart', $cart)->render(),
         ];
@@ -210,7 +211,7 @@ class CartProductService
     /**
      * @param $cart
      */
-    private function restoreCart($cart) {
+    public function restoreCart($cart) {
         $products = $cart->products;
         $this->restoreValuesCart($cart);
         $cart->total_items_products = $products->count();
@@ -225,6 +226,12 @@ class CartProductService
             $cart->total                 += $item->total;
             $cart->count_products        += $item->count;
         }
+        $cart->subtotal_before_discount_code = $cart->total;
+        $discountEl = $cart->discountCart;
+        if($discountEl != null){
+            $cart->discount_code = $cart->total * ($discountEl->percentage_discount/100);
+        }
+        $cart->total = $cart->total - $cart->discount_code;
         $cart->save();
     }
     /**
@@ -241,6 +248,8 @@ class CartProductService
         $cart->total_items_products = 0;
         $cart->total_tax = 0;
         $cart->total = 0;
+        $cart->subtotal_before_discount_code=0;
+        $cart->discount_code = 0;
     }
 
     /**
@@ -291,6 +300,13 @@ class CartProductService
         if(request('status_cart')!= null && request('status_cart') != '' && !empty(request('status_cart')) && request('status_cart') != 'all'){
             $items->where('status', request('status_cart'));
         }
+        if(request('discount-code')!= null && request('discount-code') != '' && !empty(request('discount-code')) && request('discount-code') != 'all'){
+            $items->withCount(['discountCart' =>function($query){
+                $query->where('cart_discounts.code', request('discount-code'));
+            }])
+            ->having('discount_cart_count', '>', '0')
+            ;
+        }
 
         $items = $items->paginate($countPaginate);
         return $items;
@@ -317,6 +333,7 @@ class CartProductService
             ->with(['billing.country'])
             ->with(['billing.state'])
             ->with(['billing.city'])
+            ->with('discountCart')
             ->find($transactionObject->shop_cart_id);
         return [
             'cart'  => $cart,
@@ -342,7 +359,7 @@ class CartProductService
                     ->withTrashed()
                     ->whereIn('id',$transactionObject->products->map(function($item){ return $item->product_shop_id;}));
             }])
-            ->with(['billing'])
+            ->with(['billing', 'discountCart'])
             ->find($transactionObject->shop_cart_id);
         return [
             'cart'  => $cart,
@@ -472,7 +489,7 @@ class CartProductService
         }
         $productCart->delete();
 
-        $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'discountCart']);
         $this->restoreCart($cart);
 
         return [
@@ -480,6 +497,7 @@ class CartProductService
             'code'      => '200',
             'message'   => 'Registro eliminado',
             'total_format'  => $cart->total_format,
+            'discount_format'  => $cart->discount_code_format,
             'html_items'  => view('front.pages.cart.body-table')
                 ->with('cart', $cart)->render(),
         ];
@@ -550,7 +568,7 @@ class CartProductService
      * @param $tokenCart
      * @param $city_id
      */
-    public function changeCityRecalculateDelivery($tokenCart, $state_id) {
+    public function changeCityRecalculateDelivery($tokenCart, $city_id) {
         $cart = $this->getCartShop($tokenCart, null, false, ['products', 'products.product']);
         if($cart == null){
             return [
@@ -561,7 +579,7 @@ class CartProductService
         }
 
         // PRECIO POR DELIVERY
-        $city = $this->cityModel->find($state_id);
+        $city = $this->cityModel->find($city_id);
         if($city == null){
             return [
                 'status'    => 'error',

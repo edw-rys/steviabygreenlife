@@ -28,6 +28,8 @@ class CartShop extends Model
     'subtotal',
     'subtotal_before_discount',
     'discount',
+    'discount_code',
+    'subtotal_before_discount_code',
     'total_before_tax',
     'percentage_tax',
     'total_tax',
@@ -61,16 +63,18 @@ class CartShop extends Model
     'percentage_tax'        => 'float',
     'total_tax'             => 'float',
     'subtotal_before_discount' => 'float',
+    'subtotal_before_discount_code'=> 'float',
     'total_before_tax'      => 'float',
     'total_items_products'  => 'integer',
     'delivery_cost'         => 'float',
     'total_more_delivery'   => 'float',
+    'discount_code'         => 'float',
     'number_order'          => 'integer'
   ];
 
   protected $dates = ['bought_at'];
 
-  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int', 'created_at_format', 'bought_at_format', 'numero_pedido'];
+  protected $appends = [ 'total_format', 'delivery_cost_format', 'total_more_delivery_format', 'total_more_delivery_int', 'created_at_format', 'bought_at_format', 'numero_pedido', 'discount_code_format', 'subtotal_before_discount_code_format'];
 
   public function getNumeroPedidoAttribute() {
     if($this->number_order == null){
@@ -86,6 +90,17 @@ class CartShop extends Model
 
   public function getCreatedAtFormatAttribute(){
     return $this->created_at != null ? $this->created_at->format('d/m/Y'): '';
+  }
+
+  
+  public function getSubtotalBeforeDiscountCodeFormatAttribute()
+  {
+    return twoStringDecimal($this->subtotal_before_discount_code);
+  }
+  
+  public function getDiscountCodeFormatAttribute()
+  {
+    return twoStringDecimal($this->discount_code);
   }
   public function getTotalFormatAttribute()
   {
@@ -113,5 +128,14 @@ class CartShop extends Model
   }
   public function files() {
     return $this->hasMany(FileUploadTransfer::class, 'cart_shop_id');
+  }
+
+  public function discounts() {
+    return $this->belongsToMany(DiscountCodes::class, 'cart_discounts', 'cart_shop_id', 'discount_id')->latest();
+  }
+
+  public function discountCart()
+  {
+      return $this->hasOneThrough(DiscountCodes::class, CartDiscounts::class, 'cart_shop_id', 'id', 'id', 'discount_id')->withTrashed();
   }
 }

@@ -40,6 +40,12 @@
                             { position:"bottom right",className:"success" }
                         );
                     }
+                    $('#price-discount-element').html( '-'+response.discount_format);
+                    if(!(+response.discount_format)){
+                        $('#discount-foot-el').addClass('hidden')
+                    }else{
+                        $('#discount-foot-el').removeClass('hidden')
+                    }
                     $('#price-total-element').html(response.total_format);
                     $('#body-items-products').html(response.html_items);
                     unblock($('#post-show-items-cart'));
@@ -61,6 +67,13 @@
                 data: {tokenCart: localStorage.getItem(enviropments.cartTokenStorage)},
                 success: function(response) {
                     $('#price-total-element').html(response.total_format);
+                    $('#price-discount-element').html( '-'+response.discount_format);
+                    if(!(+response.discount_format)){
+                        $('#discount-foot-el').addClass('hidden')
+                    }else{
+                        $('#discount-foot-el').removeClass('hidden')
+                    }
+                    
                     $('#body-items-products').html(response.html_items);
                     unblock($('#post-show-items-cart'));
                     $('.cart-collaterals').removeClass('hidden');
@@ -93,6 +106,51 @@
                             response.message, 
                             { position:"bottom right",className:"success" }
                         );
+                    }
+                    $('#price-discount-element').html( '-'+response.discount_format);
+                    if(!(+response.discount_format)){
+                        $('#discount-foot-el').addClass('hidden')
+                    }else{
+                        $('#discount-foot-el').removeClass('hidden')
+                    }
+                    $('#price-total-element').html(response.total_format);
+                    $('#body-items-products').html(response.html_items);
+                    unblock($('#post-show-items-cart'));
+                },
+                error: function(error) {
+                    unblock($('#post-show-items-cart'));
+                    notifyErrorGlobal(error);
+                },
+            });
+        }
+
+        /**
+         * Remove a item 
+         */
+         function applyDiscount() {
+            block($('#post-show-items-cart'))
+            $.easyAjax({
+                url: '{{ route('front.cart.apply-discount') }}',
+                container: '#formUpdateItems',
+                type: "POST",
+                redirect: false,
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    tokenCart: localStorage.getItem(enviropments.cartTokenStorage),
+                    code: $('#coupon_code').val()
+                },
+                success: function(response) {
+                    if (response.message) {
+                        $.notify(
+                            response.message, 
+                            { position:"bottom right",className:"success" }
+                        );
+                    }
+                    $('#price-discount-element').html( '-'+response.discount_format);
+                    if(!(+response.discount_format)){
+                        $('#discount-foot-el').addClass('hidden')
+                    }else{
+                        $('#discount-foot-el').removeClass('hidden')
                     }
                     $('#price-total-element').html(response.total_format);
                     $('#body-items-products').html(response.html_items);
@@ -167,13 +225,19 @@
                                         <table cellspacing="0" class="shop_table shop_table_responsive">
 
                                             <tbody>
-                                                {{-- <tr class="cart-subtotal">
-                                                    <th>Subtotal</th>
-                                                    <td data-title="Subtotal"><span
-                                                            class="woocommerce-Price-amount amount"><bdi><span
-                                                                    class="woocommerce-Price-currencySymbol">£</span>1,664.77</bdi></span>
+                                                <tr class="order-discount" id="discount-foot-el">
+                                                    <th>Descuento</th>
+                                                    <td data-title="Total">
+                                                        <strong>
+                                                            <span class="woocommerce-Price-amount" style="font-size: 24px">
+                                                                <bdi>
+                                                                    <span class="woocommerce-Price-currencySymbol">$</span>
+                                                                    <span id="price-discount-element">- {{ $cart != null ? $cart->discount_code_format : '0.00'}}</span>
+                                                                </bdi>
+                                                            </span>
+                                                        </strong>
                                                     </td>
-                                                </tr> --}}
+                                                </tr>
                                                 <tr class="order-total">
                                                     <th>Total</th>
                                                     <td data-title="Total">

@@ -170,7 +170,11 @@ return [
         'order_comments'        => 'comentarios',
         'billing_state_id'      => 'provincia',
         'billing_city_id'       => 'ciudad',
-        'billing_identification_number' => 'número de identificación'
+        'attemps'               => 'cantidad de activaciones',
+        'expired_at'            => 'fecha de expiración',
+        'percentage_discount'   => 'porcentaje de descuento',
+        'code'                  => 'código',
+        'billing_identification_number' => 'número de identificación',
     ],
 
 ];

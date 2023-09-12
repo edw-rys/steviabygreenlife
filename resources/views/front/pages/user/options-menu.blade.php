@@ -6,6 +6,7 @@
             <li class="cat-item cat-item-186"><a href="{{ route('user.profile') }}">Mi perfil</a></li>
             @if (auth()->user()->hasRole(getAdminName()))
                 <li class="cat-item cat-item-186"><a href="{{ route('admin.shopping') }}">Ver compras realizadas</a></li>
+                <li class="cat-item cat-item-186"><a href="{{ route('admin.discount.index') }}">Códigos de descuento</a></li>
             @else
                 <li class="cat-item cat-item-186"><a href="{{ route('user.favorites') }}">Mi favoritos</a></li>
                 <li class="cat-item cat-item-186"><a href="{{ route('user.shopping') }}">Mi compras</a></li>

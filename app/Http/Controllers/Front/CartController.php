@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\AddProductToCartRequest;
+use App\Http\Requests\Cart\ApplyDiscountRequest;
 use App\Http\Requests\Cart\ChangeCityBillingToCartRequest;
 use App\Http\Requests\Cart\ChangeItemsToCartRequest;
 use App\Http\Requests\Cart\RemoveItemToCartRequest;
@@ -259,7 +260,7 @@ class CartController extends Controller
      * @param Request $request
      */
     public function getReloadItems(Request $request) {
-        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
+        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'discountCart']);
         if($cart == null){
             return response()->json(['message'=> 'Su carrito no fue encontrado'], 400);
         }
@@ -272,6 +273,7 @@ class CartController extends Controller
                 'code'      => '200',
                 'message'   => 'Se ha actualizado la sección',
                 'total_format'  => $cart->total_format,
+                'discount_format'  => $cart->discount_code_format,
                 'html_items'  => view('front.pages.cart.body-table')
                     ->with('cart', $cart)->render(),
             ], 200
@@ -285,6 +287,40 @@ class CartController extends Controller
         // $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product']);
         return response()->json($response, $response['code']);
     }
+
+
+    /**
+     * @param RemoveItemToCartRequest $request
+     */
+    public function applyDiscount(ApplyDiscountRequest $request) {
+        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->user()->id, false);
+        if($cart == null){
+            return response()->json([
+                'message'   => 'Su carrito de compras no fue encontrado'
+            ], 404);
+        }
+
+        $result = $this->utilsService->allowDiscount($request->input('code'), auth()->user()->id);
+        if(!$result['process']){
+            return response()->json($result, 404);
+        }
+
+        $this->utilsService->addDiscountToCart($result['discount'], $cart->id, auth()->user()->id);
+
+        $cart = $this->cartProductService->getCartShop($request->tokenCart, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'billing', 'discountCart']);
+        $this->cartProductService->restoreCart($cart);
+        $response = [
+            'status'    => 'success',
+            'code'      => '200',
+            'message'   => 'Cupón aplicado',
+            'total_format'  => $cart->total_format,
+            'discount_format'  => $cart->discount_code_format,
+            'html_items'  => view('front.pages.cart.body-table')
+                ->with('cart', $cart)->render(),
+        ];
+        return response()->json($response, $response['code']);
+    }
+
     /**
      * 
      */

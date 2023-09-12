@@ -28,6 +28,16 @@
                                 id="billing-delivery-cost">{{ $cart->delivery_cost_format }}</span></bdi></span>
                 </td>
             </tr>
+            @if ($cart->discount_code && $cart->discountCart != null)
+                <tr class="cart_item">
+                    <td class="product-name">Descuento con cupón: <strong>{{ $cart->discountCart->code }}</strong></td>
+                    <td class="product-total">
+                        <span class="woocommerce-Price-amount amount"><bdi><span
+                                    class="woocommerce-Price-currencySymbol" style="color: red">- $</span><span
+                                    id="billing-delivery-cost" style="color: red">{{ $cart->discount_code_format }}</span></bdi></span>
+                    </td>
+                </tr>
+            @endif
 
         </tbody>
         <tfoot>

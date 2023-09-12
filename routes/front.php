@@ -88,6 +88,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('user/perfil/save', 'UserController@updateProfile')->name('user.profile.save');
     Route::post('user/change-password/save', 'UserController@updatePassword')->name('user.change-password.save');
+
+    Route::post('cart/apply-discount', 'CartController@applyDiscount')->name('front.cart.apply-discount');
 });
 
 

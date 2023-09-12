@@ -41,17 +41,36 @@
             </td>
         </tr>
     @endforeach
+    <tr>
+        <td colspan="5">
+            <strong>Total a pagar</strong>
+        </td>
+        <td>
+            <strong>$ {{ $cart->subtotal_before_discount_code_format }}</strong>
+        </td>
 
+    </tr>
     <tr>
         <td colspan="6" class="actions">
-
-            {{-- <div class="coupon">
-                <label for="coupon_code">Coupon:</label> <input type="text"
-                    name="coupon_code" class="input-text" id="coupon_code"
-                    value="" placeholder="Coupon code"> <button
-                    type="submit" class="button wp-element-button"
-                    name="apply_coupon" value="Apply coupon">Apply coupon</button>
-            </div> --}}
+            @if (auth()->check() && $cart->discountCart == null)
+                <div class="coupon">
+                    <label for="coupon_code">Cupón:</label> <input type="text"
+                        name="coupon_code" class="input-text" id="coupon_code"
+                        value="" placeholder="Coupon code"> 
+                    <button
+                        type="button" class="button wp-element-button"
+                        name="apply_coupon" value="Apply coupon"
+                        onclick="applyDiscount()">Aplicar descuento</button>
+                </div>
+            @else 
+                @if ($cart->discountCart != null)
+                    <div class="coupon">
+                        
+                        <span><strong >Cupón: </strong>  {{$cart->discountCart->code}}<br> <strong>Descuento del: </strong>{{ $cart->discountCart->percentage_discount }}%</span>
+                    </div>
+                
+                @endif
+            @endif
 
             <button type="submit" class="button wp-element-button"
                 name="update_cart" id="update_cart" value="Update cart" disabled=""

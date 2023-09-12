@@ -109,6 +109,16 @@
                 <td><p style="margin: 0;text-align: right">$ {{ $itemCart->total_format}}</p></td>
             </tr>
         @endforeach
+        <tr>{{-- Discount --}}
+            <td colspan="3">Subtotal</td>
+            <td><p style="margin: 0;text-align: right">$ {{ $cart->subtotal_before_discount_code_format }}</p></td>
+        </tr>
+        @if ($cart->discount_code && $cart->discountCart != null)
+            <tr>{{-- Discount --}}
+                <td colspan="3">Descuento con cupón: <strong>{{ $cart->discountCart->code }}</strong></td>
+                <td><p style="margin: 0;text-align: right;color: red">- $ {{ $cart->discount_code_format }}</p></td>
+            </tr>
+        @endif
         <tr>{{-- Delivery --}}
             <td colspan="3">Costo de envío</td>
             <td><p style="margin: 0;text-align: right">$ {{ $cart->delivery_cost_format }}</p></td>

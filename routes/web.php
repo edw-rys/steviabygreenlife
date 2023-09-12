@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\CartShop;
+use App\Service\CartProductService;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('random', function(){
     echo generateRandomString(75);
+});
+
+Route::get('find-cart', function(CartProductService $cartProductService){
+    $cart = CartShop::with(['products', 'products.product'])->find(26);
+    $cartProductService->restoreCart($cart);
+    dd($cart->toArray());
 });

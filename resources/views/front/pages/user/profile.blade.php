@@ -50,77 +50,71 @@ theme archive post-type-archive post-type-archive-product wp-embed-responsive th
                                 <div class="card-header"><h4>Mis datos</h4></div>
                     
                                 <div class="card-body">
-                                  <form method="POST" action="{{ route('user.profile.save') }}" class="needs-validation row" novalidate="">
-                                    @csrf 
-                                    {{-- <div class="form-group">
-                                      <label for="email">Email <span class="required">*</span></label><br>
-                                      <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
-                                      {!!$errors->first("email", "<span class='text-danger'>:message</span>")!!}
-                                    </div> --}}
-                                    
-                                    <div class="form-group col-12">
-                                        <label for="email">Email</label><br>
-                                        <strong>{{ $user->email }}</strong>
-                                    </div>
-                                    {{-- Nombres --}}
-                                    <div class="form-group col-md-6 col-12">
-                                      <div class="d-block">
-                                        <label class="control-label">Nombres <span class="required">*</span></label>
-                                      </div>
-                                      <input type="text" class="form-control" name="name" tabindex="2" required value="{{ old('name') ?? $user->name }}">
-                                      {!!$errors->first("name", "<span class='text-danger'>:message</span>")!!}
-                                    </div>
-                                    {{-- Apellidos --}}
-                                    <div class="form-group col-md-6 col-12">
-                                        <div class="d-block">
-                                          <label class="control-label">Apellidos <span class="required">*</span></label>
+                                    <form method="POST" action="{{ route('user.profile.save') }}" class="needs-validation row" novalidate="">
+                                        @csrf 
+                                        <div class="form-group col-12">
+                                            <label for="email">Email</label><br>
+                                            <strong>{{ $user->email }}</strong>
                                         </div>
-                                        <input type="text" class="form-control" name="last_name" tabindex="2" required value="{{ old('last_name') ?? $user->last_name }}">
-                                        {!!$errors->first("last_name", "<span class='text-danger'>:message</span>")!!}
-                                    </div>
-
-                                    {{-- Cédula --}}
-                                    <div class="form-group col-12">
+                                        {{-- Nombres --}}
+                                        <div class="form-group col-md-6 col-12">
                                         <div class="d-block">
-                                          <label class="control-label">Cédula</label>
+                                            <label class="control-label">Nombres <span class="required">*</span></label>
                                         </div>
-                                        <input type="text" class="form-control" name="identification_number" tabindex="2" required value="{{ old('identification_number') ?? $user->identification_number }}">
-                                        {!!$errors->first("identification_number", "<span class='text-danger'>:message</span>")!!}
-                                    </div>
-
-                                    {{-- País --}}
-                                    <div class="form-group col-12">
-                                        <div class="d-block">
-                                          <label class="control-label">País</label>
+                                        <input type="text" class="form-control" name="name" tabindex="2" required value="{{ old('name') ?? $user->name }}">
+                                        {!!$errors->first("name", "<span class='text-danger'>:message</span>")!!}
                                         </div>
-                                        <span>{{ $country->name }}</span>
-                                    </div>
-
-                                    {{-- Provincia --}}
-                                    <div class="form-group col-md-6 col-12">
-                                        <div class="d-block">
-                                          <label for="form-states" class="control-label">Provincia</label>
+                                        {{-- Apellidos --}}
+                                        <div class="form-group col-md-6 col-12">
+                                            <div class="d-block">
+                                            <label class="control-label">Apellidos <span class="required">*</span></label>
+                                            </div>
+                                            <input type="text" class="form-control" name="last_name" tabindex="2" required value="{{ old('last_name') ?? $user->last_name }}">
+                                            {!!$errors->first("last_name", "<span class='text-danger'>:message</span>")!!}
                                         </div>
-                                        <select id="form-states" name="state_id" class="select2" onchange="getCities(this.value)"></select>
-                                        {!!$errors->first("state_id", "<span class='text-danger'>:message</span>")!!}
-                                    </div>
 
-                                    {{-- Ciudad --}}
-                                    <div class="form-group col-md-6 col-12">
-                                        <div class="d-block">
-                                          <label for="form-cities" class="control-label">Ciudad</label>
+                                        {{-- Cédula --}}
+                                        <div class="form-group col-12">
+                                            <div class="d-block">
+                                            <label class="control-label">Cédula</label>
+                                            </div>
+                                            <input type="text" class="form-control" name="identification_number" tabindex="2" required value="{{ old('identification_number') ?? $user->identification_number }}">
+                                            {!!$errors->first("identification_number", "<span class='text-danger'>:message</span>")!!}
                                         </div>
-                                        <select id="form-cities" name="city_id" class="select2"></select>
-                                        {!!$errors->first("city_id", "<span class='text-danger'>:message</span>")!!}
-                                    </div>
+
+                                        {{-- País --}}
+                                        <div class="form-group col-12">
+                                            <div class="d-block">
+                                            <label class="control-label">País</label>
+                                            </div>
+                                            <span>{{ $country->name }}</span>
+                                        </div>
+
+                                        {{-- Provincia --}}
+                                        <div class="form-group col-md-6 col-12">
+                                            <div class="d-block">
+                                            <label for="form-states" class="control-label">Provincia</label>
+                                            </div>
+                                            <select id="form-states" name="state_id" class="select2" onchange="getCities(this.value)"></select>
+                                            {!!$errors->first("state_id", "<span class='text-danger'>:message</span>")!!}
+                                        </div>
+
+                                        {{-- Ciudad --}}
+                                        <div class="form-group col-md-6 col-12">
+                                            <div class="d-block">
+                                            <label for="form-cities" class="control-label">Ciudad</label>
+                                            </div>
+                                            <select id="form-cities" name="city_id" class="select2"></select>
+                                            {!!$errors->first("city_id", "<span class='text-danger'>:message</span>")!!}
+                                        </div>
 
 
-                                    <div class="form-group">
-                                      <button type="submit" class="btn btn-primary btn-sm btn-block" tabindex="4">
-                                        Guardar datos
-                                      </button>
-                                    </div>
-                                  </form>
+                                        <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-sm btn-block" tabindex="4">
+                                            Guardar datos
+                                        </button>
+                                        </div>
+                                    </form>
                                 </div>
                               </div>
                             </div>

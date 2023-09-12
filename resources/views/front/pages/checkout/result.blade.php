@@ -308,6 +308,19 @@
                                                     </tr>
                                                 @endforeach
 
+                                               
+
+                                                @if ($cart->discount_code && $cart->discountCart != null)
+                                                    <tr class="cart_item">
+                                                        <td class="product-name" style="color: red">Descuento con cupón: <strong style="color: red">{{ $cart->discountCart->code }}</strong></td>
+                                                        <td class="product-total">
+                                                            <span class="woocommerce-Price-amount amount" style="color: red"><bdi><span
+                                                                        class="woocommerce-Price-currencySymbol" >- $</span><span
+                                                                        id="billing-delivery-cost">{{ $cart->discount_code_format }}</span></bdi></span>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+
                                                 <tr class="cart_item">
                                                     <td class="product-name">Costo de envío</td>
                                                     <td class="product-total">
@@ -316,7 +329,6 @@
                                                                     id="billing-delivery-cost">{{ $cart->delivery_cost_format }}</span></bdi></span>
                                                     </td>
                                                 </tr>
-
                                             </tbody>
                                             <tfoot>
                                                 <tr class="order-total">
