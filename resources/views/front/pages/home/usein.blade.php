@@ -1,7 +1,7 @@
 {{-- Title --}}
 <div id="tips-stevia" data-type="Container"
     class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet" data-delay=""
-    style="padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(211, 107, 134, 1);background-position: center top;background-repeat: no-repeat;background-size: auto;background-image: url('{{ asset('images/userin/Fondo_Rosa-2006733.svg') }}');">
+    style="padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(211, 107, 134, 1);background-position: center top;background-repeat: no-repeat;background-size: cover;background-image: url('{{ asset('images/userin/Fondo_Rosa-2006733.svg') }}');">
     <div class="grid-content ">
         <div class="grid-column    "
             style="width: 100%;padding-left:0px;padding-right:0px;background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">

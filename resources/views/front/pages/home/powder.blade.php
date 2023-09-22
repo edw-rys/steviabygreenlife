@@ -1,9 +1,18 @@
 {{-- Web --}}
-
+<style>
+    .powder-pannel-grid-design::after{
+        content: '';
+        background: #00436D;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100px;
+    }
+</style>
 <div id="stevia-powder" data-type="Container"
     class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet powder-bck-panel" data-delay=""
     style="background-image: url('{{asset('images/powder/Fond_azul_Mano-2002186.svg')}}');">
-    <div class="powder-pannel-grid" style="background: #00436D">
+    <div class="powder-pannel-grid relative powder-pannel-grid-design">
         <div class="grid-column    "
             style="width: 52%;padding-left:0%;padding-right:0%;background-image: none;background-size: cover;background-repeat: no-repeat;background-position: center center;top: 0px;">
             <div class="widget-row ">

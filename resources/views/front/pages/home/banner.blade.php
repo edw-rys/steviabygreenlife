@@ -15,7 +15,6 @@
                         <img src="{{ asset('images/resources/logo-stevia.png') }}" alt="logo"
                             class="img-logo-stevia">
                     </a>
-                    <div class="separator-line-menu-stevia"></div>
                     <ul class="stevia-menu-principal">
                         <li class="subitems-principal-menu"><a href="{{ route('front.shop') }}">Tienda</a></li>
                         <li class="subitems-principal-menu">
