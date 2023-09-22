@@ -1,4 +1,4 @@
-<div
+{{-- <div
     class="next-step-popup justify-center flex flex-row align-center with-quick-cart cart-preview-full-height
                ">
     <a href="{{ route('front.shop')}}" class="store-cart-button">
@@ -9,4 +9,4 @@
             </path>
         </svg>
     </a>
-</div>
+</div> --}}

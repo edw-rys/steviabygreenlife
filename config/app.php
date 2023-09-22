@@ -245,5 +245,6 @@ return [
     'emails_admin'        => [
         'edw-toni@hotmail.com',
         'reyes-edw@hotmail.com'
-    ]
+    ],
+    'phone_number'  => env('PHONE_NUMBER')
 ];

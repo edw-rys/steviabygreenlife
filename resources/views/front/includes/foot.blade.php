@@ -206,6 +206,7 @@
     WebPlatform.visitorName = '';
 </script>
 
+<script type="text/javascript" src="{{ asset('scripts/platform.client.min.js') }}?v={{ config('app.website_version')}}" data-cookieconsent="ignore"></script>
 {{-- <script type="text/javascript" src="{{ asset('scripts/platform.client.min.js') }}" data-cookieconsent="ignore"></script> --}}
 
 <script type="text/javascript" src="{{asset('scripts/common/hit.js')}}?v={{ config('app.website_version')}}"></script>

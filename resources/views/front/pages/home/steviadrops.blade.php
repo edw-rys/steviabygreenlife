@@ -1,9 +1,8 @@
-<div id="container-widget-1682004930933" data-type="Container"
-    class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet steviadrops-bck-panel" data-delay=""
+<div id="stevia-drops" data-type="Container"
+    class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet steviadrops-bck-panel card-h-vh-max" data-delay=""
     style="background-image: url('{{asset('images/steviadrops/Fondo_Celeste-2006128.svg')}}');">
     <div class="powder-pannel-grid">
-        <div class="grid-column    "
-            style="width: 51%; padding-left:0%;padding-right:0%; background-image: none;background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
+        <div class="grid-column  cart-lateral-text-drops ml-25-xl">
             <h3 class="hidden">Stevia Drops</h3>
 
             <div class="widget-row with-centered-content">
@@ -42,12 +41,15 @@
                     data-type="TextWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
                     <div class="text-widget-content">
-                        <p style="text-align: center; "><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Light&quot;; font-size: 14px;">Endulza
-                                saludablemente tus bebidas sin desperdiciar</span></p>
-                        <p style="text-align: center; "><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Light&quot;; font-size: 14px;">y
-                                llévalo&nbsp;a todas partes.</span></p>
+                        <p style="text-align: center;">
+                            <span style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Light&quot;; font-size: 18px;">
+                                Endulza saludablemente tus bebidas sin desperdiciar
+                            </span>
+                            <br>
+                            <span style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Light&quot;; font-size: 18px;">
+                                y llévalo&nbsp;a todas partes.
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -72,27 +74,28 @@
             </div>
         </div>
         <div class="grid-column  steviadrops-hand-stevia-mobile"
-            style="width: 49%;padding-left:0%;padding-right:0%;background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
+            style="width: 50%;padding-left:0%;padding-right:0%;background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
 
-            <div class="widget-row ">
+            <a class="lazyImage flex flex-col  image-fit hand-steviadrops-xl">
+                <img src="{{ asset('images/steviadrops/mano-stevia-drops.png')}}"
+                    class="flex-none" alt="" style="margin-top: 10%;" loading="lazy">
+            </a>
+            {{-- <div class="widget-row ">
                 <div class="widget anim-delayed-item widgetResponsive imageWidget col20" id="image-widget-1682004930932"
                     data-type="ImageWidget" data-delay="" data-animation-duration="1100" data-animation-delay="0"
                     data-animation="lazyAnimation-fadeInLeft" style="margin-top: 11.5385%; margin-left: 0px;">
 
-                    <div class="image-box  image-position-default" style="max-width: 539px;">
+                    <div class="image-box  image-position-default" >
                         <div class="widget-preserving-ratio-outer " style="padding-bottom: 106.67903525046383%">
 
                             <div class="widget-preserving-ratio-inner"
-                                data-slide="{{ asset('images/steviadrops/Mano_SteviaDrops-2531858.png')}}">
-                                <a class="lazyImage flex flex-col  image-fit">
-                                    <img src="{{ asset('images/steviadrops/Mano_SteviaDrops-2531858.png')}}"
-                                        class="flex-none" alt="" style="" loading="lazy">
-                                </a>
+                                data-slide="{{ asset('images/steviadrops/mano-stevia-drops.png')}}">
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

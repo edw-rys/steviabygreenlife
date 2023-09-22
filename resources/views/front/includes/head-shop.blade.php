@@ -4,7 +4,7 @@
 <title>{{ config('app.name') }}</title>
 
 @include('front.includes.metadata')
-<link rel="stylesheet" href="{{ asset('styles/shop/font-awesome.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/shop/font-awesome.css') }}?v={{ config('app.website_version')}}">
 {{-- <link rel="stylesheet" href="{{ asset('styles/shop/shop.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('styles/shop/woocommerce.css') }}?v={{ config('app.website_version')}}">
 <link rel="stylesheet" href="{{ asset('styles/shop/style.css') }}?v={{ config('app.website_version')}}">

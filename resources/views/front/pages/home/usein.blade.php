@@ -1,5 +1,5 @@
 {{-- Title --}}
-<div id="container-widget-1682089148519" data-type="Container"
+<div id="tips-stevia" data-type="Container"
     class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet" data-delay=""
     style="padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(211, 107, 134, 1);background-position: center top;background-repeat: no-repeat;background-size: auto;background-image: url('{{ asset('images/userin/Fondo_Rosa-2006733.svg') }}');">
     <div class="grid-content ">
@@ -10,9 +10,6 @@
                 <div class="widget widgetResponsive textWidget headingWidget col19" id="heading-widget-1682089148518"
                     data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
-                    <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 1;"><br></h2>
-                    </div>
                 </div>
             </div>
             <div class="widget-row ">
@@ -50,8 +47,10 @@
     data-delay=""
     style="padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(211, 107, 134, 1);background-position: center top;background-repeat: no-repeat;background-size: auto;background-image: none;">
     <div class="userin-pannel-grid">
-        <div class="grid-column  justify-center "
-            style="width: 31%; padding-left:0%;padding-right:0px;background-color: transparent; background-image: none;background-size: cover;background-repeat: no-repeat;background-position: center center;top: 0px;">
+
+        <div class="grid-column    "
+            style="width: 30%;padding-left:0%;padding-right:0%;background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
+
             <div class="widget-row userin-mobile-title">
                 <div class="widget mobile-only  widgetResponsive imageWidget col20" id="image-widget-1682453159271"
                     data-type="ImageWidget" data-delay="" data-animation-duration="" data-animation-delay=""
@@ -71,47 +70,9 @@
                     </div>
                 </div>
             </div>
-            <div class="widget-row text-center">
-                <img src="{{ asset('images/userin/Mesa_de_trabajo_22_copia-2616046.png')}}"
-                     alt="MARGARITA HEALTHY" class="userin-img-receta" loading="lazy">
-            </div>
-            <div class="widget-row with-centered-content">
-                <div class="widget widgetResponsive textWidget headingWidget col20" id="heading-widget-1682429611161"
-                    data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
-                    data-animation="lazyAnimation-" style="margin-top: 1.75953%; margin-left: 0px;">
-                    <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 0.8;" class="userin-text-size"><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Semilight&quot;;">¡SAY
-                                CHEERS!</span></h2>
-                        <h2 style="text-align: center; line-height: 0.8;" class="userin-text-size"><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Semilight&quot;; font-size: 28px;">CON
-                                UNA MARGARITA HEALTHY</span></h2>
-                    </div>
-                </div>
-            </div>
-            <div class="widget-row with-centered-content">
-                <div class="widget widgetResponsive textWidget col20" id="text-widget-1682451679795"
-                    data-type="TextWidget" data-delay="" data-animation-duration="" data-animation-delay=""
-                    data-animation="lazyAnimation-" style="margin-top: 0px; margin-left: 0px;">
-                    <div class="text-widget-content">
-                        <p style="text-align: center; "><span style="color: rgb(255, 255, 255);">Si
-                                hay como disfrutar de un dulce coctel saludable, endulza tus cocteles y
-                                bebidas <span style="font-weight: 700;">SIN CAMBIAR EL SABOR con
-                                </span>Stevia By Green Life</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- <div class="grid-column  grid-column-no-widgets   "
-            style="width: 4%; padding-left:0%;padding-right:1%; background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
 
-            <div class="widget-row ">
-            </div>
-        </div> --}}
-        <div class="grid-column    "
-            style="width: 30%;padding-left:0%;padding-right:0%;background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
             <div class="widget-row text-center">
-                <img src="{{ asset('images/userin/Mesa_de_trabajo_1-8998457.png') }}"
+                <img src="{{ asset('images/userin/desayuno-frutas.png') }}"
                     class="flex-none userin-img-receta" alt="UN DESAYUNO SALUDABLE" loading="lazy">
             </div>
             <div class="widget-row with-centered-content">
@@ -119,12 +80,8 @@
                     data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 1.21212%; margin-left: 0px;">
                     <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 0.8;" class="userin-text-size"><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Semilight&quot;;">TODO
-                                COMIENZA..</span></h2>
-                        <h2 style="text-align: center; line-height: 0.8;" class="userin-text-size"><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Semilight&quot;;">CON
-                                UN DESAYUNO SALUDABLE</span></h2>
+                        <h4 style="text-align: center; line-height: 1.2;color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Semilight&quot;;" class="userin-text-size">
+                            TODO COMIENZA... <br> CON UN DESAYUNO SALUDABLE</span></h4>
                     </div>
                 </div>
             </div>
@@ -133,7 +90,7 @@
                     data-type="TextWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0px; margin-left: 0px;">
                     <div class="text-widget-content">
-                        <p style="text-align: center; "><span style="color: rgb(255, 255, 255);">Dile adíos a los
+                        <p style="text-align: center; " class="text-recipes-desc"><span style="color: rgb(255, 255, 255);">Dile adíos a los
                                 bowls con sabor
                                 desagradable, con un sobre de <span style="font-weight: bold;">Stevia
                                     Powder</span> endulza sin cambiar el sabor.</span></p>
@@ -141,6 +98,42 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="grid-column  justify-center "
+            style="width: 31%; padding-left:0%;padding-right:0px;background-color: transparent; background-image: none;background-size: cover;background-repeat: no-repeat;background-position: center center;top: 0px;">
+           
+            <div class="widget-row text-center">
+                <img src="{{ asset('images/userin/Mesa_de_trabajo_22_copia-2616046.png')}}"
+                     alt="MARGARITA HEALTHY" class="userin-img-receta" loading="lazy" style="height: 22.5em">
+            </div>
+            
+            <div class="widget-row with-centered-content">
+                <div class="widget widgetResponsive textWidget headingWidget col20" id="heading-widget-1682429611161"
+                    data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
+                    data-animation="lazyAnimation-" style="margin-top: 1.75953%; margin-left: 0px;">
+                    <div class="text-widget-content">
+                        <h4 style="text-align: center; line-height: 1.2;color: rgb(255, 255, 255); font-family: Cocogoose Pro Semilight;" class="userin-text-size">
+                            ¡SAY CHEERS! <br> CON UNA MARGARITA HEALTHY
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-row with-centered-content">
+                <div class="widget widgetResponsive textWidget col20" id="text-widget-1682451679795"
+                    data-type="TextWidget" data-delay="" data-animation-duration="" data-animation-delay=""
+                    data-animation="lazyAnimation-" style="margin-top: 0px; margin-left: 0px;">
+                    <div class="text-widget-content">
+                        <p style="text-align: center; " class="text-recipes-desc"><span style="color: rgb(255, 255, 255);">Si
+                                hay como disfrutar de un dulce coctel saludable, endulza tus cocteles y
+                                bebidas <span style="font-weight: 700;">SIN CAMBIAR EL SABOR con
+                                </span>Stevia By Green Life</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
  
         <div class="grid-column    "
             style="width: 30%;  padding-left:0%;padding-right:1%;  background-image: none;background-size: background-repeat: no-background-position: center center;top: 0px;">
@@ -153,9 +146,9 @@
                     data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
                     <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 0.8;" class="userin-text-size"><span
-                                style="color: rgb(255, 255, 255); font-family: &quot;Cocogoose Pro Semilight&quot;;">AHORA,
-                                SÍ EL CAFECITO ES "DELICIOSO"</span></h2>
+                        <h4 style="text-align: center; line-height: 1.2;" class="userin-text-size"><span
+                                style="color: rgb(255, 255, 255); font-family: Cocogoose Pro Semilight;">AHORA,
+                                SÍ EL CAFECITO <br> ES "DELICIOSO"</span></h4>
                     </div>
                 </div>
             </div>
@@ -164,7 +157,7 @@
                     data-type="TextWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0px; margin-left: 0px;">
                     <div class="text-widget-content">
-                        <p style="text-align: center; "><span style="color: rgb(255, 255, 255);">Endulza el café sin
+                        <p style="text-align: center; " class="text-recipes-desc"><span style="color: rgb(255, 255, 255);">Endulza el café sin
                                 que deje de
                                 serlo, gracias a Stevia By Green Life, la <span style="font-weight: bold;">ÚNICA que no
                                     cambia el

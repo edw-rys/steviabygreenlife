@@ -1,4 +1,4 @@
-<div id="container-widget-1682024922958" data-type="Container"
+<div id="recetas" data-type="Container"
     class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet" data-delay=""
     style="padding-bottom:0%; padding-top: 7.39358%; padding-left: 0; background-color: rgba(237, 214, 125, 1);   background-position: center top;   background-repeat: no-repeat;   background-size: auto;  background-image: url('{{ asset('images/recetas/Fondo_rosa_amarillo-2025843.svg')}}');">
     <div class="grid-content ">
@@ -116,52 +116,26 @@
                     class="recetas-cart-content-image" alt="" style="" loading="lazy">
             </div>
         </div>
-        <div class="recetas-grid-column-receta">
+        <div class="recetas-grid-column-receta" style="margin-top: 25px">
             <div class="text-center">
                 <img src="{{ asset('images/recetas/Foto_Stevia-2616503.png')}}"
                     class="recetas-cart-content-image" alt="" style="" loading="lazy">
             </div>
             <div class="recetas-content-panel-receta receta-panel-receta-2">
-                <div class="widget-row with-centered-content">
-                    <div class="widget  anim-delayed-item widgetResponsive buttonWidget col20"
-                        id="button-widget-1682082823928" data-type="Button" data-delay=""
-                        data-animation-duration="1100" data-animation-delay="0" data-animation="lazyAnimation-bounceIn"
-                        style="margin-top: 0px; margin-left: 0px;">
-                        <div class="main-widget-content">
-                            <style type="text/css">
-                                #button-widget-1682082823928 .hvr-sweep-to-right:before,
-                                #button-widget-1682082823928 .hvr-fade:focus,
-                                #button-widget-1682082823928 .hvr-fade:active,
-                                #button-widget-1682082823928 .hvr-rectangle-out:before {
-                                    background: #333333 !important;
-                                    border-color: #333333 !important;
-                                }
-
-                                #button-widget-1682082823928 .hvr-fade:hover {
-                                    background: #333333 !important;
-                                }
-
-                                #button-widget-1682082823928 .hvr-sweep-to-right:hover,
-                                #button-widget-1682082823928 .hvr-sweep-to-right:focus,
-                                #button-widget-1682082823928 .hvr-sweep-to-right:active,
-                                #button-widget-1682082823928 .hvr-fade:hover,
-                                #button-widget-1682082823928 .hvr-fade:focus,
-                                #button-widget-1682082823928 .hvr-fade:active,
-                                #button-widget-1682082823928 .hvr-rectangle-out:hover,
-                                #button-widget-1682082823928 .hvr-rectangle-out:focus,
-                                #button-widget-1682082823928 .hvr-rectangle-out:active,
-                                #button-widget-1682082823928 .hvr-sweep-to-right:hover .btn-text-wrapper span {
-                                    color: #ffffff !important;
-                                }
-                            </style>
-                            <div style="text-align: center;">
-                                <a href="{{ route('front.shop.category', 'stevia-powder')}}" target="_self"
-                                    class="theme-button hvr-sweep-to-right  border-color-primary "
-                                    style="font-size: 19px; color:rgba(255, 255, 255, 1);font-family:'Cocogoose Pro Semilight';background-color: rgba(0, 67, 109, 1);letter-spacing:1px;border-width: 0px;padding: 12px 24px;width: auto;box-shadow: 4px 2px 20px -13px rgba(0, 0, 0, 1) ;border-radius: 50px;">
-
-                                    <span class="">
-                                        ¡Compralo aquí!</span>
-                                </a>
+                <div class="widget-row ">
+                    <div class="widget with-delay anim-delayed-item widgetResponsive imageWidget col20 with-delay-initialized anim-displayed lazyAnimation-fadeInDown delay-ended"
+                        id="image-widget-1682082824190" data-type="ImageWidget" data-delay="2"
+                        data-animation-duration="1100" data-animation-delay="0" data-animation="lazyAnimation-fadeInDown"
+                        style="margin-top: 15px; margin-left: 0px; animation-delay: 0ms; animation-duration: 1100ms;">
+                        <div class="image-box  image-position-default" style="max-width: 572px;">
+                            <div class="widget-preserving-ratio-outer " style="padding-bottom: 34.44055944055944%">
+                                <div class="widget-preserving-ratio-inner"
+                                    data-slide="{{ asset('images/recetas/Cheesecake_de_fresa-2617678.svg')}}">
+                                    <a class="lazyImage flex flex-col image-fit">
+                                        <img src="{{ asset('images/recetas/Cheesecake_de_fresa-2617678.svg')}}"
+                                            class="flex-none" alt="" style="" loading="lazy">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,8 +195,55 @@
                             </ul>
                         </div>
                     </div>
+
+                    <div class="widget  anim-delayed-item widgetResponsive buttonWidget col20"
+                        id="button-widget-1682082823928" data-type="Button" data-delay=""
+                        data-animation-duration="1100" data-animation-delay="0" data-animation="lazyAnimation-bounceIn"
+                        style="margin-top: 0px; margin-left: 0px;">
+                        <div class="main-widget-content">
+                            <style type="text/css">
+                                #button-widget-1682082823928 .hvr-sweep-to-right:before,
+                                #button-widget-1682082823928 .hvr-fade:focus,
+                                #button-widget-1682082823928 .hvr-fade:active,
+                                #button-widget-1682082823928 .hvr-rectangle-out:before {
+                                    background: #333333 !important;
+                                    border-color: #333333 !important;
+                                }
+
+                                #button-widget-1682082823928 .hvr-fade:hover {
+                                    background: #333333 !important;
+                                }
+
+                                #button-widget-1682082823928 .hvr-sweep-to-right:hover,
+                                #button-widget-1682082823928 .hvr-sweep-to-right:focus,
+                                #button-widget-1682082823928 .hvr-sweep-to-right:active,
+                                #button-widget-1682082823928 .hvr-fade:hover,
+                                #button-widget-1682082823928 .hvr-fade:focus,
+                                #button-widget-1682082823928 .hvr-fade:active,
+                                #button-widget-1682082823928 .hvr-rectangle-out:hover,
+                                #button-widget-1682082823928 .hvr-rectangle-out:focus,
+                                #button-widget-1682082823928 .hvr-rectangle-out:active,
+                                #button-widget-1682082823928 .hvr-sweep-to-right:hover .btn-text-wrapper span {
+                                    color: #ffffff !important;
+                                }
+                            </style>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-row with-centered-content">
+                    <div style="text-align: center;">
+                        <a href="{{ route('front.shop.category', 'stevia-powder')}}" target="_self"
+                            class="theme-button hvr-sweep-to-right  border-color-primary "
+                            style="font-size: 19px; color:rgba(255, 255, 255, 1);font-family:'Cocogoose Pro Semilight';background-color: rgba(0, 67, 109, 1);letter-spacing:1px;border-width: 0px;padding: 12px 24px;width: auto;box-shadow: 4px 2px 20px -13px rgba(0, 0, 0, 1) ;border-radius: 50px;">
+    
+                            <span class="">
+                                ¡Compralo aquí!</span>
+                        </a>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

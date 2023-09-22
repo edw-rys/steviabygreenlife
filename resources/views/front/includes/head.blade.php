@@ -1,8 +1,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-
-    <link rel="preload" as="script" href="{{ asset('scripts/platform.client.min.js') }}?v={{ config('app.website_version')}}">
-    <script type="text/javascript" src="{{ asset('scripts/platform.client.min.js') }}?v={{ config('app.website_version')}}" data-cookieconsent="ignore"></script>
+    {{-- <script src="{{ asset('scripts/jquery.min.js') }}"></script> --}}
+    {{-- <link rel="preload" as="script" href="{{ asset('scripts/jquery.min.js') }}?v={{ config('app.website_version')}}"> --}}
+    {{-- <link rel="preload" as="script" href="{{ asset('scripts/platform.client.min.js') }}?v={{ config('app.website_version')}}"> --}}
 
 
     <link rel="icon" href="{{ asset('images/logo/favicon-3224021.svg')}}">
@@ -50,6 +50,7 @@
     <link rel="preload stylesheet" as="style" href="{{ asset('styles/trunk-480.min.css') }}?v={{ config('app.website_version')}}" type="text/css">
     <link rel="stylesheet" href="{{ asset('styles/global.css')}}?v={{ config('app.website_version')}}">
     <link rel="stylesheet" href="{{ asset('styles/home.css')}}?v={{ config('app.website_version')}}">
+  <link rel="stylesheet" href="{{ asset('styles/shop/font-awesome.css') }}?v={{ config('app.website_version')}}">
     @include('front.includes.fonts')
     
     

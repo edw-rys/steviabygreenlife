@@ -3,7 +3,7 @@
     <div class="grid-content ">
         <div class="grid-column    "
             style="width: 100%;padding-left:0px;padding-right:0px;background-image: none;  background-size: cover;  background-repeat: no-repeat;  background-position: center center;top: 0px;">
-
+            <h4 class="text-center title-foot-marca">UNA MARCA DE:</h4>
             <div class="widget-row text-center">
                 <img src="{{ asset('images/logo/Logo_Green_Life-2099064.svg') }}"
                     class="location-image-footer" alt="" style="" loading="lazy">

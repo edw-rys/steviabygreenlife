@@ -61,7 +61,7 @@
 }
 
 #video-widget-1682451679794 {
-    width: 80%;
+    width: 100%;
 }
 
 @media (max-width: 784px) {
@@ -197,8 +197,8 @@
 /* Recetas css */
 .recetas-cart-content-image{
     border-radius: 45px;
-    width: 24em;
-    margin-top: 4em;
+    width: 94%;
+    margin-top: 1em;
 }
 .recetas-grid-column-receta{
     display: grid !important;
@@ -303,5 +303,289 @@
     }
     .location-image-footer{
         width: 90%;
+    }
+}
+
+
+/* .mobile-menu-steviaweb{
+    position: relative;
+} */
+
+.center-flex{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.menu-navigation-item{
+    background: #00B4E3;
+    height: 80px;
+    width: 100%;
+    position: relative;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+}
+.enlace > .img-logo-stevia{
+    width: 147px;
+    height: 75px;
+}
+.logo{
+    height: 40px;
+}
+.menu-navigation-item .stevia-menu-principal{
+    /* float: right; */
+    margin-right: 20px;
+}
+
+.menu-navigation-item a{
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.menu-navigation-item .stevia-menu-principal li a{
+    color: #fff;
+    border-radius: 3px;
+}
+
+.menu-navigation-item .checkbtn-item{
+    font-size: 30px;
+    color: #fff;
+    /* float: left; */
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+    margin-left: 10px;
+}
+.menu-navigation-item .checkbtn-item .img-hamburguer-nav{
+    width: 43px;
+}
+#check-menu-open{
+    display: none;
+}
+
+.angle-menu-item {
+    font-size: 1.1em;
+    color: white;
+    font-weight: 600;
+}
+
+.separator-line-menu-stevia{
+    display: none;
+}
+
+@media (max-width: 748px){
+    .menu-navigation-item{
+        justify-content: space-between;
+    }
+    .enlace > .img-logo-stevia{
+        width: 120px;
+        height: 77px;
+    }
+    .menu-navigation-item .checkbtn-item{
+        display: block;
+    }
+    .menu-navigation-item .stevia-menu-principal{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #00B4E3;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+    }
+    .menu-navigation-item .stevia-menu-principal li{
+        display: block;
+        margin: 20px 0;
+        line-height: 30px;
+    }
+    .menu-navigation-item .stevia-menu-principal li a{
+        font-size: 20px;
+    }
+    .menu-navigation-item li a:hover,.menu-navigation-item li a.active{
+        background: none;
+    }
+
+    .subitems-principal-menu:hover > .submenus-items-child{
+        display: initial;
+    }
+    .menu-navigation-item #check-menu-open:checked ~ .stevia-menu-principal{
+        left:0;
+    }
+}
+
+.submenus-items-child{
+    display: none;
+}
+
+
+@media (min-width: 748px){
+    .separator-line-menu-stevia{
+        display: inline-block;
+        width: 3px;
+        height: 80%;
+        background: white;
+        margin: auto 0;
+    }
+    .submenus-items-child{
+        position: absolute;
+        left: -50px;
+        background: #00B4E3;
+        min-width: 225px;
+    }
+    .submenus-items-child .link-submenu-item{
+        padding: 0 50px;
+    }
+    .submenus-items-child .subitem-option-child{
+        border-bottom: 1px solid #fff;
+    }
+    .subitems-principal-menu:hover > .submenus-items-child{
+        display: initial;
+    }
+    .menu-navigation-item .stevia-menu-principal li.subitems-principal-menu{
+        display: inline-block;
+        line-height: 80px;
+        margin: 0 30px;
+        position: relative;
+    }
+}
+
+.store-cart-btn-new{
+    border-radius: 100%;
+    border: 1px solid #fff;
+    padding: 6px;
+}
+*{
+    /* Keyword values */
+    scroll-behavior: auto;
+    scroll-behavior: smooth;
+}
+.mr-5px{
+    margin-right: 5px;
+}
+
+.video-player{
+    height: 50vh;
+}
+.card-lateral-text-powder{
+    width: 48%;padding-left:0%;padding-right:0%;background-color: transparent;background-image: none;background-size: cover;background-repeat: no-repeat;background-position: center center;top: 0px;
+}
+.z-i-2{
+    z-index: 2;
+}
+.cart-lateral-text-drops{
+    width: 50%; padding-left:0%;padding-right:0%; background-image: none;background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;
+}
+.text-recipes-desc{
+    width: 75%;
+    margin: 0 auto;
+    font-size: 1.3em;
+}
+@media (min-width: 780px){
+    .scale-1-1-xl{
+        scale: 1.1;
+    }
+    .scale-1-2-xl{
+        scale: 1.2;
+    }
+    .video-player{
+        height: 97vh;
+    }
+    .higth-text-xl{
+        font-size: 1.5em;
+    }
+    .card-lateral-text-powder{
+        padding-right: 18%;
+    }
+    .card-h-vh-max{
+        min-height: 108vh;
+    }
+    
+   
+}
+@media (min-width: 1290px){
+    .ml-25-xl{
+        margin-left: 25px;
+    }
+    .hand-steviadrops-xl{
+        text-align: left;
+        display: block;
+    }
+}
+
+.card-stevialovers-item{
+    width: 31%; 
+    padding-left:0px;
+    padding-right:0%;
+    background-color: rgba(255, 255, 255, 1); 
+    background-image: none;    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+    border-radius: 48px; 
+    top: 0px;  
+}
+
+.title-foot-marca{
+    font-weight: bold;
+    font-size: 2em;
+    margin-top: 11%;
+    color: #01426A;
+}
+
+.float-button {
+    text-decoration: none;
+    position: fixed;
+    padding: 10px;
+    padding-right: 15px;
+    bottom: 30px;
+    right: 30px;
+    color: #fff;
+    background-color:#25D366;
+    border-radius: 25px 30px 5px 25px;
+    z-index: 100;
+    font-family: Arial;
+    font-size: 17px;
+    animation: whatsapp-animation 0.5s ease-in-out;
+    box-shadow: 1px 2px 5px 2px rgba(30,30,30,0.3);
+    transition:all 0.3s ease-out;
+}
+
+.float-button:hover {
+     background-color: #128C7E;
+      color: #fff;
+}
+
+.fa-whatsapp {
+    font-size: 20px !important;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+@keyframes whatsapp-animation {
+    from {
+        opacity: 0%;
+    }
+
+    to {
+        opacity: 100%
+    }
+}
+
+@media screen and (max-width: 545px) {
+
+    .float-button {
+        bottom: 15px;
+        right: 15px;
+        width: 20px;
+        border-radius: 20px 20px 5px 20px;
+    }
+
+    .fa-whatsapp {
+        font-size: 22px !important;
+        padding: 4px;
     }
 }

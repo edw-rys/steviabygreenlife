@@ -3,17 +3,16 @@
     style="padding-bottom:0%;padding-top: 8.94545%; padding-left: 0;background-color: rgba(28, 176, 222, 1);  background-position: center top;  background-repeat: no-repeat;  background-size: cover;background-image: url('https://content.app-sources.com/s/73296972938990007/uploads/Images/Fondo_Redes-2097841.svg');">
     <div class="powder-pannel-grid ">
         <div class="grid-column"
-            style="width: 57% !important;margin: 0 auto;padding-left:2%;padding-right:2%;background-image: none;  background-size: cover;  background-repeat: no-repeat;  background-position: center center;top: 0px;">
+            style="margin: 0 auto;padding-left:2%;padding-right:2%;background-image: none;  background-size: cover;  background-repeat: no-repeat;  background-position: center center;top: 0px;">
 
             <div class="widget-row with-centered-content">
                 <div class="widget widgetResponsive textWidget headingWidget col20" id="heading-widget-1682096029092"
                     data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
-                    <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 1;"><span
+                    <div class="">
+                        <h4 style="text-align: center; line-height: 1;"><span
                                 style="color: rgb(255, 255, 255); font-size: 48px; font-family: Jumper;"><span
-                                    style="font-size: 54px;"><span style="font-size: 48px;">Conoce
-                                        más de nosotros</span>&nbsp;</span>&nbsp;👉 síguenos</span></h2>
+                                    style="font-size: 54px;"><span style="font-size: 48px;">Conoce  más de <br>nosotros</span></span>&nbsp;👉 síguenos</span></h4>
                     </div>
                 </div>
             </div>
@@ -74,10 +73,10 @@
                     data-animation-duration="" data-animation-delay="" data-animation="lazyAnimation-"
                     style="margin-top: 16.0819%; margin-left: 0px;">
                     <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 1;"><span
+                        <h3 style="text-align: center; line-height: 1;"><span
                                 style="color: rgb(255, 255, 255); font-size: 48px; font-weight: 700; font-family: Jumper;"><span
                                     style="font-size: 42px;">NO OLVIDES SEGUIRNOS</span><span
-                                    style="font-size: 42px;">&nbsp;👇🏻</span></span></h2>
+                                    style="font-size: 42px;">&nbsp;👇🏻</span></span></h3>
                     </div>
                 </div>
             </div>

@@ -27,9 +27,7 @@
         </div>
     </div>
     <div class="stevialovers-grid-comments">
-        <div class="grid-column stevialovers-grid-child has-bg-color"
-            style="width: 31%; padding-left:0px;padding-right:0%;background-color: rgba(255, 255, 255, 1); background-image: none;    background-size: cover;   background-repeat: no-repeat;   background-position: center center; border-radius: 10px; top: 0px;  ">
-
+        <div class="grid-column stevialovers-grid-child has-bg-color card-stevialovers-item">
             <div class="widget-row ">
                 <div class="widget widgetResponsive imageWidget col20" id="image-widget-1682094781753"
                     data-type="ImageWidget" data-delay="" data-animation-duration="" data-animation-delay=""
@@ -87,9 +85,7 @@
             </div>
         </div>
 
-        <div class="grid-column  stevialovers-grid-child has-bg-color"
-            style="width: 33%; padding-left:2%;padding-right:2%;background-color: rgba(255, 255, 255, 1); background-image: none;    background-size: cover;   background-repeat: no-repeat;   background-position: center center; border-radius: 10px; top: 0px;  ">
-
+        <div class="grid-column stevialovers-grid-child has-bg-color card-stevialovers-item">
             <div class="widget-row ">
                 <div class="widget widgetResponsive imageWidget col20" id="image-widget-1682094781749"
                     data-type="ImageWidget" data-delay="" data-animation-duration="" data-animation-delay=""
@@ -136,9 +132,7 @@
             </div>
         </div>
 
-        <div class="grid-column  stevialovers-grid-child has-bg-color"
-            style="width: 30%; padding-left:1%;padding-right:1%;background-color: rgba(255, 255, 255, 1); background-image: none;    background-size: cover;   background-repeat: no-repeat;   background-position: center center; border-radius: 10px; top: 0px;  ">
-
+        <div class="grid-column stevialovers-grid-child has-bg-color card-stevialovers-item">
             <div class="widget-row ">
                 <div class="widget widgetResponsive imageWidget col20" id="image-widget-1682094781745"
                     data-type="ImageWidget" data-delay="" data-animation-duration="" data-animation-delay=""
@@ -201,11 +195,11 @@
                 <div class="widget widgetResponsive textWidget headingWidget col19" id="heading-widget-1682617796063"
                     data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
-                    <div class="text-widget-content">
-                        <h2 style="text-align: center; line-height: 1;"><span
+                    <div class="">
+                        <h4 style="text-align: center; line-height: 1;"><span
                                 style="color: rgb(255, 255, 255); font-family: Jumper; font-weight: 700; font-size: 30px !important;">¡Unete
-                                a esta comunidad! Solo debes contarnos tu experiencia en nuestras redes
-                                sociales</span></h2>
+                                a esta comunidad! Solo debes contarnos <br> tu experiencia en nuestras redes
+                                sociales</span></h4>
                     </div>
                 </div>
             </div>
