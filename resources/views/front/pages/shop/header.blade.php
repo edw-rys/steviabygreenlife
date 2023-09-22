@@ -1,12 +1,18 @@
-<header id="masthead" class="site-header header-2" role="banner" style="">
+<header id="masthead" class="site-header header-2 new-design-template" role="banner" style="background: {{ config('app.theme.principal-color')}}">
     <div class="header-main">
         <div class="inner">
             <div class="left">
                 <div class="site-branding">
-                    <a href="{{ route('front.shop') }}" class="custom-logo-link" rel="home"><img
-                            src="{{ asset('images/shop/logo.png') }}" class="logo-light lazyloaded" alt="Logo"
-                            data-ll-status="loaded"><noscript><img src="{{ asset('images/shop/logo.png') }}"
-                                class="logo-light" alt="Logo" /></noscript></a>
+                    <a href="{{ route('front.index') }}" class="custom-logo-link" rel="home">
+                        <img
+                            src="{{ asset('images/resources/logo-stevia.png') }}" class="logo-light lazyloaded" alt="Logo"
+                            data-ll-status="loaded">
+                        {{-- <noscript>
+                            <img src="{{ asset('images/shop/logo.png') }}"
+                                class="logo-light" alt="Logo" />
+                        </noscript> --}}
+                    </a>
+
                 </div>
 
                 <div class="site-header-cart header-cart-mobile" >
@@ -17,7 +23,7 @@
                         <a class="cart-contents" href="{{ route('front.cart.show') }}"
                             title="Ver su carrito de compras">
                             <span class="count float-count-cart">0</span>
-                            <span class="woocommerce-Price-amount amount"><span
+                            <span class="woocommerce-Price-amount amount text-white"><span
                                     class="woocommerce-Price-currencySymbol">$</span class="float-total-cart">0.00</span> </a>
                     </div>
 
@@ -45,10 +51,10 @@
                     <div class="freshio-contact">
                         <div class="contact_inner">
                             <div class="contact_icon">
-                                <i class="freshio-icon-headphones-alt" aria-hidden="true"></i>
+                                <i class="freshio-icon-headphones-alt icon-color" aria-hidden="true"></i>
                             </div>
                             <div class="contact_content">
-                                <span class="sub-title">Llámanos:</span>
+                                <span class="sub-title bold" style="font-size: 1.2em"><strong>Llámanos</strong>:</span>
                                 <span class="title">042739211 - 042739400</span>
 
                             </div>
@@ -119,7 +125,7 @@
                         <a class="cart-contents cart-contents-icon" href="{{ route('front.cart.show')}}"
                             title="Ver su carrito de compras">
                             <span class="count float-count-cart">0</span>
-                            <span class="woocommerce-Price-amount amount"><span
+                            <span class="woocommerce-Price-amount amount text-white"><span
                                     class="woocommerce-Price-currencySymbol">$</span><span class="float-total-cart">0.00</span></span> </a>
 
                         {{-- <div class="widget woocommerce widget_shopping_cart">
@@ -138,7 +144,7 @@
                                 </div>
 
                                 <p class="woocommerce-mini-cart__total total">
-                                    <strong>Subtotal:</strong> <span class="woocommerce-Price-amount amount"><bdi><span
+                                    <strong>Subtotal:</strong> <span class="woocommerce-Price-amount amount text-white"><bdi><span
                                                 class="woocommerce-Price-currencySymbol">$</span><span class="float-total-cart">0.00</span></bdi></span>
                                 </p>
 

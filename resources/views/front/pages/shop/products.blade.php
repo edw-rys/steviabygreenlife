@@ -40,12 +40,27 @@
                     class="gamma widget-title">Categorías</span>
 
                 <ul class="product-categories">
-                    <li class="cat-item cat-item-186"><a
-                        href="{{ route('front.shop') }}">Todos</a> </li>
+                    <li class="cat-item cat-item-186">
+                        <a href="{{ route('front.shop') }}" class="point-category-item-expan border-blue p-internal-suave">
+                            <div class="separate-ctg-expand">
+                                <span>Todos</span>
+                            </div>
+                            <div class="content-img-ctg-expand">
+                                <img src="{{ asset('images/shop/category/all.png' )}}" alt="Todas las categorías" class="m-auto">
+                            </div>
+                        </a>
+                    </li>
                     @foreach ($categories as $category)
-                        <li class="cat-item cat-item-186"><a
-                                href="{{ route('front.shop.category', $category->system_name) }}@if(request('layout')!= null)?layout={{request('layout')}}@endif">{{ $category->name }}</a>
-                            <span class="count">({{ $category->products_count }})</span></li>
+                        <li class="cat-item cat-item-186">
+                            <a href="{{ route('front.shop.category', $category->system_name) }}@if(request('layout')!= null)?layout={{request('layout')}}@endif" class="point-category-item-expan border-blue p-internal-suave">
+                                <div class="separate-ctg-expand">
+                                    <span>{{ $category->name }}</span>
+                                </div>
+                                <div class="content-img-ctg-expand">
+                                    <img src="{{ $category->url_image }}" alt="{{ $category->name}}" class="m-auto">
+                                </div>
+                            </a>
+                            {{-- <span class="count">({{ $category->products_count }})</span></li> --}}
                     @endforeach
                 </ul>
             </div>
@@ -60,17 +75,30 @@
     <div class="freshio-canvas-filter-wrap">
         <div id="woocommerce_product_categories-2" class="widget woocommerce widget_product_categories"><span
                 class="gamma widget-title">Categorías</span>
-            <ul class="product-categories">
-                <li class="cat-item cat-item-186"><a
-                    href="{{ route('front.shop') }}">Todos</a> </li>
-                @foreach ($categories as $category)
-                    <li class="cat-item cat-item-186"><a
-                            href="{{ route('front.shop.category', $category->system_name) }}@if(request('layout')!= null)?layout={{request('layout')}}@endif">{{ $category->name }}</a> <span
-                            class="count">({{ $category->products_count }})</span></li>
-                @endforeach
-
-              
-            </ul>
+                <ul class="product-categories">
+                    <li class="cat-item cat-item-186">
+                        <a href="{{ route('front.shop') }}" class="point-category-item-expan border-blue p-internal-suave">
+                            <div class="separate-ctg-expand">
+                                <span>Todos</span>
+                            </div>
+                            <div class="content-img-ctg-expand">
+                                <img src="{{ asset('images/shop/category/all.png' )}}" alt="Todas las categorías" class="m-auto">
+                            </div>
+                        </a>
+                    </li>
+                    @foreach ($categories as $category)
+                        <li class="cat-item cat-item-186">
+                            <a href="{{ route('front.shop.category', $category->system_name) }}@if(request('layout')!= null)?layout={{request('layout')}}@endif" class="point-category-item-expan border-blue p-internal-suave">
+                                <div class="separate-ctg-expand">
+                                    <span>{{ $category->name }}</span>
+                                </div>
+                                <div class="content-img-ctg-expand">
+                                    <img src="{{ $category->url_image }}" alt="{{ $category->name}}" class="m-auto">
+                                </div>
+                            </a>
+                            {{-- <span class="count">({{ $category->products_count }})</span></li> --}}
+                    @endforeach
+                </ul>
         </div>
     </div>
 </div>

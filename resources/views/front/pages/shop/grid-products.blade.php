@@ -4,9 +4,10 @@
             class="product type-product post-267 status-publish first instock product_cat-dairy-bread-eggs product_cat-uncategorized has-post-thumbnail shipping-taxable purchasable product-type-variable">
             <div class="product-block">
                 <div class="product-transition">
-                    <div class="product-image"><img width="450" height="420"
+                    <div class="product-image">
+                        <img width="450" height="420"
                             src="{{ $item->url_image }}"
-                            class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazyloaded" alt=""
+                            class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazyloaded border-blue" alt="{{ $item->name }}"
                             decoding="async" data-ll-status="loaded"><noscript><img width="450" height="420"
                                 src="{{ $item->url_image }}"
                                 class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt=""
@@ -33,8 +34,9 @@
                     <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">£</span>{{ $item->price_format }}</bdi></span></ins>
                 </span>
                 <a href="{{ route('front.shop.show', $item->id) }}" data-quantity="1"
-                    class="button wp-element-button product_type_variable add_to_cart_button" data-product_id="267"
-                    data-product_sku="" aria-label="Select options for “{{ $item->name }}”" rel="nofollow">Ver producto</a>
+                    class="button wp-element-button product_type_variable add_to_cart_button "
+                    data-product_id="{{ $item->id }}" data-product_sku="ergonomic-concrete-lamp-52303043"
+                    aria-label="Select options for “{{ $item->name }}”" rel="nofollow"><span class="text-blue-tono">Ver producto</span> <span class="text-blue-tono ml-10px"><i class="fas fa-forward"></i></span></a>
             </div>
         </li>
     @endforeach

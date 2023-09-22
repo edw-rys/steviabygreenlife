@@ -25,10 +25,10 @@ class ShopController extends Controller
 
     function show(Request $request, $id) {
         $product = $this->shopService->findProduct($id);
-        $productsBeLink = null;
-        if($product->category != null){
-            $productsBeLink = $this->shopService->getProducts($request, $product->category->system_name, $id);
-        }
+        // $productsBeLink = null;
+        // if($product->category != null){
+        // }
+        $productsBeLink = $this->shopService->getProducts($request, null, $id);
 
         return view('front.pages.product')
             ->with('product', $product)

@@ -7,25 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CategoryProduct extends Model 
+class FilesProducts extends Model 
 {
   use SoftDeletes;
-  protected $table = 'category_product';
+  protected $table = 'files_products';
   protected $fillable = [
     'id',
-    'system_name',
     'route_image',
-    'name',
-    'products_count',
+    'product_id',
     'created_at',
     'updated_at',
     'deleted_at',
   ];
-
   protected $appends = ['url_image'];
 
   public function getUrlImageAttribute()
   {
-    return asset('images/shop/category/' . $this->route_image);
+    return asset('images/shop/products/' . $this->route_image);
   }
 }
+

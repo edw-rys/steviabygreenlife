@@ -10,16 +10,16 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
 @endsection
 @section('main-content')
     @include('front.pages.shop.header')
-    <div class="freshio-breadcrumb" style="background: #00BAB4;color:white">
+    <div class="freshio-breadcrumb" style="background: #fff;">
         <div class="col-full">
             <h1 class="breadcrumb-heading">
                 {{ $product->name }} </h1>
-            <nav class="woocommerce-breadcrumb" style="color:white">
-                <a style="color:white" href="{{ route('front.shop')}}">Inicio</a>
+            <nav class="woocommerce-breadcrumb" >
+                <a  href="{{ route('front.shop')}}">Inicio</a>
                 @if ($product->category != null)
-                    <span style="color:white" class="breadcrumb-separator"> / </span><a style="color:white" href="{{ route('front.shop.category', $product->category->system_name)}}">{{ $product->category->name }}</a>
+                    <span  class="breadcrumb-separator"> / </span><a href="{{ route('front.shop.category', $product->category->system_name)}}">{{ $product->category->name }}</a>
                 @endif
-                <span style="color:white" class="breadcrumb-separator"> / </span> {{ $product->name }}
+                <span class="breadcrumb-separator"> / </span> <span class="text-blue-tono bold">{{ $product->name }}</span>
             </nav>
         </div>
     </div>
@@ -48,7 +48,7 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                     href="#" class="woocommerce-product-gallery__trigger"><img draggable="false"
                                         role="img" class="emoji" alt="🔍"
                                         src="{{ asset('images/shop/1f50d.svg')}}"></a>
-                                <figure class="woocommerce-product-gallery__wrapper">
+                                <figure class="woocommerce-product-gallery__wrapper border-blue">
                                     <div data-thumb="{{ $product->url_image }}"
                                         data-thumb-alt="" class="woocommerce-product-gallery__image"
                                         style="position: relative; overflow: hidden;"><a
@@ -69,9 +69,9 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                     </div>
                                 </figure>
                             </div>
-                            <div class="summary entry-summary" id="product-cart-item-shop">
+                            <div class="summary entry-summary" id="product-cart-item-shop" style="margin-top: 50px">
                                 <span class="inventory_status">En Stock</span>
-                                <h2 class="product_title entry-title">{{ $product->name }}</h2>
+                                <h2 class="product_title entry-title title-product-redisign"><span class="item-title-link">{{ $product->name }}</span></h2>
 
 
                                 <p class="price">
@@ -80,7 +80,7 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                             <bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->original_price_format}}</bdi>
                                         </span></del> 
                                     @endif
-                                    <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->price_format }}</bdi></span></ins>
+                                    <ins><span class="woocommerce-Price-amount amount"><bdi class="style-total-redisign"><span class="woocommerce-Price-currencySymbol ">$</span>{{ $product->price_format }}</bdi></span></ins>
                                 </p>
 
                                 {{-- <p class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">$</span>{{ $product->price_format}}</bdi></span></p> --}}
@@ -111,7 +111,7 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                         </div>
                         
                         <section class="up-sells upsells products">
-                            <h2>Productos que te podrían gustar…</h2>
+                            <h2 class="text-blue-tono">Productos que te podrían gustar…</h2>
                             <ul class="products columns-4">
                                 @foreach ($productsBeLink->items as $item)    
                                     <li
@@ -138,13 +138,12 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
                                             </div>
                                             <h3 class="woocommerce-loop-product__title"><a
                                                     href="{{ route('front.shop.show', $item->id) }}">{{ $item->name }}</a></h3>
-                                            <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">$</span>{{ $item->price_format }}</bdi></span>
-                                            <a href="{{ route('front.shop.show', $item->id) }}"
-                                                data-quantity="1" class="button wp-element-button product_type_grouped"
-                                                data-product_id="{{ $item->id }}" data-product_sku="aerodynamic-linen-knife-74234493"
-                                                aria-label="Ver productos en el grupo “{{ $item->name }}"
-                                                rel="nofollow">Ver producto</a>
+                                            <span class="price"><span class="woocommerce-Price-amount amount"><bdi>
+                                                <span class="woocommerce-Price-currencySymbol">$</span>{{ $item->price_format }}</bdi></span>
+                                                <a href="{{ route('front.shop.show', $item->id) }}" data-quantity="1"
+                                                    class="button wp-element-button product_type_variable add_to_cart_button "
+                                                    data-product_id="{{ $item->id }}" data-product_sku="ergonomic-concrete-lamp-52303043"
+                                                    aria-label="Select options for “{{ $item->name }}”" rel="nofollow"><span class="text-blue-tono">Ver producto</span> <span class="text-blue-tono ml-10px"><i class="fas fa-forward"></i></span></a>
                                         </div>
                                     </li>
                                 @endforeach

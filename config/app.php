@@ -246,5 +246,9 @@ return [
         'edw-toni@hotmail.com',
         'reyes-edw@hotmail.com'
     ],
-    'phone_number'  => env('PHONE_NUMBER')
+    'phone_number'  => env('PHONE_NUMBER'),
+    'theme'         => [
+        // 'principal-color'   => '#fff'
+        'principal-color'   => '#00BBB5'
+    ]
 ];
