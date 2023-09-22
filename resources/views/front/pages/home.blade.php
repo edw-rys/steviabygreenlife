@@ -29,7 +29,8 @@ theme @endsection
         </div>
     </div>
     @include('front.pages.home.cart-panel')
-    <a class="float-button" target="_blank" href="https://api.whatsapp.com/send/?phone={{ config('app.phone_number')}}">
+    
+    <a class="float-button" target="_blank" href="https://wa.me/{{ config('app.phone_number')}}?text=Hola!">
         <i class="fa fa-whatsapp" aria-hidden="true"></i>
     </a>
       
