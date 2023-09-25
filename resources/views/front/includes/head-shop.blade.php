@@ -39,17 +39,17 @@
 
     .freshio-breadcrumb {
         background-position: center center;
-        background-image: url('{{asset('images/shop/banner-mobile.png')}}');
+        /* background-image: url('{{asset('images/shop/banner-mobile.png')}}'); */
     }
 
     
-    body.woocommerce-page:not(.single-product) .freshio-breadcrumb {
+    /* body.woocommerce-page:not(.single-product) .freshio-breadcrumb {
             background-position: center center;
             background-image: url('{{asset('images/shop/banner-short-mobile.png')}}');
             background-size: 100%;
                 background-repeat: no-repeat;
-        }
-    @media (min-width: 450px) {
+        } */
+    /* @media (min-width: 450px) {
         body.woocommerce-page:not(.single-product) .freshio-breadcrumb {
             background-position: center center;
             background-image: url('{{asset('images/shop/banner-mobile.png')}}');
@@ -61,9 +61,9 @@
         body.woocommerce-page:not(.single-product) .freshio-breadcrumb {
             background-size: 100%;
             background-repeat: no-repeat;
-            background-image: url('{{asset('images/shop/banner.png')}}');
+            background-image: url('{{asset('images/shop/banner-renovado.png')}}');
         }
-    }
+    } */
     .color-white{
         color: #ffffff !important;
     }

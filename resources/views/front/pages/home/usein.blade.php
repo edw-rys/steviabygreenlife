@@ -1,7 +1,7 @@
 {{-- Title --}}
 <div id="tips-stevia" data-type="Container"
     class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet" data-delay=""
-    style="padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(211, 107, 134, 1);background-position: center top;background-repeat: no-repeat;background-size: cover;background-image: url('{{ asset('images/userin/Fondo_Rosa-2006733.svg') }}');">
+    style="padding-bottom:0%;padding-top: 0%; padding-left: 0;background-color: rgba(211, 107, 134, 1);background-position: center top;background-repeat: no-repeat;background-size: 100%;background-image: url('{{ asset('images/userin/Fondo_Rosa-2006733.svg') }}');">
     <div class="grid-content ">
         <div class="grid-column    "
             style="width: 100%;padding-left:0px;padding-right:0px;background-image: none; background-size: cover; background-repeat: no-repeat; background-position: center center;top: 0px;">
@@ -22,7 +22,7 @@
 
                             <div class="widget-preserving-ratio-inner"
                                 data-slide="{{ asset('images/userin/En_que_la_puedo_utilizar-2618513.svg') }}">
-                                <a class="lazyImage flex flex-col image-fit userin-web-title">
+                                <a class="lazyImage flex flex-col image-fit userin-web-title" style="margin-top: 50px">
                                     <img src="{{ asset('images/userin/En_que_la_puedo_utilizar-2618513.svg') }}"
                                         class="flex-none " alt="" style="" loading="lazy">
 
@@ -72,7 +72,7 @@
             </div>
 
             <div class="widget-row text-center">
-                <img src="{{ asset('images/userin/desayuno-frutas.png') }}"
+                <img src="{{ asset('images/userin/desayuno-frutas-c.png') }}"
                     class="flex-none userin-img-receta" alt="UN DESAYUNO SALUDABLE" loading="lazy">
             </div>
             <div class="widget-row with-centered-content">

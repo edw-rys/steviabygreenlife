@@ -4437,7 +4437,7 @@ ul.menu li.current-menu-item>a {
 
 .freshio-breadcrumb {
     margin: 0 0 2.617924em;
-    padding: 2.617924em 0;
+    /* padding: 2.617924em 0; */
     text-align: center;
     /* background: #f8eee3; */
     color: #fff
@@ -10694,4 +10694,66 @@ html[dir=rtl] .mega-menu.mega-stretchwidth {
 }
 .short-description{
     font-size: 1.1em;
+}
+.hoja-lateral-design, .hoja-lateral-reverso-design{
+    position: relative;
+}
+.hoja-lateral-design::before{
+    content: '';
+    background-image: url(/images/shop/hoja.png);
+    position: absolute;
+    bottom: -9em;
+    right: 1px;
+    width: 9em;
+    height: 9em;
+    background-size: cover;
+}
+@media(max-width:750px){
+    .hoja-lateral-design::before{
+        content: '';
+        bottom: -7em;
+        right: 1px;
+        width: 8em;
+        height: 7em;
+    }
+}
+
+.relative{
+    position: relative;
+}
+
+.hoja-lateral-reverso-design img.img-rigth-hoja{
+    position: absolute;
+    right: 0px;
+    transform: scaleY(-1);
+    bottom: 0px;
+    width: 9em;
+}
+.hoja-lateral-reverso-design img.img-left-hoja{
+    position: absolute;
+    left: 0px;
+    transform: scaleX(-1) scaleY(-1);
+    bottom: 0px;
+    width: 9em;
+}
+@media(max-width:750px){
+    .hoja-lateral-reverso-design img.img-rigth-hoja{
+        width: 8em;
+        /* height: 9em; */
+    }
+}
+
+
+.bck-banner-shop{
+    background-image: url('/images/shop/banner-cart.png')
+    ;padding: 9.5em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center
+}
+@media(max-width: 750px){
+    .bck-banner-shop{
+        background-size: cover;
+        padding: 1em;
+    }
 }

@@ -10,11 +10,11 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
 @endsection
 @section('main-content')
     @include('front.pages.shop.header')
-    <div class="freshio-breadcrumb" style="background: #fff;">
-        <div class="col-full">
-            <h1 class="breadcrumb-heading">
-                {{ $product->name }} </h1>
-            <nav class="woocommerce-breadcrumb" >
+    <div class="hoja-lateral-design" style="background: #fff;"></div>
+    <div class="freshio-breadcrumb ">
+        <div class="col-full ">
+            <h1 class="breadcrumb-heading hidden">{{ $product->name }} </h1>
+            <nav class="woocommerce-breadcrumb" style="font-size: 1.1em;">
                 <a  href="{{ route('front.shop')}}">Inicio</a>
                 @if ($product->category != null)
                     <span  class="breadcrumb-separator"> / </span><a href="{{ route('front.shop.category', $product->category->system_name)}}">{{ $product->category->name }}</a>
@@ -154,6 +154,8 @@ class-body-templateproduct-template-default single single-product postid-285 wp-
             </div>
         </div>
     </div>
+
+    @include('front.includes.footer-hojas')
 
 @endsection
 

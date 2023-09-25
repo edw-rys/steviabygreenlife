@@ -20,6 +20,7 @@ class ShopController extends Controller
         $products = $this->shopService->getProducts($request, $category);
         return view('front.pages.shop')
             ->with('products',$products)
+            ->with('categoryRoute', $category)
             ->with('categories',$categories);
     }
 

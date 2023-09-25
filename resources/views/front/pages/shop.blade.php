@@ -11,7 +11,8 @@ theme archive post-type-archive post-type-archive-product wp-embed-responsive th
     @include('front.pages.shop.header')
     @include('front.pages.shop.banner')
     @include('front.pages.shop.products')
-    @endsection
+    @include('front.includes.footer-hojas')
+@endsection
     
 @section('scripts_body_after')
     <script src="{{ asset('scripts/off-canvas.js')}}"></script>

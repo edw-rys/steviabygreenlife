@@ -60,8 +60,14 @@
                                     <img src="{{ $category->url_image }}" alt="{{ $category->name}}" class="m-auto">
                                 </div>
                             </a>
-                            {{-- <span class="count">({{ $category->products_count }})</span></li> --}}
                     @endforeach
+                    <div class="banners-laterales-ctg" style="margin-top: 50px">
+                        @if ($categoryRoute && $categoryRoute != 'all')
+                            <img src="{{ asset('images/shop/products/banner-lateral-ctg.png')}}" alt="Stevia Powder" style="width: 95%">
+                        @else
+                            <img src="{{ asset('images/shop/products/banner-lateral-all.png')}}" alt="Stevia Powder" style="width: 95%">
+                        @endif
+                    </div>
                 </ul>
             </div>
         </div>
@@ -98,6 +104,13 @@
                             </a>
                             {{-- <span class="count">({{ $category->products_count }})</span></li> --}}
                     @endforeach
+                    <div class="banners-laterales-ctg" style="margin-top: 50px">
+                        @if ($categoryRoute && $categoryRoute != 'all')
+                            <img src="{{ asset('images/shop/products/banner-lateral-ctg.png')}}" alt="Stevia Powder" style="width: 95%">
+                        @else
+                            <img src="{{ asset('images/shop/products/banner-lateral-all.png')}}" alt="Stevia Powder" style="width: 95%">
+                        @endif
+                    </div>
                 </ul>
         </div>
     </div>

@@ -267,9 +267,9 @@
 
 @section('main-content')
     @include('front.pages.shop.header')
-    <div class="freshio-breadcrumb">
-        <div class="col-full">
-            <h1 class="breadcrumb-heading color-white">Verificar compra</h1>
+    <div class="freshio-breadcrumb"  style="background: #00BBB5;">
+        <div class="col-full bck-banner-shop">
+            <h1 class="breadcrumb-heading" style="color: #F9DD6C">Verificar compra</h1>
 
             <nav class="woocommerce-breadcrumb color-white"><a class="color-white"
                     href="{{ route('front.shop') }}">Inicio</a><span class="breadcrumb-separator color-white"> /
