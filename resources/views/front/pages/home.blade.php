@@ -32,6 +32,7 @@ theme @endsection
     
     <a class="float-button" target="_blank" href="https://wa.me/{{ config('app.phone_number')}}?text=Hola!">
         <i class="fa fa-whatsapp" aria-hidden="true"></i>
+        <span class="title-float-button-whatsapp">Compra ahora por Whatsapp<span>
     </a>
       
     

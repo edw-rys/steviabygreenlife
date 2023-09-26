@@ -576,7 +576,9 @@
 }
 
 @media screen and (max-width: 545px) {
-
+    .title-float-button-whatsapp{
+        display: none;
+    }
     .float-button {
         bottom: 15px;
         right: 15px;
