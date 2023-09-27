@@ -63,9 +63,9 @@
                     @endforeach
                     <div class="banners-laterales-ctg" style="margin-top: 50px">
                         @if ($categoryRoute && $categoryRoute != 'all')
-                            <img src="{{ asset('images/shop/products/banner-lateral-ctg.png')}}" alt="Stevia Powder" style="width: 95%">
+                            <img src="{{ asset('images/shop/products/banner-lateral-ctg-refactor.png')}}" alt="Stevia Powder" style="width: 95%">
                         @else
-                            <img src="{{ asset('images/shop/products/banner-lateral-all.png')}}" alt="Stevia Powder" style="width: 95%">
+                            <img src="{{ asset('images/shop/products/banner-lateral-all-refactor.png')}}" alt="Stevia Powder" style="width: 95%">
                         @endif
                     </div>
                 </ul>
@@ -106,9 +106,9 @@
                     @endforeach
                     <div class="banners-laterales-ctg" style="margin-top: 50px">
                         @if ($categoryRoute && $categoryRoute != 'all')
-                            <img src="{{ asset('images/shop/products/banner-lateral-ctg.png')}}" alt="Stevia Powder" style="width: 95%">
+                            <img src="{{ asset('images/shop/products/banner-lateral-ctg-refactor.png')}}" alt="Stevia Powder" style="width: 95%">
                         @else
-                            <img src="{{ asset('images/shop/products/banner-lateral-all.png')}}" alt="Stevia Powder" style="width: 95%">
+                            <img src="{{ asset('images/shop/products/banner-lateral-all-refactor.png')}}" alt="Stevia Powder" style="width: 95%">
                         @endif
                     </div>
                 </ul>
