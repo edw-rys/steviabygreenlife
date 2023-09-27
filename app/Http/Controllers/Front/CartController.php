@@ -527,7 +527,8 @@ class CartController extends Controller
                 'token'     => config('app.custompay.token'),
                 'client_id' => $cart->transaction_code,
             ],
-            'currency'  => "USD"
+            'currency'  => "USD",
+            'store_id'      => config('app.custompay.store_id')
         ]);
     }
 

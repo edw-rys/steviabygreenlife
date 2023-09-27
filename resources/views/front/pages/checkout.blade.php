@@ -146,6 +146,7 @@
                             clientTransactionId: response.payment.client_id,
                             lang: "es",
                             email: response.billing.email,
+                            storeId: response.store_id,
                             // phoneNumber: response.billing.phone,
                             documentId: response.billing.identification_number
                         }).then(function(paramlog){

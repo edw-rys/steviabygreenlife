@@ -240,6 +240,7 @@ return [
         'id_app'        => env('PAYMENT_PP_ID_APP'),
         'token'         => env('PAYMENT_PP_TOKEN'),
         'client_id'     => env('PAYMENT_PP_CLIENT_ID'),
+        'store_id'     => env('PAYMENT_PP_STORE_ID'),
     ],
     'paymentapp'    => env('PAYMENT_APP'),
     'emails_admin'        => [
