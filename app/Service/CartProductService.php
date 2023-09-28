@@ -489,8 +489,14 @@ class CartProductService
         }
         $productCart->delete();
 
-        $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'discountCart']);
+        $cart = $this->getCartShop($cart->uuid, auth()->check() ? auth()->user()->id : null, false, ['products', 'products.product', 'discountCart', 'discountReference']);
         $this->restoreCart($cart);
+        if($cart->products->isEmpty() && $cart->discountReference != null){
+            $cart->discountCart->users_used--;
+            $cart->discountCart->save();
+            $cart->discountReference->delete();
+            $cart->delete();
+        }
 
         return [
             'status'    => 'success',

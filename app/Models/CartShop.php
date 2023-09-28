@@ -138,4 +138,7 @@ class CartShop extends Model
   {
       return $this->hasOneThrough(DiscountCodes::class, CartDiscounts::class, 'cart_shop_id', 'id', 'id', 'discount_id')->withTrashed();
   }
+  function discountReference()  {
+    return $this->hasOne(CartDiscounts::class, 'cart_shop_id');
+  }
 }

@@ -3,7 +3,7 @@
         <tr class="woocommerce-cart-form__cart-item cart_item">
             <td class="product-remove">
                 <span onclick="removeItemShop('{{ $productShop->id }}')" 
-                    style="cursor: pointer"
+                    style="cursor: pointer;border: 1px solid;border-radius: 100%;padding: 2px 4px;"
                     class="remove" aria-label="Remove this item" data-product_id="{{ $productShop->id }}"
                     data-product_sku="durable-aluminum-shoes-62990271">×</span>
             </td>
