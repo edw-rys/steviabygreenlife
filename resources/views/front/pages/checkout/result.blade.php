@@ -280,7 +280,7 @@
                                                 <div class="col-md-5">
                                                     <div class="message-box _success _failed">
                                                         <i class="fa fa-times-circle" aria-hidden="true"></i>
-                                                        <h3> Transacción {{ $transaction->message }} </h3>
+                                                        <h3>Resultado de la transacción: {{ $transaction->message }} </h3>
                                                     </div> 
                                                 </div> 
                                             </div> 
