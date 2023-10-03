@@ -244,8 +244,8 @@ return [
     ],
     'paymentapp'    => env('PAYMENT_APP'),
     'emails_admin'        => [
-        'edw-toni@hotmail.com',
-        'reyes-edw@hotmail.com'
+        'greenlife_pedidos@importmova.com.ec',
+        'ventas@importmova.com.ec'
     ],
     'phone_number'  => env('PHONE_NUMBER'),
     'theme'         => [
