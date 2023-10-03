@@ -30,7 +30,7 @@ theme @endsection
     </div>
     @include('front.pages.home.cart-panel')
     
-    <a class="float-button" target="_blank" href="https://wa.me/{{ config('app.phone_number')}}?text=Hola!">
+    <a class="float-button" target="_blank" href="https://wa.me/{{ config('app.phone_number')}}?text=Hola! te saluda Liseth tu asesora comercial en línea, por favor cuéntame que producto le interesa.">
         <i class="fa fa-whatsapp" aria-hidden="true"></i>
         <span class="title-float-button-whatsapp">Compra ahora por Whatsapp<span>
     </a>
