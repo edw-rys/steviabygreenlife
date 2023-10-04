@@ -86,23 +86,28 @@
             </div>
             <div id="mode-pay-transferencia" class="hidden">
                 <a href="javascript:;" onclick="resetSelectMethodPayment()"><i class="fa fas fa-arrow-left"></i></a>
+                <div>
+                    <h5 class="text-center">Detalle de las cuentas</h5>
+                </div>
                 @foreach ($accountsBank as $bank)
                     <div>
-                        <h5 class="text-center">Detalle de la cuenta</h5>
-                    </div>
-                    <div>
-                        <p>
-                            <strong>Cuenta</strong>
+                        <p style="margin: 0">
+                            <strong>Nombre de la cuenta:</strong>
+                            <span>{{ $bank->details }}</span>
+                        </p>
+                        <p style="margin: 0"> 
+                            <strong>{{ $bank->type_account }} {{ $bank->bank_name }}:</strong>
                             <span>{{ $bank->number_account }}</span>
                         </p>
-                        <p>
-                            <strong>Banco</strong>
-                            <span>{{ $bank->bank_name }}</span>
+                        <p style="margin: 0">
+                            <strong>Ruc:</strong>
+                            <span>{{ config('app.shop_details.ruc') }}</span>
                         </p>
-                        <p>
-                            <strong>Tipo de cuenta</strong>
-                            <span>{{ $bank->type_account }}</span>
+                        <p style="margin: 0">
+                            <strong>Mail:</strong>
+                            <span>{{ config('app.shop_details.mail') }}</span>
                         </p>
+                        <br>
                     </div>
                 @endforeach
                 <div class="border-2 border-dashed dark:border-dark-5 rounded-md pt-4 ng-star-inserted"

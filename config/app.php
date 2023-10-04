@@ -251,5 +251,9 @@ return [
     'theme'         => [
         // 'principal-color'   => '#fff'
         'principal-color'   => '#00BBB5'
+    ],
+    'shop_details'  => [
+        'mail'  => env('SHOP_DETAIL_MAIL'),
+        'ruc'   => env('SHOP_DETAIL_RUC')
     ]
 ];
