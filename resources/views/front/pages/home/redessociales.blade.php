@@ -9,7 +9,7 @@
                 <div class="widget widgetResponsive textWidget headingWidget col20" id="heading-widget-1682096029092"
                     data-type="HeadingWidget" data-delay="" data-animation-duration="" data-animation-delay=""
                     data-animation="lazyAnimation-" style="margin-top: 0%; margin-left: 0px;">
-                    <div class="">
+                    <div class="" style="display: flex;justify-content: right;margin-top: 20px;">
                         <h4 style="text-align: center; line-height: 1;"><span
                                 style="color: rgb(255, 255, 255); font-size: 48px; font-family: Jumper;"><span
                                     style="font-size: 54px;"><span style="font-size: 48px;">Conoce  más de <br>nosotros</span></span>&nbsp;👉 síguenos</span></h4>

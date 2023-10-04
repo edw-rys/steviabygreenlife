@@ -8,12 +8,20 @@
         width: 100%;
         height: 100px;
     }
+    @media(min-width: 750px){
+        .pb-all-wdth{
+            padding-bottom: 101px;
+        }
+        .zindex-55-all-wdth{
+            z-index: 55
+        }
+    }
 </style>
 <div id="stevia-powder" data-type="Container"
     class="grid-row phone-hidden tablet-hidden stretched-mobile stretched-tablet powder-bck-panel" data-delay=""
     style="background-image: url('{{asset('images/powder/Fond_azul_Mano-2002186.svg')}}');">
     <div class="powder-pannel-grid relative powder-pannel-grid-design">
-        <div class="grid-column    "
+        <div class="grid-column pb-all-wdth"
             style="width: 52%;padding-left:0%;padding-right:0%;background-image: none;background-size: cover;background-repeat: no-repeat;background-position: center center;top: 0px;">
             <div class="widget-row ">
                 <div class="widget anim-delayed-item widgetResponsive imageWidget col20"
@@ -28,7 +36,7 @@
                                 data-slide="{{ asset('images/powder/Mano_Stevia_-2531568.png')}}">
                                 <a class="lazyImage flex flex-col image-fit">
                                     <img src="{{ asset('images/powder/Mano_Stevia_-2531568.png')}}"
-                                        class="flex-none" alt="" style="" loading="lazy">
+                                        class="flex-none zindex-55-all-wdth" alt="" loading="lazy" >
                                 </a>
                             </div>
                             <h3 class="hidden">Stevia Powder</h3>
