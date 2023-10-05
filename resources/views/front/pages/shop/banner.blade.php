@@ -1,5 +1,5 @@
 <div class="freshio-breadcrumb hoja-lateral-design" style="background: #00BBB5;">
-    <div class="col-full">
+    <div class="m-auto">
         <img src="{{asset('images/shop/banner-renovado.png')}}" alt="">
         {{-- <h1 class="breadcrumb-heading" style="color: white">
             Tienda
