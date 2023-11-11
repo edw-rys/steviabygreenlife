@@ -244,7 +244,7 @@ return [
     ],
     'paymentapp'    => env('PAYMENT_APP'),
     'emails_admin'        => [
-        'greenlife_pedidos@importmova.com.ec',
+        'Kerly.anzules@importmova.com.ec',
         'ventas@importmova.com.ec'
     ],
     'phone_number'  => env('PHONE_NUMBER'),
