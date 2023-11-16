@@ -24,3 +24,4 @@ use Illuminate\Support\Facades\Route;
 //     $cartProductService->restoreCart($cart);
 //     dd($cart->toArray());
 // });
+Route::get('/order/show-file/{id}', 'Admin\AdminShopController@showFileFront')->name('web.order.show-file');

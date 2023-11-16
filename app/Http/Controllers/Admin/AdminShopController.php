@@ -139,6 +139,27 @@ class AdminShopController extends Controller
         $response->header("Content-Type", $type);
         return $response;
     }
+    /**
+     * @param $id
+     */
+    public function showFileFront($id) {
+        $id = base64_decode($id);
+        $fileData = $this->cartProductService->getFileById($id);
+        if($fileData == null){
+            abort(404);
+        }
+        $filename = $fileData->cart_shop_id . '/'.$fileData->filename;
+        if (!Storage::disk('transferencias')->exists($filename)) {
+            abort(404);
+        }
+        $file = Storage::disk('transferencias')->get($filename);
+        
+        $type = Storage::disk('transferencias')->mimeType($filename);
+
+        $response = response()->make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+    }
 
     public function discountCodes(Request $request) {
         $list = $this->utilsService->discountList();
