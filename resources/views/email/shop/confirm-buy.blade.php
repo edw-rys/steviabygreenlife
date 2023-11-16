@@ -32,6 +32,9 @@
     background-color: #dc3545;
 }
 
+.control-tamanio-img{
+    width: 100px;height: 120px;
+}
 </style>
 <h1>Nueva compra realizada, pedido # {{$cart->numero_pedido}}</h1>
 <span class="badge {{ badgeStatusStore($cart->status) }}" style="font-size: 13px;padding: 7px;"> @lang('global.status-label.'. ( $cart->status ?? 'in-process'))</span>
@@ -103,7 +106,7 @@
     <tbody>
         @foreach ($cart->products as $itemCart)
             <tr>
-                <td><img src="{{$itemCart->url_image}}" style="width: 100px;height: 120px;" alt=""></td>
+                <td><img src="{{$itemCart->url_image}}" class="control-tamanio-img" alt=""></td>
                 <td>{{ $itemCart->name}}</td>
                 <td>{{ $itemCart->count}}</td>
                 <td><p style="margin: 0;text-align: right">$ {{ $itemCart->total_format}}</p></td>
@@ -124,11 +127,31 @@
             <td><p style="margin: 0;text-align: right">$ {{ $cart->delivery_cost_format }}</p></td>
         </tr>
         <tr>{{-- Total --}}
+            <td colspan="3">Método de pago:</td>
+            <td><p style="margin: 0;text-align: right">$ {{ ($cart->status=='pending_check_transfer' ) ? 'Transferencia Bancaria' : 'TC/TD' }}</p></td>
+        </tr>
+        <tr>{{-- Total --}}
             <td colspan="3">Total + envío</td>
             <td><p style="margin: 0;text-align: right">$ {{ $cart->total_more_delivery_format }}</p></td>
         </tr>
-    </tbody>
+</tbody>
 </table>
+@if (isset($cart->files) && $cart->files && $cart->files->isNotEmpty())
+<table>
+<thead>
+    <tr><th colspan="2">Comprobantes</th></tr>
+</thead>
+<tbody>
+    @foreach ($cart->files as $key => $fileUpload)
+    <tr>
+        <td>{{ $key + 1 }}</td>
+        <td><a href="{{ route('web.order.show-file', base64_encode($fileUpload->id))}}"><img class="control-tamanio-img" src="{{route('web.order.show-file', base64_encode($fileUpload->id))}}" alt="{{$fileUpload->original_name}}"></a></td>
+    </tr>
+    @endforeach
+
+</tbody>
+</table>
+@endif
 
 {{ config('app.company_name') }}
 @endcomponent
